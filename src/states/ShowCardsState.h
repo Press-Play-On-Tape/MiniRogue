@@ -35,7 +35,7 @@ class ShowCardsState : public BaseState {
     Font3x5 font3x5 = Font3x5();    
     ViewState viewState = ViewState::DealCards;
     
-    uint8_t count = 0;           
+    uint8_t counter = 0;           
     uint8_t displayCard = 0;           
     uint8_t numberOfCardsToDisplay = 6;
 

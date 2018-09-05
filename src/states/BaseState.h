@@ -16,6 +16,6 @@ class BaseState : public GameState<GameContext, GameStateType> {
 
     void renderPlayerDead(StateMachine & machine);
     void renderMonsterDead(StateMachine & machine);
-    void renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood, bool showCardsView = false);
-    void drawItem(uint8_t position, uint8_t const *imageName, bool showCardsView);
+    void renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood);
+    void drawItem(uint8_t position, uint8_t const *imageName);
 };

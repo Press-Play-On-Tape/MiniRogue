@@ -17,7 +17,7 @@ void BaseState::renderMonsterDead(StateMachine & machine) {
 
 }
 
-void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood, bool showCardsView) {
+void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood) {
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
@@ -88,24 +88,24 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     uint8_t position = 0;
 
-    if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) { drawItem(position, Images::IceWand, showCardsView); position++; }
-    if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 1) { drawItem(position, Images::IceWand, showCardsView); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) { drawItem(position, Images::IceWand); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 1) { drawItem(position, Images::IceWand); position++; }
 
-    if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) { drawItem(position, Images::FireWand, showCardsView); position++; }
-    if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 1) { drawItem(position, Images::FireWand, showCardsView); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) { drawItem(position, Images::FireWand); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 1) { drawItem(position, Images::FireWand); position++; }
 
-    if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) { drawItem(position, Images::PoisonWand, showCardsView); position++; }
-    if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 1) { drawItem(position, Images::PoisonWand, showCardsView); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) { drawItem(position, Images::PoisonWand); position++; }
+    if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 1) { drawItem(position, Images::PoisonWand); position++; }
 
-    arduboy.drawRect((showCardsView ? 107 : 106), 55, 9, 9, WHITE);
-    arduboy.drawRect((showCardsView ? 118 : 117), 55, 9, 9, WHITE);
+    arduboy.drawRect(106, 55, 9, 9, WHITE);
+    arduboy.drawRect(117, 55, 9, 9, WHITE);
 
   }
 
 }
 
-void BaseState::drawItem(uint8_t position, uint8_t const *imageName, bool showCardsView) {
+void BaseState::drawItem(uint8_t position, uint8_t const *imageName) {
 
-  Sprites::drawOverwrite((showCardsView ? 108 : 107) + (position * 11), 56, imageName, 0);
+  Sprites::drawOverwrite(107 + (position * 11), 56, imageName, 0);
 
 }

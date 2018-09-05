@@ -3,7 +3,7 @@
 #include "../utils/Utils.h"
 #include "../fonts/Font3x5.h"
 
-constexpr const static uint8_t FLIP_DELAY = 1; 
+constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 7; 
 
 
 constexpr const static uint8_t DEAL_DELAY = 5; 
@@ -40,8 +40,8 @@ void ShowCardsState::activate(StateMachine & machine) {
 
 		this->viewState = ViewState::DealCards;
 		this->displayCard = 0;
+		this->counter = NO_OF_CARDS_IN_FLIP;
 		gameStats.room = 1;
-		count = (FLIP_DELAY * 7);
 
 
 		// Shuffle cards ..
@@ -56,7 +56,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 
 		}
 
-		machine.getContext().cards[0] = GameStateType::Monster; 			//SJH
+		//machine.getContext().cards[0] = GameStateType::Monster; 			//SJH
 		// machine.getContext().cards[1] = GameStateType::Trap; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
 		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
@@ -69,7 +69,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 		this->displayCard = CARD_SHOW_ALL;
 
 		if (playerStats.food > 0) {
-			count = (FLIP_DELAY * 7);
+			this->counter = NO_OF_CARDS_IN_FLIP;
 			this->viewState = ViewState::PlayCard;
 		}
 		else {
@@ -102,7 +102,7 @@ void ShowCardsState::update(StateMachine & machine) {
 				else {
 					this->displayCard = CARD_SHOW_ALL;
         	this->viewState = ViewState::PlayCard;
-					this->count = (FLIP_DELAY * 7);
+					this->counter = NO_OF_CARDS_IN_FLIP;
 				}
 
 			}
@@ -168,13 +168,12 @@ void ShowCardsState::render(StateMachine & machine) {
 	// Player statistics ..
 
   BaseState::renderPlayerStatistics(machine,
-    true, // Overall
+    true,  // Overall
     false, // XP
     false, // HP
     false, // Armour
     false, // Gold
-    false, // Food
-		true
+    false  // Food
   );
 
   const bool flash = arduboy.getFrameCountHalf(12);
@@ -187,7 +186,7 @@ void ShowCardsState::render(StateMachine & machine) {
 			uint8_t y = pgm_read_byte(&cardPositionY[i]);
 			uint8_t r = pgm_read_byte(&cardIndexToRoom[i]);
 
-			if (count == (FLIP_DELAY * 7) || (room != r && count > 0) || count == 0) {
+			if (this->counter == NO_OF_CARDS_IN_FLIP || (room != r && this->counter > 0) || this->counter == 0) {
 			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
 			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 			}
@@ -195,54 +194,23 @@ void ShowCardsState::render(StateMachine & machine) {
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
 			}
 
-			if ((room > r) || (room == r && count == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
+			if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
 				arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
 				SpritesB::drawSelfMasked(x + 3, y + 6, Images::Card_Faces, (i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
 			}
 
-				if (room == r && count > 0 && this->displayCard == CARD_SHOW_ALL) {
-					arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-					ardBitmap.drawCompressed(x, y, Images::spinning_mask[count - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-					ardBitmap.drawCompressed(x, y, Images::spinning_card[count - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+			if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
+				arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
+				ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
-				}
+			}
 
 		}
 
 	}
 
-
-if (count > 0 && this->displayCard == CARD_SHOW_ALL) count --;
-
-// Serial.print(this->displayCard == CARD_SHOW_ALL);
-// Serial.print(" ");
-// Serial.println(count);
-
-// 	if ((this->displayCard == CARD_SHOW_ALL) && (count > 0)) {
-
-// 		uint8_t img = count / 10;
-
-// 		for (uint8_t i = 0; i < 7; i++) {
-
-// 			if (this->displayCard >= i) {
-
-// 				int8_t x =  pgm_read_byte(&cardPositionX[i]);
-// 				uint8_t y = pgm_read_byte(&cardPositionY[i]);
-// 				uint8_t r = pgm_read_byte(&cardIndexToRoom[i]);
-
-// 				if (room == r) {
-// 					arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-// 					ardBitmap.drawCompressed(x, y, Images::spinning_mask[img], BLACK, ALIGN_NONE, MIRROR_NONE);
-// 					ardBitmap.drawCompressed(x, y, Images::spinning_card[img], WHITE, ALIGN_NONE, MIRROR_NONE);
-// 				}
-
-// 			}
-
-// 		}
-
-// // 	}
-// 			if (count > 0)
-// 		count--;
+	if (this->counter > 0 && this->displayCard == CARD_SHOW_ALL) this->counter --;
 
 
 	// Are we dead?
