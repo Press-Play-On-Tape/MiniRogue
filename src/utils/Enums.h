@@ -60,7 +60,7 @@ struct PlayerStats {
 
     xp = xp + value;
 
-    if (xp == 6 && xpTrack < 4) {
+    if (xp >= 6 && xpTrack < 4) {
 
       xp = xp - 6;
       xpTrack++;

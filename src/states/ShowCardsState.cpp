@@ -156,7 +156,6 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	// Draw background ..
 
-//	ardBitmap.drawCompressed(107, 0, Images::Card_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
 	for (uint8_t i = 0; i < 94; i = i + 10) {
 		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
