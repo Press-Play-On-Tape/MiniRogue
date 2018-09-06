@@ -153,9 +153,9 @@ void ShowCardsState::render(StateMachine & machine) {
   #ifndef AREA_IN_LEVEL
 	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
   #else
-	font3x5.print("Area");
+	font3x5.print("A");
 	font3x5.print(gameStats.getAreaId() + 1);
-	font3x5.print("-");
+	font3x5.print("~L");
 	font3x5.print(gameStats.level + 1);
 	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
   #endif
