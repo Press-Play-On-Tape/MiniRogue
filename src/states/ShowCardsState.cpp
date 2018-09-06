@@ -4,8 +4,6 @@
 #include "../fonts/Font3x5.h"
 
 constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 7; 
-
-
 constexpr const static uint8_t DEAL_DELAY = 5; 
 constexpr const static uint8_t CARD_SHOW_ALL = 255;
 constexpr const static uint8_t CARD_NONE_SELECTED = 255;
@@ -56,11 +54,11 @@ void ShowCardsState::activate(StateMachine & machine) {
 
 		}
 
-		//machine.getContext().cards[0] = GameStateType::Monster; 			//SJH
-		// machine.getContext().cards[1] = GameStateType::Trap; 		//SJH
+		machine.getContext().cards[0] = GameStateType::Event; 			//SJH
+		// machine.getContext().cards[1] = GameStateType::Monster; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
 		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
-		// machine.getContext().cards[4] = GameStateType::Event;				//SJH
+		// machine.getContext().cards[4] = GameStateType::Trap;				//SJH
 		// machine.getContext().cards[5] = GameStateType::Treasure;		//SJH
 
 	}
@@ -155,9 +153,9 @@ void ShowCardsState::render(StateMachine & machine) {
   #ifndef AREA_IN_LEVEL
 	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
   #else
-	font3x5.print("A");
+	font3x5.print("Area");
 	font3x5.print(gameStats.getAreaId() + 1);
-	font3x5.print("L");
+	font3x5.print("-");
 	font3x5.print(gameStats.level + 1);
 	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
   #endif

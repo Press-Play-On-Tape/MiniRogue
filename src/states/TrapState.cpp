@@ -4,6 +4,8 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 13; 
+
 
 // ----------------------------------------------------------------------------
 //  Handle state updates .. 
@@ -57,15 +59,10 @@ void TrapState::update(StateMachine & machine) {
       if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
       #endif
       
-			if (counter < sizeof(DiceDelay)) {
-				
-				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[counter]))) {
+			if (counter < NO_OF_CARDS_IN_FLIP) {
 
-					this->dice = random(1, 7);
-					counter++;
-					arduboy.resetFrameCount();
-
-				}
+        this->dice = random(1, 7);
+        counter++;
 
 			}
 			else {
@@ -211,16 +208,32 @@ void TrapState::render(StateMachine & machine) {
       break;
 
     case ViewState::RollDice:
+
+      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[this->counter], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+      if (counter < NO_OF_CARDS_IN_FLIP) {
+
+        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
+          for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
+            ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
+          }
+        }
+
+      }
+      else {
+
+        ardBitmap.drawCompressed(30, 10, Images::Trap_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+      }
+
+      break;
+
     case ViewState::UpdateStats:
 
       ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[12], WHITE, ALIGN_NONE, MIRROR_NONE);
       ardBitmap.drawCompressed(30, 10, Images::Trap_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-
-
-      if (viewState == ViewState::UpdateStats) {
-        font3x5.setCursor(4, 0);
-        printTrapName();
-      }
+      font3x5.setCursor(4, 0);
+      printTrapName();
 
       break;
 

@@ -241,7 +241,7 @@ namespace Images {
   };
 
   const uint8_t Large_Spinning_Inlays[] = { 
-    12, 10, 8, 6, 4, 2, 0, 0, 0, 0, 0, 0
+    12, 10, 8, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0
   };
 
 }
