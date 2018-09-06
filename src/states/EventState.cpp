@@ -119,7 +119,8 @@ void EventState::render(StateMachine & machine) {
     case ViewState::RollDice:
     case ViewState::UpdateStats:
 
-      SpritesB::drawOverwrite(28, 8, Images::Event_Dice, (this->dice - 1));
+      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[12], WHITE, ALIGN_NONE, MIRROR_NONE);
+      ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
       if(this->viewState == ViewState::UpdateStats) {
         font3x5.setCursor(4, 0);
         printEventName();
