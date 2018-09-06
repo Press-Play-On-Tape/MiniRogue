@@ -188,15 +188,14 @@ void TreasureState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  uint8_t flags = {
-      (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER) << 7 | // Overall
-      (this->dice == 6) << 6 | // XP
-      (this->dice == 4) << 5 | // HP
-      (this->dice == 5) << 4 | // Armour
-      true << 3 | // Gold
-      false << 2  // Food
-    };
-  BaseState::renderPlayerStatistics(machine, flags);
+  BaseState::renderPlayerStatistics(machine,
+    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
+    (this->dice == 6), // XP
+    (this->dice == 4), // HP
+    (this->dice == 5), // Armour
+    true, // Gold
+    false // Food
+  );
 
   if (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER && flash) {
 
@@ -219,7 +218,7 @@ void TreasureState::renderSelectTreasure(StateMachine & machine) {
   auto & ardBitmap = machine.getContext().ardBitmap;
   
   ardBitmap.drawCompressed(14, 8, Images::Chest_Open_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  SpritesB::drawSelfMasked(33, 13, Images::Chest_Dice, (this->dice - 1));
+  ardBitmap.drawCompressed(35, 15, Images::Chest_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
 }
 

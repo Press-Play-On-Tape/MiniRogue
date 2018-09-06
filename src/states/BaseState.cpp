@@ -17,37 +17,56 @@ void BaseState::renderMonsterDead(StateMachine & machine) {
 
 }
 
-void BaseState::renderPlayerStatistics(StateMachine & machine, uint8_t flashFlags) {
-//bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood) {
+void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood) {
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
   auto & gameStats = machine.getContext().gameStats;
 
   const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
-  const bool overallFlash = flashFlags & 0xF0;
 
-	// Player statistics ..
 
   for (uint8_t x = 0; x < 5; x++) {
-
+    
     uint8_t val = 0;
+    bool flag = false;
 
     switch (x)  {
-      case 0:   val = playerStats.xp;       break;
-      case 1:   val = playerStats.hp;       break;
-      case 2:   val = playerStats.armour;   break;
-      case 3:   val = playerStats.gold;     break;
-      case 4:   val = playerStats.food;     break;
+
+      case 0:   
+        val = playerStats.xp;       
+        flag = flashXP;
+        break;
+
+      case 1:   
+        val = playerStats.hp;
+        flag = flashHP;
+        break;
+
+      case 2:   
+        val = playerStats.armour;
+        flag = flashArmour;
+        break;
+
+      case 3:   
+        val = playerStats.gold;
+        flag = flashGold;
+        break;
+
+      case 4:   
+        val = playerStats.food;
+        flag = flashFood;
+        break;
+
     }
 
-    if (overallFlash && flash && (flashFlags & (0xF0 > (x + 1)))) {
+    if (overallFlash && flag && flash) {
       font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, (x * 11), (val < 10 ? 5 : 10), 7, WHITE);
+      arduboy.fillRect(119, (x * 11), 5, 7, WHITE);
     }
 
-    font3x5.setCursor(120, 0);
-    font3x5.print(playerStats.xp);
+    font3x5.setCursor(120, (x * 11));
+    font3x5.print(val);
     font3x5.setTextColor(WHITE);  
 
   }

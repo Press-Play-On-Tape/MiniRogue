@@ -484,15 +484,14 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-	uint8_t flags = {
-			true << 7 | // Overall
-			false << 6 | // XP
-			(this->viewState == ViewState::HighlightPlayerStats) << 5 | // HP
-			false << 4 | // Armour
-			false << 3 | // Gold
-			false << 2 // Food
-		};
-  BaseState::renderPlayerStatistics(machine, flags);
+  BaseState::renderPlayerStatistics(machine,
+    true, // Overall
+    false, // XP
+    (this->viewState == ViewState::HighlightPlayerStats), // HP
+    false, // Armour
+    false, // Gold
+    false // Food
+  );
 
 
 	// Messages ..
@@ -500,18 +499,17 @@ void FightMonstersState::render(StateMachine & machine) {
 	switch (this->viewState) {
 
 		case ViewState::MonsterDead:
-			{
-				uint8_t flags = {
-					true << 7 | // Overall
-					true << 6 | // XP
-					false << 5 | // HP
-					false << 4 | // Armour
-					(machine.getContext().gameState == GameStateType::BossMonster) << 3 | // Gold
-					false << 2 // Food
-				};
-				BaseState::renderPlayerStatistics(machine, flags);
-				BaseState::renderMonsterDead(machine);
-			}
+
+			BaseState::renderPlayerStatistics(machine,
+				true, // Overall
+				true, // XP
+				false, // HP
+				false, // Armour
+				(machine.getContext().gameState == GameStateType::BossMonster), // Gold
+				false // Food
+			);
+			
+			BaseState::renderMonsterDead(machine);
 			break;
 
 		case ViewState::MonsterDead_Wait:

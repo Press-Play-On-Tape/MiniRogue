@@ -247,15 +247,14 @@ void TrapState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  uint8_t flags[] = {
-      (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER) << 7 | // Overall
-      (this->dice == 5) << 6 | // XP
-      (this->dice == 4) << 5 | // HP
-      (this->dice == 3) << 4 | // Armour
-      (this->dice == 2) << 3 | // Gold
-      (this->dice == 1) << 2   // Food
-    };
-  BaseState::renderPlayerStatistics(machine, flags);
+  BaseState::renderPlayerStatistics(machine,
+    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
+    (this->dice == 5), // XP
+    (this->dice == 4), // HP
+    (this->dice == 3), // Armour
+    (this->dice == 2), // Gold
+    (this->dice == 1) // Food
+  );
 
 }
 

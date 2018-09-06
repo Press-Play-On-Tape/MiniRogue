@@ -54,12 +54,12 @@ void ShowCardsState::activate(StateMachine & machine) {
 
 		}
 
-		//machine.getContext().cards[0] = GameStateType::Event; 			//SJH
+		//machine.getContext().cards[0] = GameStateType::Merchant; 			//SJH
 		// machine.getContext().cards[1] = GameStateType::Monster; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
-		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
+		// machine.getContext().cards[3] = GameStateType::Treasure;			//SJH
 		// machine.getContext().cards[4] = GameStateType::Trap;				//SJH
-		// machine.getContext().cards[5] = GameStateType::Treasure;		//SJH
+		// machine.getContext().cards[5] = GameStateType::Event;		//SJH
 
 	}
 	else {
@@ -172,15 +172,14 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-	uint8_t flags[] = {
-			true << 7 |  // Overall
-			false << 6 | // XP
-			false << 5 | // HP
-			false << 4 | // Armour
-			false << 3 | // Gold
-			false << 2   // Food
-		};
-  BaseState::renderPlayerStatistics(machine, flags);
+  BaseState::renderPlayerStatistics(machine,
+    true,  // Overall
+    false, // XP
+    false, // HP
+    false, // Armour
+    false, // Gold
+    false  // Food
+  );
 
   const bool flash = arduboy.getFrameCountHalf(12);
 

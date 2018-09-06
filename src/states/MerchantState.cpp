@@ -205,29 +205,28 @@ void MerchantState::render(StateMachine & machine) {
   Sprites::drawOverwrite(2, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
   Sprites::drawOverwrite(33, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
 
-  uint8_t flags = {
-      true << 7 | // Overall
-      flashXP << 6 | // XP
-      flashHP << 5 | // HP
-      false << 4 | // Armour
-      flashGold << 3 | // Gold
-      flashFood << 2 // Food
-    };
-  BaseState::renderPlayerStatistics(machine, flags);
-
 
   // Error Message ?
 
   if (this->errorNumber > 0) {
 
-    //arduboy.fillRect(38, 24, 64, 20, WHITE);
-    arduboy.fillRect(39, 25, 60, 18, BLACK);
-    // arduboy.drawFastHLine(40, 26, 48);
-    // arduboy.drawFastHLine(40, 38, 48);
-    // Sprites::drawOverwrite(38, 24, Images::Message_Box, 0);
-    font3x5.setCursor(40, 26);
+    arduboy.fillRect(31, 23, 64, 26, BLACK);
+    arduboy.drawFastHLine(34, 25, 58);
+    arduboy.drawFastHLine(34, 46, 58);
+    arduboy.drawFastVLine(33, 26, 20);
+    arduboy.drawFastVLine(92, 26, 20);
+    font3x5.setCursor(36, 28);
   	font3x5.print(FlashString(error_Captions[ this->errorNumber - 1]));
 
   }
+
+  BaseState::renderPlayerStatistics(machine,
+    true, // Overall
+    flashXP, // XP
+    flashHP, // HP
+    false, // Armour
+    flashGold, // Gold
+    flashFood // Food
+  );
 
 }

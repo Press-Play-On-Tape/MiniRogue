@@ -5,9 +5,9 @@
 #include "../utils/FadeEffects.h"
 #include "../fonts/Font3x5.h"
 
-char const error_01[] PROGMEM = "   You need\nmore gold!";
-char const error_02[] PROGMEM = "You don't have\none to sell!";
-char const error_03[] PROGMEM = "  You already\nhave enough!";
+char const error_01[] PROGMEM = "   You need\n  more gold!";
+char const error_02[] PROGMEM = "~You dont have\n one to sell!";
+char const error_03[] PROGMEM = " ~You already\n have enough!";
 
 char const * const error_Captions[] = {
 	error_01,
