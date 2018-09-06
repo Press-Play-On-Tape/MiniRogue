@@ -200,14 +200,7 @@ void TreasureState::render(StateMachine & machine) {
   if (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER && flash) {
 
     font3x5.setCursor(10, 0);
-
-    // if (this->dice == 1) { font3x5.print(F(" Gain~a~Fire~Wand!")); }
-    // if (this->dice == 5) { font3x5.print(F(" Gain~a~Ice~Wand!")); }
-    // if (this->dice == 6) { font3x5.print(F("Gain~a~Poison~Wand!")); }
-    // if (this->dice <= 3) { printCaption(this->dice - 1); }
     printCaption(this->dice - 1); 
-    // if (this->dice == 5) { printCaption(1); }
-    // if (this->dice == 6) { printCaption(2); }
 
   }
 
@@ -225,7 +218,7 @@ void TreasureState::renderSelectTreasure(StateMachine & machine) {
   auto & ardBitmap = machine.getContext().ardBitmap;
   
   ardBitmap.drawCompressed(14, 8, Images::Chest_Open_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  SpritesB::drawSelfMasked(33, 13, Images::Chest_Dice, (this->dice - 1));
+  ardBitmap.drawCompressed(35, 15, Images::Chest_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
 }
 

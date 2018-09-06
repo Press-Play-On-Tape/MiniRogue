@@ -15,6 +15,8 @@ void MerchantState::update(StateMachine & machine) {
 	auto & gameStats = machine.getContext().gameStats;
   auto justPressed = arduboy.justPressedButtons();
 
+  if (justPressed > 0) this->errorNumber = 0;
+
   switch (this->viewState) {
 
     case ViewState::Buying:
@@ -28,7 +30,13 @@ void MerchantState::update(StateMachine & machine) {
 
           case 0:
             
-            if (playerStats.gold > 0 && playerStats.food < 10) { 
+            if (playerStats.gold == 0) {
+              this->errorNumber = 1;
+            } 
+            else if (playerStats.food == 10) { 
+              this->errorNumber = 3;
+            } 
+            else {
               this->flashFood = true; 
               playerStats.food++; 
               playerStats.gold--; 
@@ -38,7 +46,13 @@ void MerchantState::update(StateMachine & machine) {
 
           case 1:
 
-            if (playerStats.gold > 0 && playerStats.hp < 20) { 
+            if (playerStats.gold == 0) {
+              this->errorNumber = 1;
+            } 
+            else if (playerStats.hp == 20) { 
+              this->errorNumber = 3;
+            } 
+            else { 
               this->flashHP = true; 
               playerStats.hp++; 
               playerStats.gold--; 
@@ -48,7 +62,13 @@ void MerchantState::update(StateMachine & machine) {
 
           case 2:
 
-            if (playerStats.gold > 3 && playerStats.hp < 20) { 
+            if (playerStats.gold < 3) {
+              this->errorNumber = 1;
+            } 
+            else if (playerStats.hp == 20) { 
+              this->errorNumber = 3;
+            } 
+            else { 
               this->flashHP = true; 
               playerStats.hp = clamp(playerStats.hp + 4, 0, 20); 
               playerStats.gold = playerStats.gold - 4; 
@@ -58,22 +78,31 @@ void MerchantState::update(StateMachine & machine) {
 
           case 3 ... 5:
 
-            if (playerStats.gold >= 8 && playerStats.itemCount() < 2) { 
+            if (playerStats.gold >= 8) {
 
-              playerStats.gold = playerStats.gold - 8; 
+              if (playerStats.itemCount() < 2) { 
 
-              if (this->selectedItem == 3 ) {
-                playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; 
+                if (playerStats.items[static_cast<uint8_t>(Wand::Fire) - 3] == 0) {
+
+                  this->errorNumber = 2;
+
+                }
+                else {
+
+                  playerStats.items[static_cast<uint8_t>(Wand::Fire) - 3]++; 
+                  playerStats.gold = playerStats.gold - 8; 
+                  flashGold = true;
+
+                }
+
+              }
+              else {
+                this->errorNumber = 3;
               }
 
-              if (this->selectedItem == 4 ) {
-                playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; 
-              }
-
-              if (this->selectedItem == 5 ) {
-                playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; 
-              }
-
+            }
+            else {
+              this->errorNumber = 1;
             }   
             
            break;
@@ -94,9 +123,14 @@ void MerchantState::update(StateMachine & machine) {
       if (justPressed & A_BUTTON) {
 
         if (playerStats.items[this->selectedItem] > 0) {
+
           playerStats.items[this->selectedItem]--;
           playerStats.gold = playerStats.gold + 4;
           flashGold = true;
+
+        }
+        else {
+          this->errorNumber = 2;
         }
 
       } 
@@ -170,6 +204,21 @@ void MerchantState::render(StateMachine & machine) {
 
   Sprites::drawOverwrite(2, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
   Sprites::drawOverwrite(33, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
+
+
+  // Error Message ?
+
+  if (this->errorNumber > 0) {
+
+    arduboy.fillRect(31, 23, 64, 26, BLACK);
+    arduboy.drawFastHLine(34, 25, 58);
+    arduboy.drawFastHLine(34, 46, 58);
+    arduboy.drawFastVLine(33, 26, 20);
+    arduboy.drawFastVLine(92, 26, 20);
+    font3x5.setCursor(36, 28);
+  	font3x5.print(FlashString(error_Captions[ this->errorNumber - 1]));
+
+  }
 
   BaseState::renderPlayerStatistics(machine,
     true, // Overall

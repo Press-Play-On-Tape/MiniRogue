@@ -26,61 +26,49 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
   const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
 
 
-	// Player statistics ..
+  for (uint8_t x = 0; x < 5; x++) {
+    
+    uint8_t val = 0;
+    bool flag = false;
 
-  { // XP
-    if (overallFlash && flashXP && flash) {
-      font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 0, 5, 7, WHITE);
+    switch (x)  {
+
+      case 0:   
+        val = playerStats.xp;       
+        flag = flashXP;
+        break;
+
+      case 1:   
+        val = playerStats.hp;
+        flag = flashHP;
+        break;
+
+      case 2:   
+        val = playerStats.armour;
+        flag = flashArmour;
+        break;
+
+      case 3:   
+        val = playerStats.gold;
+        flag = flashGold;
+        break;
+
+      case 4:   
+        val = playerStats.food;
+        flag = flashFood;
+        break;
+
     }
 
-    font3x5.setCursor(120, 0);
-    font3x5.print(playerStats.xp);
+    if (overallFlash && flag && flash) {
+      font3x5.setTextColor(BLACK);
+      arduboy.fillRect(119, (x * 11), 5, 7, WHITE);
+    }
+
+    font3x5.setCursor(120, (x * 11));
+    font3x5.print(val);
     font3x5.setTextColor(WHITE);  
-  }
-  
-  { // HP
-    if (overallFlash && flashHP && flash) {
-      font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 11, (playerStats.hp < 10 ? 5 : 10), 7, WHITE);
-    }
 
-    font3x5.setCursor(120, 11);
-    font3x5.print(playerStats.hp);
-    font3x5.setTextColor(WHITE);
-  }
-
-  { // Armour
-    if (overallFlash && flashArmour && flash) {
-      font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 22, (playerStats.armour < 10 ? 5 : 10), 7, WHITE);
-    }
-
-    font3x5.setCursor(120, 22);
-    font3x5.print(playerStats.armour);
-    font3x5.setTextColor(WHITE);
-  }
-
-  { // Gold
-    if (overallFlash && flashGold && flash) {
-      font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 33, (playerStats.gold < 10 ? 5 : 10), 7, WHITE);
-    }
-
-    font3x5.setCursor(120, 33);
-    font3x5.print(playerStats.gold);
-    font3x5.setTextColor(WHITE);
-  }
-
-  { // Food
-    if (overallFlash && flashFood && flash) {
-      font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 44, (playerStats.food < 10 ? 5 : 10), 7, WHITE);
-    }
-
-    font3x5.setCursor(120, 44);
-    font3x5.print(playerStats.food);
-    font3x5.setTextColor(WHITE);
   }
 
   {
