@@ -92,14 +92,15 @@ void RestingState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats), // Overall
-    (this->selectedItem == SelectedItem::Weapon), // XP
-    (this->selectedItem == SelectedItem::Heal), // HP
-    false, // Armour
-    false, // Gold
-    (this->selectedItem == SelectedItem::Food) // Food
-  );
+  uint8_t flags = {
+      (this->viewState == ViewState::UpdateStats) << 7 | // Overall
+      (this->selectedItem == SelectedItem::Weapon) << 6 | // XP
+      (this->selectedItem == SelectedItem::Heal) << 5 | // HP
+      false << 4 | // Armour
+      false << 3 | // Gold
+      (this->selectedItem == SelectedItem::Food) << 2 // Food
+    };
+  BaseState::renderPlayerStatistics(machine, flags);
 
   if (flash) {
 

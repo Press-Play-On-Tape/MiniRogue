@@ -188,26 +188,20 @@ void TreasureState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
-    (this->dice == 6), // XP
-    (this->dice == 4), // HP
-    (this->dice == 5), // Armour
-    true, // Gold
-    false // Food
-  );
+  uint8_t flags = {
+      (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER) << 7 | // Overall
+      (this->dice == 6) << 6 | // XP
+      (this->dice == 4) << 5 | // HP
+      (this->dice == 5) << 4 | // Armour
+      true << 3 | // Gold
+      false << 2  // Food
+    };
+  BaseState::renderPlayerStatistics(machine, flags);
 
   if (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER && flash) {
 
     font3x5.setCursor(10, 0);
-
-    // if (this->dice == 1) { font3x5.print(F(" Gain~a~Fire~Wand!")); }
-    // if (this->dice == 5) { font3x5.print(F(" Gain~a~Ice~Wand!")); }
-    // if (this->dice == 6) { font3x5.print(F("Gain~a~Poison~Wand!")); }
-    // if (this->dice <= 3) { printCaption(this->dice - 1); }
     printCaption(this->dice - 1); 
-    // if (this->dice == 5) { printCaption(1); }
-    // if (this->dice == 6) { printCaption(2); }
 
   }
 
