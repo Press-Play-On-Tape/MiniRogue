@@ -149,14 +149,22 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	// Display area names ..
 
-  font3x5.setTextColor(WHITE);
-  font3x5.setCursor(0, 0);
-	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
+	font3x5.setTextColor(WHITE);
+	font3x5.setCursor(0, 0);
 
+  #ifndef AREA_IN_LEVEL
+	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
+  #else
+	font3x5.print("A");
+	font3x5.print(gameStats.getAreaId() + 1);
+	font3x5.print("L");
+	font3x5.print(gameStats.level + 1);
+	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
+  #endif
 
 	// Draw background ..
 
-  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
+	ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
 	for (uint8_t i = 0; i < 94; i = i + 10) {
 		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);

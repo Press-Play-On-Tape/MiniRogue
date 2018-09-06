@@ -31,11 +31,10 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
   { // XP
     if (overallFlash && flashXP && flash) {
       font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, 0, 10, 7, WHITE);
+      arduboy.fillRect(119, 0, 5, 7, WHITE);
     }
 
     font3x5.setCursor(120, 0);
-    font3x5.print(playerStats.xpTrack);
     font3x5.print(playerStats.xp);
     font3x5.setTextColor(WHITE);  
   }

@@ -6,11 +6,19 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+#ifndef AREA_IN_LEVEL
 char const area_Caption_01[] PROGMEM = "Area~1:The~Black~Sewers";
 char const area_Caption_02[] PROGMEM = "Area~2:Poisonous~Dungeons";
 char const area_Caption_03[] PROGMEM = "Area~3:Undead~Catacombs";
 char const area_Caption_04[] PROGMEM = "Area~4:Flaming~Underworld";
 char const area_Caption_05[] PROGMEM = "Area~5:Sunken~Keep~of~Og!";
+#else
+char const area_Caption_01[] PROGMEM = ":~The~Black~Sewers";
+char const area_Caption_02[] PROGMEM = ":~Poisonous~Dungeons";
+char const area_Caption_03[] PROGMEM = ":~Undead~Catacombs";
+char const area_Caption_04[] PROGMEM = ":~Flaming~Underworld";
+char const area_Caption_05[] PROGMEM = ":~Sunken~Keep~of~Og!";
+#endif
 
 char const * const area_Captions[] = {
 	area_Caption_01,
