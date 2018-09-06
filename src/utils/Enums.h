@@ -91,7 +91,7 @@ struct PlayerStats {
 
 struct GameStats {
 
-  uint8_t skillLevel = 0;
+  uint8_t skillLevel = 1;
   uint8_t level = 0;
   uint8_t room = 0;
   uint8_t selectedCard = 0;

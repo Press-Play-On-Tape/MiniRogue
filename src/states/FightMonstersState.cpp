@@ -525,12 +525,12 @@ void FightMonstersState::render(StateMachine & machine) {
 		case ViewState::ItemFireUsed:
 		case ViewState::ItemPoisonUsed:
 
-			arduboy.fillRect(17, 10, 94, 32, BLACK);
+			arduboy.fillRect(17, 10, 94, 42, BLACK);
 			arduboy.drawFastHLine(18, 11, 92);
 			arduboy.drawFastHLine(18, 40, 92);
 
 			font3x5.setCursor(20, 14);
-			font3x5.print(FlashString(itemUsed_Captions[ static_cast<uint8_t>(this->viewState) - 8 ]));
+			font3x5.print(FlashString(itemUsed_Captions[ static_cast<uint8_t>(this->viewState) - static_cast<uint8_t>(ViewState::ItemIceUsed) ]));
 			break;
 
 		default: break;
