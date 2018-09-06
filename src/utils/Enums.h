@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define DEBUG
+#define _DEBUG
 #define AREA_IN_LEVEL
 
 constexpr const static uint8_t FLASH_DELAY = 24;
