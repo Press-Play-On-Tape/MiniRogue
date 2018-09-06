@@ -4,6 +4,8 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 13; 
+
 
 // ----------------------------------------------------------------------------
 //  Handle state updates .. 
@@ -23,17 +25,12 @@ void EventState::update(StateMachine & machine) {
       if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
       #endif
       
-			if (counter < sizeof(DiceDelay)) {
-				
-				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[counter]))) {
+			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 
-					this->dice = random(1, 7);
-					counter++;
-					arduboy.resetFrameCount();
+				this->dice = random(1, 7);
+				counter++;
 
-				}
-
-			}
+			}      
 			else {
 
         switch (this->dice) {
@@ -117,13 +114,32 @@ void EventState::render(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::RollDice:
+
+      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[this->counter], WHITE, ALIGN_NONE, MIRROR_NONE);
+      
+      if (counter < NO_OF_CARDS_IN_FLIP) {
+
+        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
+          for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
+            ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
+          }
+        }
+
+      }
+      else {
+
+        ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+      }
+
+      break;
+
     case ViewState::UpdateStats:
 
-      SpritesB::drawOverwrite(28, 8, Images::Event_Dice, (this->dice - 1));
-      if(this->viewState == ViewState::UpdateStats) {
-        font3x5.setCursor(4, 0);
-        printEventName();
-      }
+      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[12], WHITE, ALIGN_NONE, MIRROR_NONE);
+      ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+      font3x5.setCursor(4, 0);
+      printEventName();
 
       break;
 
