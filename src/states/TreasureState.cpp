@@ -112,8 +112,7 @@ void TreasureState::update(StateMachine & machine) {
 
       if (justPressed & A_BUTTON) {
 
-        gameStats.incRoom(playerStats);
-    		machine.changeState(GameStateType::ShowCards); 
+        machine.changeState(gameStats.incRoom(playerStats)); 
 
       }
 

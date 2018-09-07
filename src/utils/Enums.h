@@ -7,6 +7,7 @@
 
 constexpr const static uint8_t FLASH_DELAY = 24;
 constexpr const static uint8_t FLASH_COUNTER = 70;
+constexpr const static uint8_t WINNER_LEVEL = 5;
 
 const uint8_t InitSettings[] PROGMEM = {
 	1, 5, 5, 6,
@@ -33,7 +34,6 @@ enum class GameStateType : uint8_t {
   BossMonster,
   MonsterFromEvent,
   GamePlay,
-  GameOver,
   ShowCards,
 	SplashScreen,
 	TitleScreen,
@@ -141,7 +141,7 @@ struct GameStats {
   
   }
 
-  void incRoom(PlayerStats & playerStats) { 
+  GameStateType incRoom(PlayerStats & playerStats) { 
   
     room++;
 
@@ -169,6 +169,8 @@ struct GameStats {
       }
       
     }
+
+    return (level == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
 
   }
 

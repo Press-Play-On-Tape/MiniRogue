@@ -293,9 +293,9 @@ void FightMonstersState::update(StateMachine & machine) {
 		case ViewState::MonsterDead_Wait:
 
 			if (justPressed & A_BUTTON) {
+
 				gameStats.monsterDefeated = true;
-				gameStats.incRoom(playerStats);
-    		machine.changeState(GameStateType::ShowCards); 
+        machine.changeState(gameStats.incRoom(playerStats)); 
 
 			}
 
@@ -304,7 +304,7 @@ void FightMonstersState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
 			if (justPressed & A_BUTTON) {
-				machine.changeState(GameStateType::GameOver);
+				machine.changeState(GameStateType::TitleScreen);
 			}
 
 			break;

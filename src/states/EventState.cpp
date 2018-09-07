@@ -63,8 +63,7 @@ void EventState::update(StateMachine & machine) {
 
           if (this->dice < 6) {
             
-            gameStats.incRoom(playerStats);
-            machine.changeState(GameStateType::ShowCards); 
+            machine.changeState(gameStats.incRoom(playerStats)); 
 
           }
           else {
@@ -80,7 +79,7 @@ void EventState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
       if (justPressed & A_BUTTON) { 
-        machine.changeState(GameStateType::GameOver);
+        machine.changeState(GameStateType::TitleScreen);
 			}
 
 			break;

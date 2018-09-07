@@ -139,8 +139,7 @@ void MerchantState::update(StateMachine & machine) {
 
   if (justPressed & B_BUTTON) {
 
-    gameStats.incRoom(playerStats);
-    machine.changeState(GameStateType::ShowCards); 
+    machine.changeState(gameStats.incRoom(playerStats)); 
 
   }
 

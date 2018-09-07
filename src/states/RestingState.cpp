@@ -56,16 +56,16 @@ void RestingState::update(StateMachine & machine) {
 
         if (counter == FLASH_COUNTER) {
 
-          gameStats.incRoom(playerStats);
-      		machine.changeState(GameStateType::ShowCards); 
+          machine.changeState(gameStats.incRoom(playerStats)); 
 
         }
 
       }
 
 			if (justPressed & A_BUTTON) {
-        gameStats.incRoom(playerStats);
-    		machine.changeState(GameStateType::ShowCards); 
+
+        machine.changeState(gameStats.incRoom(playerStats)); 
+
       }
 
       break;

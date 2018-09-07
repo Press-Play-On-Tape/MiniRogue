@@ -36,8 +36,7 @@ void TrapState::update(StateMachine & machine) {
 
           if (this->dice <= playerStats.armour) {
 
-            gameStats.incRoom(playerStats);
-        		machine.changeState(GameStateType::ShowCards); 
+            machine.changeState(gameStats.incRoom(playerStats)); 
 
           }
           else {
@@ -129,8 +128,9 @@ void TrapState::update(StateMachine & machine) {
       else {
 
         if (justPressed & A_BUTTON) {
-          gameStats.incRoom(playerStats);
-      		machine.changeState(GameStateType::ShowCards); 
+
+          machine.changeState(gameStats.incRoom(playerStats)); 
+
         }
 
       }
@@ -140,7 +140,7 @@ void TrapState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
       if (justPressed & A_BUTTON) {
-				machine.changeState(GameStateType::GameOver);
+				machine.changeState(GameStateType::TitleScreen);
 			}
 
       break;
