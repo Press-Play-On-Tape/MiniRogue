@@ -24,8 +24,6 @@ GameContext::GameContext() {
   for (uint8_t i = 0; i < 6; i++) { 
     this->cards[i] = static_cast<GameStateType>(i + 1); 
   }
-// this->playerStats.items[static_cast<uint8_t>(Wand::Ice)] = 1;//sjh
-// this->playerStats.items[static_cast<uint8_t>(Wand::Fire)] = 1; //sjh
 
 }
 

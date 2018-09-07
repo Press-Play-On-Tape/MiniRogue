@@ -19,7 +19,10 @@ void WinnerState::activate(StateMachine & machine) {
 //
 void WinnerState::update(StateMachine & machine) { 
 
-  (void)machine;
+	auto & arduboy = machine.getContext().arduboy;
+  auto justPressed = arduboy.justPressedButtons();
+
+  if (justPressed & A_BUTTON) { machine.changeState(GameStateType::TitleScreen); }
 
 }
 

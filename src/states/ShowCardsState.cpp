@@ -9,18 +9,9 @@ constexpr const static uint8_t DEAL_DELAY = 5;
 constexpr const static uint8_t CARD_SHOW_NONE = -1;
 constexpr const static uint8_t CARD_SHOW_ALL = 127;
 constexpr const static uint8_t CARD_NONE_SELECTED = 255;
-constexpr const static uint8_t ODD_COLS_Y = 23;
-constexpr const static uint8_t EVEN_COLS_UPPER_Y = 8;
-constexpr const static uint8_t EVEN_COLS_LOWER_Y = 36;
-constexpr const static uint8_t COL_SPACING = 20;
-constexpr const static int8_t  COL_1_X = -1;
-constexpr const static uint8_t COL_2_X = COL_1_X + COL_SPACING;
-constexpr const static uint8_t COL_3_X = COL_2_X + COL_SPACING;
-constexpr const static uint8_t COL_4_X = COL_3_X + COL_SPACING;
-constexpr const static uint8_t COL_5_X = COL_4_X + COL_SPACING;
 
-const int8_t  cardPositionX[] PROGMEM = { COL_1_X, COL_2_X, COL_2_X, COL_3_X, COL_4_X, COL_4_X, COL_5_X };
-const uint8_t cardPositionY[] PROGMEM = { ODD_COLS_Y, EVEN_COLS_UPPER_Y, EVEN_COLS_LOWER_Y, ODD_COLS_Y, EVEN_COLS_UPPER_Y, EVEN_COLS_LOWER_Y, ODD_COLS_Y };
+const int8_t  cardPositionX[] PROGMEM = { -1, 19, 19, 39, 59, 59, 79 };
+const uint8_t cardPositionY[] PROGMEM = { 23, 8, 36, 23, 8, 36, 23 };
 const uint8_t cardIndexToRoom[] PROGMEM = { 1, 2, 2, 3, 4, 4, 5 };
 
 
