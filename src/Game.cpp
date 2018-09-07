@@ -54,7 +54,7 @@ void Game::loop(void) {
 
 	if (this->currentState != nullptr) this->currentState->render(*this);
 
-	arduboy.display(true);
+	arduboy.display();
 	
 	while (this->changePending) {
 
@@ -68,6 +68,7 @@ void Game::loop(void) {
 		}
 
 		this->changePending = false;
+  	this->context.gameState = this->currentStateId;
 		this->currentState->activate(*this);
 
 	}
@@ -83,7 +84,6 @@ const Game::Context & Game::getContext(void) const {
 }
 
 void Game::changeState(const StateId & stateId) {
-	this->context.gameState = stateId;
 	this->nextStateId = stateId;
 	this->changePending = true;
 }
@@ -104,9 +104,7 @@ Game::State * Game::createState(const StateId & stateType) {
 
 		case GameStateType::Monster:   								
 		case GameStateType::BossMonster:
-		case GameStateType::MonsterFromEvent:
-		   								
-				return new (&this->stateData[0])  FightMonstersState();
+		case GameStateType::MonsterFromEvent: 				return new (&this->stateData[0])  FightMonstersState();
 
 		default: return nullptr;
 
