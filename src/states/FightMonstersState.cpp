@@ -11,7 +11,8 @@
 void FightMonstersState::activate(StateMachine & machine) {
   
 	auto & gameStats = machine.getContext().gameStats;
-
+	auto & playerStats = machine.getContext().playerStats;
+  playerStats.food = 0;//sjh
 	setDiceSelection(machine, false);
 
 	switch (machine.getContext().gameState) {
@@ -281,9 +282,6 @@ void FightMonstersState::update(StateMachine & machine) {
 
 				if (counter == FLASH_COUNTER) {
 
-				// 	counter = 0;
-				// 	arduboy.resetFrameCount();
-
 					this->viewState = ViewState::MonsterDead_Wait;
 
 				}
@@ -336,11 +334,12 @@ void FightMonstersState::update(StateMachine & machine) {
 void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 	
 	auto & playerStats = machine.getContext().playerStats;
+	auto & gameStats = machine.getContext().gameStats;
 
 	switch (machine.getContext().gameState) {
 
 		case GameStateType::Monster:
-			playerStats.incXP(machine.getContext().gameStats.getAreaId() + 1);
+			playerStats.incXP(gameStats.getMonsterReward());
 			break;
 
 		case GameStateType::BossMonster:
@@ -355,11 +354,10 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 
 	}
 
-	// this->viewState = ViewState::HighlightMonsterStats;
-	// this->nextState = ViewState::MonsterDead;
 	this->viewState = ViewState::MonsterDead;
 	
 }
+
 
 // ----------------------------------------------------------------------------
 //  Render the state .. 
@@ -509,16 +507,16 @@ void FightMonstersState::render(StateMachine & machine) {
 				false // Food
 			);
 			
-			BaseState::renderMonsterDead(machine);
+			BaseState::renderMonsterDead();
 			break;
 
 		case ViewState::MonsterDead_Wait:
-			BaseState::renderMonsterDead(machine);
+			BaseState::renderMonsterDead();
 			break;
 
 		case ViewState::PlayerDead:
 
-			BaseState::renderPlayerDead(machine);
+			BaseState::renderPlayerDead();
 			break;
 
 		case ViewState::ItemIceUsed:

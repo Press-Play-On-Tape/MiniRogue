@@ -95,8 +95,6 @@ void EventState::update(StateMachine & machine) {
 //
 void EventState::render(StateMachine & machine) {
 
-	auto & arduboy = machine.getContext().arduboy;
-	auto & playerStats = machine.getContext().playerStats;
   auto & gameStats = machine.getContext().gameStats;
   auto & ardBitmap = machine.getContext().ardBitmap;
   
@@ -145,7 +143,7 @@ void EventState::render(StateMachine & machine) {
 
     case ViewState::PlayerDead:
 
-      BaseState::renderPlayerDead(machine);
+      BaseState::renderPlayerDead();
       break;
 
   }

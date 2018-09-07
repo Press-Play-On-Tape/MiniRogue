@@ -71,7 +71,7 @@ void MerchantState::update(StateMachine & machine) {
             else { 
               this->flashHP = true; 
               playerStats.hp = clamp(playerStats.hp + 4, 0, 20); 
-              playerStats.gold = playerStats.gold - 4; 
+              playerStats.gold = playerStats.gold - 3; 
             }   
             
             break;
@@ -82,18 +82,9 @@ void MerchantState::update(StateMachine & machine) {
 
               if (playerStats.itemCount() < 2) { 
 
-                if (playerStats.items[static_cast<uint8_t>(Wand::Fire) - 3] == 0) {
-
-                  this->errorNumber = 2;
-
-                }
-                else {
-
-                  playerStats.items[static_cast<uint8_t>(Wand::Fire) - 3]++; 
-                  playerStats.gold = playerStats.gold - 8; 
-                  flashGold = true;
-
-                }
+                playerStats.items[this->selectedItem - 3]++; 
+                playerStats.gold = playerStats.gold - 8; 
+                flashGold = true;
 
               }
               else {

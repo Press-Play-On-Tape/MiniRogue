@@ -44,7 +44,7 @@ class ShowCardsState : public BaseState {
     ViewState viewState = ViewState::DealCards;
     
     uint8_t counter = 0;           
-    uint8_t displayCard = 0;           
+    int8_t displayCard = 0;           
     uint8_t numberOfCardsToDisplay = 6;
 
   public:	

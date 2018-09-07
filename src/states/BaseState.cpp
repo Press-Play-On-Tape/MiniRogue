@@ -5,15 +5,15 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
-void BaseState::renderPlayerDead(StateMachine & machine) {
+void BaseState::renderPlayerDead() {
 
-  Sprites::drawOverwrite(38, 24, Images::Message_PlayerDead, 0);
+  Sprites::drawOverwrite(38, 25, Images::Message_PlayerDead, 0);
 
 }
 
-void BaseState::renderMonsterDead(StateMachine & machine) {
+void BaseState::renderMonsterDead() {
 
-  Sprites::drawOverwrite(39, 24, Images::Message_MonsterDead, 0);
+  Sprites::drawOverwrite(39, 25, Images::Message_MonsterDead, 0);
 
 }
 

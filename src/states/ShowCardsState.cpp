@@ -3,9 +3,11 @@
 #include "../utils/Utils.h"
 #include "../fonts/Font3x5.h"
 
+constexpr const static uint8_t STARVED_TO_DEATH = 255; 
 constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 7; 
 constexpr const static uint8_t DEAL_DELAY = 5; 
-constexpr const static uint8_t CARD_SHOW_ALL = 255;
+constexpr const static uint8_t CARD_SHOW_NONE = -1;
+constexpr const static uint8_t CARD_SHOW_ALL = 127;
 constexpr const static uint8_t CARD_NONE_SELECTED = 255;
 constexpr const static uint8_t ODD_COLS_Y = 23;
 constexpr const static uint8_t EVEN_COLS_UPPER_Y = 8;
@@ -54,6 +56,14 @@ void ShowCardsState::activate(StateMachine & machine) {
 
 		}
 
+		if (playerStats.food == STARVED_TO_DEATH) {
+  		this->displayCard = CARD_SHOW_ALL;
+			this->viewState = ViewState::PlayerDead;
+      playerStats.food = 0;
+  		gameStats.room = 0;
+		}
+
+
 		//machine.getContext().cards[0] = GameStateType::Merchant; 			//SJH
 		// machine.getContext().cards[1] = GameStateType::Monster; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
@@ -65,14 +75,8 @@ void ShowCardsState::activate(StateMachine & machine) {
 	else {
 
 		this->displayCard = CARD_SHOW_ALL;
-
-		if (playerStats.food > 0) {
-			this->counter = NO_OF_CARDS_IN_FLIP;
-			this->viewState = ViewState::PlayCard;
-		}
-		else {
-			this->viewState = ViewState::PlayerDead;
-		}
+  	this->counter = NO_OF_CARDS_IN_FLIP;
+		this->viewState = ViewState::PlayCard;
 		
 	}
   
@@ -139,7 +143,6 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & gameStats = machine.getContext().gameStats;
-	auto & playerStats = machine.getContext().playerStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	
 	uint8_t room = gameStats.room;
@@ -178,7 +181,7 @@ void ShowCardsState::render(StateMachine & machine) {
     false, // HP
     false, // Armour
     false, // Gold
-    false  // Food
+    (viewState == ViewState::PlayerDead)  // Food
   );
 
   const bool flash = arduboy.getFrameCountHalf(12);
@@ -195,21 +198,25 @@ void ShowCardsState::render(StateMachine & machine) {
 			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
 			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 			}
-			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && playerStats.food > 0) {
+			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
 			}
 
-			if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
-				arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-				SpritesB::drawSelfMasked(x + 3, y + 6, Images::Card_Faces, (i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
-			}
+      if (room != 0) {
 
-			if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
-				arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-				ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-				ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+        if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
+          arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
+          SpritesB::drawSelfMasked(x + 3, y + 6, Images::Card_Faces, (i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
+        }
 
-			}
+        if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
+          arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
+          ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
+          ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+        }
+
+      }
 
 		}
 
@@ -222,7 +229,7 @@ void ShowCardsState::render(StateMachine & machine) {
 
   if (viewState == ViewState::PlayerDead) {
 
-    BaseState::renderPlayerDead(machine);
+    BaseState::renderPlayerDead();
 
 	}
 

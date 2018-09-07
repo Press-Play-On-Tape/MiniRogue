@@ -239,7 +239,7 @@ void TrapState::render(StateMachine & machine) {
 
     case ViewState::PlayerDead:
 
-      BaseState::renderPlayerDead(machine);
+      BaseState::renderPlayerDead();
       break;
 
   }
