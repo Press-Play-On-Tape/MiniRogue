@@ -37,7 +37,7 @@ void TitleScreenState::update(StateMachine & machine) {
 	// Handle other input ..
 
 	if ((justPressed & LEFT_BUTTON) && gameStats.skillLevel > MIN_LEVEL) 		--gameStats.skillLevel;
-	if ((justPressed & RIGHT_BUTTON) && gameStats.skillLevel < MAX_LEVEL) 		++gameStats.skillLevel;
+	if ((justPressed & RIGHT_BUTTON) && gameStats.skillLevel < MAX_LEVEL) 	++gameStats.skillLevel;
 
 	if (justPressed & A_BUTTON) {
 
@@ -51,7 +51,7 @@ void TitleScreenState::update(StateMachine & machine) {
 		playerStats.food = pgm_read_byte(&InitSettings[idx]);
 		playerStats.xpTrack = 1;
 
-		gameStats.resetGame();
+		machine.getContext().resetGame();
 
 		machine.changeState(GameStateType::ShowCards);
 		

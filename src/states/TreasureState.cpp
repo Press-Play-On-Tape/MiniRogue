@@ -31,16 +31,26 @@ void TreasureState::update(StateMachine & machine) {
     case ViewState::InitialRoll:
     case ViewState::RollDice:
 
-      #ifdef PRESS_A_TO_BYPASS
-      if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-      #endif
+      if (justPressed & A_BUTTON) { 
+        
+        counter = sizeof(DiceDelay); 
+        
+        if (playerStats.itemCount() == 2) {
+          this->dice = random(5, 7);
+        }
+        else {
+          this->dice = random(1, 7);
+        }
+
+      }
+      
       
 			if (this->counter < sizeof(DiceDelay)) {
 				
 				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
 
           if (playerStats.itemCount() == 2) {
-  					this->dice = random(4, 7);
+  					this->dice = random(5, 7);
           }
           else {
   					this->dice = random(1, 7);
@@ -63,9 +73,9 @@ void TreasureState::update(StateMachine & machine) {
             case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
             case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
             case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-            case 4: playerStats.incHP(5); break;
+            case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
             case 5: playerStats.incArmour(1); break;
-            case 6: playerStats.incXP(1); break;
+            case 6: playerStats.incXP(2); break;
 
             break;
 
@@ -137,9 +147,6 @@ void TreasureState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(0, 0, Images::Chest_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
   switch (this->viewState) {

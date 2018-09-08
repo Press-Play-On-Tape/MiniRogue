@@ -20,10 +20,6 @@ void EventState::update(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::RollDice:
-
-      #ifdef PRESS_A_TO_BYPASS
-      if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-      #endif
       
 			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 

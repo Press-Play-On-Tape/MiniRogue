@@ -9,7 +9,7 @@
 
 
 char const treasureDice_Caption_01[] PROGMEM = " Gain~a~Fire~Wand!";
-char const treasureDice_Caption_02[] PROGMEM = " Gain~a~Ice~Wand!";
+char const treasureDice_Caption_02[] PROGMEM = " Gain~an~Ice~Wand!";
 char const treasureDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
 char const treasureDice_Caption_04[] PROGMEM = "Heal~Potion~+~5HP!";
 char const treasureDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";

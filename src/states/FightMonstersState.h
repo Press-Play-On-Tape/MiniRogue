@@ -9,15 +9,34 @@ struct MonsterStats {
   uint8_t dmg;
 };
 
-char const itemUsed_Caption_01[] PROGMEM = "You used an ice wand.\n  Monster is frozen\n  for two turns.";
-char const itemUsed_Caption_02[] PROGMEM = "You used a fire wand.\n   Monster loses 10\n      HP points.";
-char const itemUsed_Caption_03[] PROGMEM = "You used a poison wand.\n  Deal 2 extra damage\n       per turn.";
+char const itemUsed_Caption_01[] PROGMEM = " You~used~an~ice~spell.\n  ~Monster~is~frozen\n    ~for~two~turns.";
+char const itemUsed_Caption_02[] PROGMEM = " You~used~a~fire~spell.\n   ~Monster~loses~10\n      HP~points.";
+char const itemUsed_Caption_03[] PROGMEM = "~You~used~a~poison~spell.\n  ~Deal~2~extra~damage\n       per~turn.";
+char const itemUsed_Caption_04[] PROGMEM = "You~used~a~healing~spell.\n   ~You~have~gained~8\n    ~extra~HP~points.";
 
 char const * const itemUsed_Captions[] = {
 	itemUsed_Caption_01,
 	itemUsed_Caption_02,
 	itemUsed_Caption_03,
+	itemUsed_Caption_04,
 };
+
+char const bossDice_Caption_01[] PROGMEM = " Gain~a~Fire~Wand!";
+char const bossDice_Caption_02[] PROGMEM = " Gain~an~Ice~Wand!";
+char const bossDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
+char const bossDice_Caption_04[] PROGMEM = "Heal~Potion~+~5HP!";
+char const bossDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
+char const bossDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
+
+char const * const bossDice_Captions[] = {
+	bossDice_Caption_01,
+	bossDice_Caption_02,
+	bossDice_Caption_03,
+	bossDice_Caption_04,
+	bossDice_Caption_05,
+	bossDice_Caption_06,
+}; 
+
 
 enum class ViewState : uint8_t {
   HighlightMonsterStats,
@@ -27,11 +46,13 @@ enum class ViewState : uint8_t {
   WandSelection,
   Defend,
   MonsterDead,
+//  BossMonsterDead,
   MonsterDead_Wait,
   PlayerDead,
   ItemIceUsed,
   ItemFireUsed,
-  ItemPoisonUsed
+  ItemPoisonUsed,
+  ItemHealingUsed
 };
 
 enum class SelectedElement : int8_t {
@@ -39,6 +60,7 @@ enum class SelectedElement : int8_t {
   ItemFire,
   ItemIce,
   ItemPoison,
+  ItemHealing,
   Dice1,
   Dice2,
   Dice3,
@@ -52,12 +74,14 @@ class FightMonstersState : public BaseState {
 
     ViewState viewState = ViewState::RollDice;
     ViewState nextState = ViewState::RollDice;
+    ViewState lastState = ViewState::RollDice;
 
     MonsterStats monsterStats;
 
     SelectedElement selectedElement = SelectedElement::None;
     uint8_t dice[4];
     uint8_t dice_Sixes[4];
+		uint8_t diceMonster = 0;
 
     uint8_t counter = 0;
     uint8_t ice = 0;

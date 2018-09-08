@@ -21,9 +21,7 @@ void TrapState::update(StateMachine & machine) {
 
     case ViewState::SkillCheckResult:
 
-      #ifdef PRESS_A_TO_BYPASS
-        if (justPressed & A_BUTTON) { counter = FLASH_COUNTER; }
-      #endif
+      if (justPressed & A_BUTTON) { counter = FLASH_COUNTER; }
 
       if (this->counter < FLASH_COUNTER) {
 
@@ -53,10 +51,6 @@ void TrapState::update(StateMachine & machine) {
 
     case ViewState::SkillCheck:
     case ViewState::RollDice:
-
-      #ifdef PRESS_A_TO_BYPASS
-      if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-      #endif
       
 			if (counter < NO_OF_CARDS_IN_FLIP) {
 

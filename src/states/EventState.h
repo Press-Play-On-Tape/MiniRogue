@@ -6,10 +6,10 @@
 #include "../fonts/Font3x5.h"
 
 
-char const eventDice_Caption_01[] PROGMEM = "Found~Loot   ~+1~Gold";
-char const eventDice_Caption_02[] PROGMEM = "Health~Potion   +1~H";
+char const eventDice_Caption_01[] PROGMEM = "Found~Loot   ~+2~Gold";
+char const eventDice_Caption_02[] PROGMEM = "Health~Potion   +2~HP";
 char const eventDice_Caption_03[] PROGMEM = "Found~Meat    +1~Food";
-char const eventDice_Caption_04[] PROGMEM = "Whetstone       +1~XP";
+char const eventDice_Caption_04[] PROGMEM = "Whetstone       +2~XP";
 char const eventDice_Caption_05[] PROGMEM = "Found~Shield    +1~AR";
 char const eventDice_Caption_06[] PROGMEM = "Monster         5~DMG";
 
