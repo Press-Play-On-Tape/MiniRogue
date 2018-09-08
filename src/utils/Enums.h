@@ -103,8 +103,8 @@ struct PlayerStats {
     items[0] = 0;
     items[1] = 0;
     items[2] = 0;
-    items[3] = 0;//sjh
-    xpTrack = 0;
+    items[3] = 0;
+    xpTrack = 1;
     xp = 0;
 
   }
