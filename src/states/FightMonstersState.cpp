@@ -343,10 +343,10 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 			break;
 
 		case GameStateType::BossMonster:
-			playerStats.incXP(2);
-			break;
+		// 	playerStats.incXP(2);
+		// 	break;
 
-		case GameStateType::MonsterFromEvent:
+		// case GameStateType::MonsterFromEvent:
 			playerStats.incXP(2);
 			break;
 
@@ -424,7 +424,6 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	// Inventory ..
 	{
-
 		font3x5.setCursor(21, 20);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Fire)]);
 		font3x5.setCursor(21, 30);

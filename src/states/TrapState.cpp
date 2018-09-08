@@ -70,15 +70,15 @@ void TrapState::update(StateMachine & machine) {
 
           switch (this->dice) {
 
-            case 1: if (playerStats.food > 0)     playerStats.food--;     break;
-            case 2: if (playerStats.gold > 0)     playerStats.gold--;     break;
-            case 3: if (playerStats.armour > 0)   playerStats.armour--;   break;
-            case 4: if (playerStats.hp > 1)       playerStats.hp--;       break;
+            case 1: playerStats.incFood(-1);      break;
+            case 2: playerStats.incGold(-1);      break;
+            case 3: playerStats.incArmour(-1);    break;
+            case 4: playerStats.incHP(-1);        break;
             case 5: if (playerStats.xp > 1)       playerStats.xp--;       break;
 
             case 6: 
               
-              playerStats.hp = clamp(playerStats.hp - 2, 0, 20); 
+              playerStats.incHP(-2); 
               
               if (playerStats.hp > 0) {
                 gameStats.dropArea();

@@ -35,12 +35,12 @@ void EventState::update(StateMachine & machine) {
 
         switch (this->dice) {
 
-          case 1: playerStats.gold = clamp(playerStats.gold + 2, 0, 20);     break;
-          case 2: playerStats.hp = clamp(playerStats.hp + 2, 0, 20);         break;
-          case 3: playerStats.food = clamp(playerStats.food + 1, 0, 10);     break;
-          case 4: playerStats.incXP(2);                                      break;
-          case 5: playerStats.armour = clamp(playerStats.armour + 1, 0, 5);  break;
-          case 6:                                                            break;
+          case 1: playerStats.incGold(2);     break;
+          case 2: playerStats.incHP(2);       break;
+          case 3: playerStats.incFood(1);     break;
+          case 4: playerStats.incXP(2);       break;
+          case 5: playerStats.incArmour(1);   break;
+          case 6:                             break;
 
         }
 

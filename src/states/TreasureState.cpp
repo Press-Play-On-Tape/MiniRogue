@@ -63,8 +63,8 @@ void TreasureState::update(StateMachine & machine) {
             case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
             case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
             case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-            case 4: playerStats.hp = clamp(playerStats.hp + 5, 0, 20); break;
-            case 5: playerStats.armour = clamp(playerStats.armour + 1, 0, 5); break;
+            case 4: playerStats.incHP(5); break;
+            case 5: playerStats.incArmour(1); break;
             case 6: playerStats.incXP(1); break;
 
             break;
@@ -73,7 +73,7 @@ void TreasureState::update(StateMachine & machine) {
             
           this->counter = 0;
           this->viewState = ViewState::UpdateStats;
-          playerStats.gold = playerStats.gold + (gameStats.monsterDefeated ? 2 : 1);
+          playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
 
         }
         else {
@@ -91,7 +91,7 @@ void TreasureState::update(StateMachine & machine) {
           }
           else {
 
-            playerStats.gold = playerStats.gold + (gameStats.monsterDefeated ? 2 : 1);
+            playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
             this->counter = 0;
             this->viewState = ViewState::UpdateStats;   
 

@@ -186,22 +186,30 @@ void ShowCardsState::render(StateMachine & machine) {
 			uint8_t r = pgm_read_byte(&cardIndexToRoom[i]);
 
 			if (this->counter == NO_OF_CARDS_IN_FLIP || (room != r && this->counter > 0) || this->counter == 0) {
-			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
 			}
+
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
+
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
+
 			}
 
       if (room != 0) {
 
         if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
+
           arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-          SpritesB::drawSelfMasked(x + 3, y + 6, Images::Card_Faces, (i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
+          ardBitmap.drawCompressed(x + 3, y + 6, Images::Card_Faces[(i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1)], WHITE, ALIGN_NONE, MIRROR_NONE);
+
         }
 
         if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
-          arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
+
+          // sjh arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
           ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
           ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
