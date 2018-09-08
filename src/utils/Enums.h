@@ -3,7 +3,6 @@
 #include <stdint.h>
 
 #define _DEBUG
-#define AREA_IN_LEVEL
 
 constexpr const static uint8_t FLASH_DELAY = 24;
 constexpr const static uint8_t FLASH_COUNTER = 70;
@@ -44,18 +43,47 @@ enum class GameStateType : uint8_t {
 enum class Wand : uint8_t { 
   Fire,
   Ice,
-  Poison
+  Poison,
+  Healing
 };
 
 struct PlayerStats {
 
-  uint8_t armour;
-  uint8_t food;
-  uint8_t gold;
-  uint8_t hp;
+  int8_t armour;
+  int8_t food;
+  int8_t gold;
+  int8_t hp;
   uint8_t xpTrack = 1;
   uint8_t xp;
-  uint8_t items[3];
+  uint8_t items[4];
+
+  void incArmour(int8_t val) {
+  
+    armour = armour + val;
+    armour = (armour < 0 ? 0 : (armour > 5 ? 5 : armour));
+
+  }
+
+  void incFood(int8_t val) {
+  
+    food = food + val;
+    food = (food < 0 ? 0 : (food > 10 ? 10 : food));
+
+  }
+
+  void incGold(int8_t val) {
+  
+    gold = gold + val;
+    gold = (gold < 0 ? 0 : (gold > 10 ? 10 : gold));
+
+  }
+
+  void incHP(int8_t val) {
+  
+    hp = hp + val;
+    hp = (hp < 0 ? 0 : (hp > 20 ? 20 : hp));
+
+  }
 
   void incXP(uint8_t value) {
 
@@ -63,7 +91,7 @@ struct PlayerStats {
 
     if (xp >= 6 && xpTrack < 4) {
 
-      xp = xp - 6;
+      xp = xp - 5;
       xpTrack++;
 
     }
@@ -75,6 +103,7 @@ struct PlayerStats {
     items[0] = 0;
     items[1] = 0;
     items[2] = 0;
+    items[3] = 0;
     xpTrack = 1;
     xp = 0;
 
@@ -82,7 +111,7 @@ struct PlayerStats {
 
   uint8_t itemCount() {
 
-    return items[0] + items[1] + items[2];
+    return items[0] + items[1] + items[2] + items[3];
 
   }
 
@@ -92,18 +121,25 @@ struct PlayerStats {
 struct GameStats {
 
   uint8_t skillLevel = 1;
-  uint8_t level = 0;
+  uint8_t level = 1;
   uint8_t room = 0;
   uint8_t selectedCard = 0;
   bool monsterDefeated = false;
+
+  void resetGame() {
+    level = 0;
+    room = 0;
+    monsterDefeated = false;
+    selectedCard = 0;
+  }
 
   void dropArea() {
 
     switch (level) {
       
-      case 0 ... 5:     level = level + 3;    break;
-      case 6 ... 9:     level = level + 4;    break;
-      case 10 ... 14:   level = level + 5;    break;
+      case 0 ... 3:     level = level + 2;    break;
+      case 4 ... 9:     level = level + 3;    break;
+      case 10 ... 14:   break;
 
     }
 
@@ -113,10 +149,10 @@ struct GameStats {
 
     switch (level) {
 
-      case 0 ... 2:    return 0;
-      case 3 ... 5:    return 1;
-      case 6 ... 9:    return 2;
-      case 10 ... 14:  return 3;
+      case 0 ... 1:    return 0;
+      case 2 ... 3:    return 1;
+      case 4 ... 6:    return 2;
+      case 7 ... 9:    return 3;
       default:         return 4;
 
     }
@@ -127,11 +163,11 @@ struct GameStats {
 
     switch (level) {
       
-      case 2:
-      case 5:
+      case 1:
+      case 3:
+      case 6:
       case 9:
-      case 14:
-      case 19:
+      case 13:
         return true;
 
       default:
@@ -157,7 +193,7 @@ struct GameStats {
     
     if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
 
-      playerStats.food--;
+      playerStats.incFood(-1);
 
       if (playerStats.food > 0) {
 

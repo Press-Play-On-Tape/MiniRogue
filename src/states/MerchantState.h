@@ -33,6 +33,7 @@ class MerchantState : public BaseState {
     bool flashHP = false;
     bool flashGold = false;
     bool flashFood = false;
+    bool flashArmour = false;
 
 
   public:

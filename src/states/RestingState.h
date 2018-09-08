@@ -3,7 +3,6 @@
 #include "BaseState.h"
 #include "../utils/Enums.h"
 #include "../utils/FadeEffects.h"
-#include "../fonts/Font3x5.h"
 
 class RestingState : public BaseState {
   
@@ -21,8 +20,6 @@ class RestingState : public BaseState {
   private:
 
     ViewState viewState = ViewState::SelectReward;
-    //Font3x5 font3x5 = Font3x5();
-
     SelectedItem selectedItem = SelectedItem::Food;
     SelectedItem prevSelection = SelectedItem::Food;
     

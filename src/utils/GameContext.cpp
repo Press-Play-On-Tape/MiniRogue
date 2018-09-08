@@ -29,8 +29,7 @@ GameContext::GameContext() {
 
 void GameContext::resetGame() {
 
-  this->gameStats.level = 0;
-  this->gameStats.room = 0;
+  this->gameStats.resetGame();
   this->playerStats.resetGame();
 
 }

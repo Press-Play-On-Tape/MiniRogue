@@ -20,10 +20,6 @@ void EventState::update(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::RollDice:
-
-      #ifdef PRESS_A_TO_BYPASS
-      if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-      #endif
       
 			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 
@@ -35,12 +31,12 @@ void EventState::update(StateMachine & machine) {
 
         switch (this->dice) {
 
-          case 1: if (playerStats.gold < 20)    playerStats.gold++;     break;
-          case 2: if (playerStats.hp < 20)      playerStats.hp++;       break;
-          case 3: if (playerStats.food < 10)    playerStats.food++;     break;
-          case 4:                               playerStats.incXP(1);   break;
-          case 5: if (playerStats.armour < 5)   playerStats.armour++;   break;
-          case 6:                                                       break;
+          case 1: playerStats.incGold(2);     break;
+          case 2: playerStats.incHP(2);       break;
+          case 3: playerStats.incFood(1);     break;
+          case 4: playerStats.incXP(2);       break;
+          case 5: playerStats.incArmour(1);   break;
+          case 6:                             break;
 
         }
 
@@ -104,9 +100,10 @@ void EventState::render(StateMachine & machine) {
     ardBitmap.drawCompressed(i, 40, Images::Event_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   }
 
-  ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  BaseState::renderBackground(machine, true);
+  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   
   switch (this->viewState) {
 

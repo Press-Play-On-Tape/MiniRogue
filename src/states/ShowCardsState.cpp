@@ -55,10 +55,10 @@ void ShowCardsState::activate(StateMachine & machine) {
 		}
 
 
-		//machine.getContext().cards[0] = GameStateType::Merchant; 			//SJH
-		// machine.getContext().cards[1] = GameStateType::Monster; 		//SJH
+		//machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
+		// machine.getContext().cards[1] = GameStateType::Treasure; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
-		// machine.getContext().cards[3] = GameStateType::Treasure;			//SJH
+		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
 		// machine.getContext().cards[4] = GameStateType::Trap;				//SJH
 		// machine.getContext().cards[5] = GameStateType::Event;		//SJH
 
@@ -144,15 +144,12 @@ void ShowCardsState::render(StateMachine & machine) {
 	font3x5.setTextColor(WHITE);
 	font3x5.setCursor(0, 0);
 
-  #ifndef AREA_IN_LEVEL
-	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
-  #else
-	font3x5.print("A");
+	font3x5.print("L");
 	font3x5.print(gameStats.getAreaId() + 1);
-	font3x5.print("~L");
+	font3x5.print("~A");
 	font3x5.print(gameStats.level + 1);
 	font3x5.print(FlashString(area_Captions[gameStats.getAreaId()]));
-  #endif
+
 
 	// Draw background ..
 
@@ -186,22 +183,29 @@ void ShowCardsState::render(StateMachine & machine) {
 			uint8_t r = pgm_read_byte(&cardIndexToRoom[i]);
 
 			if (this->counter == NO_OF_CARDS_IN_FLIP || (room != r && this->counter > 0) || this->counter == 0) {
-			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-			ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
 			}
+
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
+
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
+
 			}
 
       if (room != 0) {
 
         if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
+
           arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
-          SpritesB::drawSelfMasked(x + 3, y + 6, Images::Card_Faces, (i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
+          ardBitmap.drawCompressed(x + 3, y + 6, Images::Card_Faces[(i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1)], WHITE, ALIGN_NONE, MIRROR_NONE);
+
         }
 
         if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
-          arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
+
           ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
           ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 

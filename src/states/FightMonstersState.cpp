@@ -18,7 +18,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 	switch (machine.getContext().gameState) {
 
 		case GameStateType::Monster:
-			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7);
+			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7); //SJH
 			this->monsterStats.dmg = gameStats.getMonsterDMG();
 			break;
 
@@ -61,9 +61,7 @@ void FightMonstersState::update(StateMachine & machine) {
 		case ViewState::HighlightMonsterStats:
 		case ViewState::HighlightPlayerStats:
 
-      #ifdef PRESS_A_TO_BYPASS
 			if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER - 1; }
-			#endif
 			
 			if (this->counter < FLASH_COUNTER) {
 
@@ -82,9 +80,17 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::RollDice:
 
-      #ifdef PRESS_A_TO_BYPASS
-			if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-			#endif
+			this->lastState = ViewState::RollDice;
+
+			if (justPressed & A_BUTTON) { 
+
+				counter = sizeof(DiceDelay); 
+
+				for (uint8_t i = 0; i < playerStats.xpTrack; i++) {
+					if (!this->dice_Retain[i]) this->dice[i] = random(1, 7);
+				}
+
+			}
 
 			if (counter < sizeof(DiceDelay)) {
 				
@@ -126,8 +132,8 @@ void FightMonstersState::update(StateMachine & machine) {
 					case SelectedElement::Dice1 ... SelectedElement::Dice4:
 
 						counter = 0;
-						this->dice_Retain[static_cast<uint8_t>(this->selectedElement) - 3] = false;
-						this->dice_Sixes[static_cast<uint8_t>(this->selectedElement) - 3]++;
+						this->dice_Retain[static_cast<uint8_t>(this->selectedElement) - 4] = false;
+						this->dice_Sixes[static_cast<uint8_t>(this->selectedElement) - 4]++;
 						this->viewState = ViewState::RollDice;
 						break;
 
@@ -146,6 +152,7 @@ void FightMonstersState::update(StateMachine & machine) {
 							else {
 								
 								counter = 0;
+								this->lastState = ViewState::DiceSelection;
 								this->selectedElement = canUseWand(machine);
 
 								if (dmg != 0) {
@@ -164,6 +171,7 @@ void FightMonstersState::update(StateMachine & machine) {
 									else {
 										this->viewState = ViewState::HighlightMonsterStats;
 										this->nextState = ViewState::WandSelection;
+										this->selectedElement = SelectedElement::Action;
 									}
 
 								}
@@ -180,6 +188,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 									}
 									else {
+										this->selectedElement = SelectedElement::Action;
 										this->viewState = ViewState::WandSelection;
 									}
 
@@ -200,8 +209,10 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::WandSelection:
 
-			if (justPressed & UP_BUTTON) 			{ this->selectedElement = prevWandSelection(machine, this->selectedElement); }
-			if (justPressed & DOWN_BUTTON) 		{ this->selectedElement = nextWandSelection(machine, this->selectedElement); }
+			this->lastState = ViewState::WandSelection;
+	
+			if (justPressed & UP_BUTTON || justPressed & LEFT_BUTTON) 			{ this->selectedElement = prevWandSelection(machine, this->selectedElement); }
+			if (justPressed & DOWN_BUTTON || justPressed & RIGHT_BUTTON) 		{ this->selectedElement = nextWandSelection(machine, this->selectedElement); }
 			
 			if (justPressed & A_BUTTON) {
 
@@ -220,6 +231,7 @@ void FightMonstersState::update(StateMachine & machine) {
 						}
 						else {
 
+							this->lastState = ViewState::WandSelection;
 							this->viewState = ViewState::ItemFireUsed;
 
 						}
@@ -235,6 +247,12 @@ void FightMonstersState::update(StateMachine & machine) {
 						this->poison = true;
 						this->viewState = ViewState::ItemPoisonUsed;
 						playerStats.items[static_cast<uint8_t>(Wand::Poison)]--;
+						break;
+
+					case SelectedElement::ItemHealing:
+						this->viewState = ViewState::ItemHealingUsed;
+						playerStats.items[static_cast<uint8_t>(Wand::Healing)]--;
+						playerStats.incHP(8);
 						break;
 
 					default: 
@@ -272,9 +290,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::MonsterDead:
 
-      #ifdef PRESS_A_TO_BYPASS
 			if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER - 1; }
-			#endif
 			
 			if (this->counter < FLASH_COUNTER) {
 
@@ -282,6 +298,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 				if (counter == FLASH_COUNTER) {
 
+					this->lastState = this->viewState;
 					this->viewState = ViewState::MonsterDead_Wait;
 
 				}
@@ -310,6 +327,7 @@ void FightMonstersState::update(StateMachine & machine) {
 			break;
 
 		case ViewState::ItemIceUsed:
+		case ViewState::ItemHealingUsed:
 
 			if (justPressed & A_BUTTON) {
 				this->viewState = ViewState::RollDice;
@@ -340,21 +358,48 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 
 		case GameStateType::Monster:
 			playerStats.incXP(gameStats.getMonsterReward());
+			this->viewState = ViewState::MonsterDead;
 			break;
 
-		case GameStateType::BossMonster:
-			playerStats.incXP(2);
-			break;
+		// case GameStateType::BossMonster:
+		// 	{
+		// 		playerStats.incXP(2);
+
+		// 		if (playerStats.itemCount() == 2) {
+		// 			this->diceMonster = random(5, 7);
+		// 		}
+		// 		else {
+		// 			this->diceMonster = random(1, 7);
+		// 		}
+
+		// 		switch (this->diceMonster) {
+
+		// 			case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
+		// 			case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
+		// 			case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
+		// 			case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
+		// 			case 5: playerStats.incArmour(1); break;
+		// 			case 6: playerStats.incXP(2); break;
+
+		// 			break;
+
+		// 		}
+
+		// 		this->viewState = ViewState::BossMonsterDead;
+
+		// 	}
+
+		//  	break;
 
 		case GameStateType::MonsterFromEvent:
 			playerStats.incXP(2);
+			this->viewState = ViewState::MonsterDead;
 			break;
 
 		default: break;
 
 	}
 
-	this->viewState = ViewState::MonsterDead;
 	
 }
 
@@ -370,10 +415,8 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	bool flash = arduboy.getFrameCountHalf(20);
 
-  ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(0, 0, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  BaseState::renderBackground(machine, true);
+	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 	{
 		uint8_t const *imageName = nullptr;
@@ -423,32 +466,42 @@ void FightMonstersState::render(StateMachine & machine) {
 
 
 	// Inventory ..
-	{
+	if (viewState == ViewState::WandSelection || lastState == ViewState::WandSelection) {
 
-		font3x5.setCursor(21, 20);
+		ardBitmap.drawCompressed(0, 19, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+		font3x5.setCursor(21, 23);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Fire)]);
-		font3x5.setCursor(21, 30);
+		font3x5.setCursor(21, 33);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Ice)]);
-		font3x5.setCursor(21, 40);
+		font3x5.setCursor(21, 43);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Poison)]);
+		font3x5.setCursor(21, 53);
+		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Healing)]);
 
-		if (this->ice > 0) 	arduboy.drawVerticalDottedLine(29, 29 + (this->ice * 4), 0, 2); 
-		if (this->poison) 	arduboy.drawVerticalDottedLine(39, 47, 0, 2); 
+		// if (this->ice > 0) 	arduboy.drawVerticalDottedLine(32, 35 + (this->ice * 3), 0, 2); 
+		// if (this->poison) 	arduboy.drawVerticalDottedLine(42, 51, 0, 2); 
 
 	}
 
 
 	// Dice ..
 
-	for (uint8_t i = 0; i < playerStats.xpTrack; i++) {
-		SpritesB::drawOverwrite(3 + (i * 10), 52, Images::Dice, this->dice[i]);
+	if (viewState == ViewState::DiceSelection || viewState == ViewState::RollDice || lastState == ViewState::DiceSelection) {
+		for (uint8_t i = 0; i < playerStats.xpTrack; i++) {
+			SpritesB::drawOverwrite(3 + (i * 10), 52, Images::Dice, this->dice[i]);
+		}
 	}
 
 
 	// Marker ..
 	
-	if ((this->viewState == ViewState::DiceSelection || this->viewState == ViewState::WandSelection) && ((this->selectedElement == SelectedElement::Action && flash) || this->selectedElement != SelectedElement::Action)) {
+	if (this->viewState == ViewState::DiceSelection && ((this->selectedElement == SelectedElement::Action && flash) || this->selectedElement != SelectedElement::Action)) {
 		SpritesB::drawOverwrite(3 + (playerStats.xpTrack * 10), 53, Images::Marker, 0);
+	}
+
+	if (this->viewState == ViewState::WandSelection && ((this->selectedElement == SelectedElement::Action && flash) || this->selectedElement != SelectedElement::Action)) {
+		SpritesB::drawOverwrite(26, 53, Images::Marker, 0);
 	}
 
 
@@ -461,12 +514,12 @@ void FightMonstersState::render(StateMachine & machine) {
 			
 				switch (this->selectedElement) {
 
-					case SelectedElement::ItemFire ... SelectedElement::ItemPoison:
-						SpritesB::drawPlusMask(3, 19 + (static_cast<uint8_t>(this->selectedElement) * 10), Images::Dice_Highlight_SelfMasked, 0);
+					case SelectedElement::ItemFire ... SelectedElement::ItemHealing:
+						SpritesB::drawPlusMask(3, 22 + (static_cast<uint8_t>(this->selectedElement) * 10), Images::Dice_Highlight_SelfMasked, 0);
 						break;
 
 					case SelectedElement::Dice1 ... SelectedElement::Dice4:
-						SpritesB::drawPlusMask(3 + ((static_cast<uint8_t>(this->selectedElement) - 3) * 10), 52, Images::Dice_Highlight_SelfMasked, 0);
+						SpritesB::drawPlusMask(3 + ((static_cast<uint8_t>(this->selectedElement) - 4) * 10), 52, Images::Dice_Highlight_SelfMasked, 0);
 						break;
 
 					default: break;
@@ -497,6 +550,7 @@ void FightMonstersState::render(StateMachine & machine) {
 	switch (this->viewState) {
 
 		case ViewState::MonsterDead:
+		//case ViewState::BossMonsterDead:
 
 			BaseState::renderPlayerStatistics(machine,
 				true, // Overall
@@ -506,8 +560,25 @@ void FightMonstersState::render(StateMachine & machine) {
 				(machine.getContext().gameState == GameStateType::BossMonster), // Gold
 				false // Food
 			);
+
+			//if (this->viewState == ViewState::BossMonsterDead) {
 			
-			BaseState::renderMonsterDead();
+				BaseState::renderMonsterDead();
+
+			// }
+			// else {
+
+			// 	arduboy.fillRect(31, 23, 64, 26, BLACK);
+			// 	arduboy.drawFastHLine(34, 25, 58);
+			// 	arduboy.drawFastHLine(34, 46, 58);
+			// 	arduboy.drawFastVLine(33, 26, 20);
+			// 	arduboy.drawFastVLine(92, 26, 20);
+			// 	ardBitmap.drawCompressed(36, 26, Images::Chest_Dice[this->diceMonster - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+			// 	font3x5.setCursor(56, 28);
+			// 	font3x5.print(F("You killed the Boss!\n\n"));
+			// 	font3x5.print(FlashString(bossDice_Captions[ this->diceMonster]));
+
+			// }
 			break;
 
 		case ViewState::MonsterDead_Wait:
@@ -522,12 +593,15 @@ void FightMonstersState::render(StateMachine & machine) {
 		case ViewState::ItemIceUsed:
 		case ViewState::ItemFireUsed:
 		case ViewState::ItemPoisonUsed:
+		case ViewState::ItemHealingUsed:
 
-			arduboy.fillRect(17, 10, 94, 42, BLACK);
-			arduboy.drawFastHLine(18, 11, 92);
-			arduboy.drawFastHLine(18, 40, 92);
+			arduboy.fillRect(15, 17, 100, 32, BLACK);
+			arduboy.drawFastHLine(18, 18, 94);
+			arduboy.drawFastVLine(17, 19, 28);
+			arduboy.drawFastHLine(18, 47, 94);
+			arduboy.drawFastVLine(112, 19, 28);
 
-			font3x5.setCursor(20, 14);
+			font3x5.setCursor(20, 21);
 			font3x5.print(FlashString(itemUsed_Captions[ static_cast<uint8_t>(this->viewState) - static_cast<uint8_t>(ViewState::ItemIceUsed) ]));
 			break;
 
@@ -577,9 +651,10 @@ SelectedElement FightMonstersState::prevWandSelection(StateMachine & machine, Se
 
 	auto & playerStats = machine.getContext().playerStats;
 
-	if (element > SelectedElement::ItemPoison && playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) 	{ return SelectedElement::ItemPoison; }
-	if (element > SelectedElement::ItemIce && playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) 				{ return SelectedElement::ItemIce; }
-	if (element > SelectedElement::ItemFire && playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) 			{ return SelectedElement::ItemFire; }
+	if (element > SelectedElement::ItemHealing && playerStats.items[static_cast<uint8_t>(Wand::Healing)] > 0) 	{ return SelectedElement::ItemHealing; }
+	if (element > SelectedElement::ItemFire && playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) 				{ return SelectedElement::ItemFire; }
+	if (element > SelectedElement::ItemIce && playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) 					{ return SelectedElement::ItemIce; }
+	if (element > SelectedElement::ItemPoison && playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) 		{ return SelectedElement::ItemPoison; }
 
 	return element;
 
@@ -593,10 +668,11 @@ SelectedElement FightMonstersState::nextWandSelection(StateMachine & machine, Se
 	
 	auto & playerStats = machine.getContext().playerStats;
 
-	if (element < SelectedElement::ItemFire && playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) 			{ return SelectedElement::ItemFire; }
-	if (element < SelectedElement::ItemIce && playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) 				{ return SelectedElement::ItemIce; }
-	if (element < SelectedElement::ItemPoison && playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) 	{ return SelectedElement::ItemPoison; }
-	if (element < SelectedElement::Action) 																																		{ return SelectedElement::Action; }
+	if (element < SelectedElement::ItemHealing && playerStats.items[static_cast<uint8_t>(Wand::Healing)] > 0) 	{ return SelectedElement::ItemHealing; }
+	if (element < SelectedElement::ItemFire && playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) 				{ return SelectedElement::ItemFire; }
+	if (element < SelectedElement::ItemIce && playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) 					{ return SelectedElement::ItemIce; }
+	if (element < SelectedElement::ItemPoison && playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) 		{ return SelectedElement::ItemPoison; }
+	if (element < SelectedElement::Action) 																																			{ return SelectedElement::Action; }
 
 	return element;
 

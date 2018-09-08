@@ -21,9 +21,7 @@ void TrapState::update(StateMachine & machine) {
 
     case ViewState::SkillCheckResult:
 
-      #ifdef PRESS_A_TO_BYPASS
-        if (justPressed & A_BUTTON) { counter = FLASH_COUNTER; }
-      #endif
+      if (justPressed & A_BUTTON) { counter = FLASH_COUNTER; }
 
       if (this->counter < FLASH_COUNTER) {
 
@@ -53,10 +51,6 @@ void TrapState::update(StateMachine & machine) {
 
     case ViewState::SkillCheck:
     case ViewState::RollDice:
-
-      #ifdef PRESS_A_TO_BYPASS
-      if (justPressed & A_BUTTON) { counter = sizeof(DiceDelay); }
-      #endif
       
 			if (counter < NO_OF_CARDS_IN_FLIP) {
 
@@ -70,20 +64,18 @@ void TrapState::update(StateMachine & machine) {
 
           switch (this->dice) {
 
-            case 1: if (playerStats.food > 0)     playerStats.food--;     break;
-            case 2: if (playerStats.gold > 0)     playerStats.gold--;     break;
-            case 3: if (playerStats.armour > 0)   playerStats.armour--;   break;
-            case 4: if (playerStats.hp > 1)       playerStats.hp--;       break;
+            case 1: playerStats.incFood(-1);      break;
+            case 2: playerStats.incGold(-1);      break;
+            case 3: playerStats.incArmour(-1);    break;
+            case 4: playerStats.incHP(-1);        break;
             case 5: if (playerStats.xp > 1)       playerStats.xp--;       break;
 
             case 6: 
               
-              if (playerStats.hp > 3) {
-                playerStats.hp = playerStats.hp - 3; 
+              playerStats.incHP(-2); 
+              
+              if (playerStats.hp > 0) {
                 gameStats.dropArea();
-              }
-              else {
-                playerStats.hp = 0;
               }
 
             break;
@@ -164,9 +156,10 @@ void TrapState::render(StateMachine & machine) {
 
   // Render common parts ..
 
-  ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  BaseState::renderBackground(machine, true);
+  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(0, 40, Images::Trap_LHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(79, 40, Images::Trap_RHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
@@ -188,7 +181,7 @@ void TrapState::render(StateMachine & machine) {
 
         if (this->counter < FLASH_COUNTER && flash) font3x5.setTextColor(BLACK);
 
-        if (this->dice <= playerStats.armour) {
+        if (this->dice <= playerStats.xpTrack) {
 
           if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(64, 3, 15, 7, WHITE);
           font3x5.print(F("Yes"));
@@ -263,7 +256,7 @@ char const trapDice_Caption_02[] PROGMEM = "Tripwire     ~-1~Gold";
 char const trapDice_Caption_03[] PROGMEM = "Rusted~Armour   -1~AR";
 char const trapDice_Caption_04[] PROGMEM = "Spring~Blade    -1~HP";
 char const trapDice_Caption_05[] PROGMEM = "Moving~Walls    -1~XP";
-char const trapDice_Caption_06[] PROGMEM = "Pit     ~-3~HP,~+Fall";
+char const trapDice_Caption_06[] PROGMEM = "Pit     ~-2~HP,~+Fall";
 
 char const * const trapDice_Captions[] = {
 	trapDice_Caption_01,
