@@ -40,7 +40,6 @@ class ShowCardsState : public BaseState {
       PlayerDead
     };
 
-    Font3x5 font3x5 = Font3x5();    
     ViewState viewState = ViewState::DealCards;
     
     uint8_t counter = 0;           
