@@ -17,6 +17,16 @@ void BaseState::renderMonsterDead() {
 
 }
 
+void BaseState::renderBackground(StateMachine & machine, bool renderCorners) {
+
+	auto & ardBitmap = machine.getContext().ardBitmap;
+
+  if (renderCorners) ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  for (uint8_t y= 0; y < 64; y = y + 10)  ardBitmap.drawCompressed(89, y, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+}
+
 void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood) {
 
 	auto & arduboy = machine.getContext().arduboy;
