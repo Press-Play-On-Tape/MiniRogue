@@ -35,12 +35,12 @@ void EventState::update(StateMachine & machine) {
 
         switch (this->dice) {
 
-          case 1: if (playerStats.gold < 20)    playerStats.gold++;     break;
-          case 2: if (playerStats.hp < 20)      playerStats.hp++;       break;
-          case 3: if (playerStats.food < 10)    playerStats.food++;     break;
-          case 4:                               playerStats.incXP(1);   break;
-          case 5: if (playerStats.armour < 5)   playerStats.armour++;   break;
-          case 6:                                                       break;
+          case 1: playerStats.gold = clamp(playerStats.gold + 2, 0, 20);     break;
+          case 2: playerStats.hp = clamp(playerStats.hp + 2, 0, 20);         break;
+          case 3: playerStats.food = clamp(playerStats.food + 1, 0, 10);     break;
+          case 4: playerStats.incXP(2);                                      break;
+          case 5: playerStats.armour = clamp(playerStats.armour + 1, 0, 5);  break;
+          case 6:                                                            break;
 
         }
 

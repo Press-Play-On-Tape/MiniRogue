@@ -22,7 +22,7 @@ void MerchantState::update(StateMachine & machine) {
     case ViewState::Buying:
 
       if ((justPressed & UP_BUTTON) && this->selectedItem > 0)            this->selectedItem--;
-      if ((justPressed & DOWN_BUTTON) && this->selectedItem < 5)          this->selectedItem++;
+      if ((justPressed & DOWN_BUTTON) && this->selectedItem < 6)          this->selectedItem++;
 
       if (justPressed & A_BUTTON) {
 
@@ -98,9 +98,30 @@ void MerchantState::update(StateMachine & machine) {
             
            break;
 
+          case 6:
+
+            if (playerStats.gold >= 6) {
+
+              if (playerStats.armour < 5) { 
+
+                playerStats.armour++; 
+                playerStats.gold = playerStats.gold - 6; 
+                flashArmour = true;
+                flashGold = true;
+
+              }
+              else {
+                this->errorNumber = 3;
+              }
+
+            }
+            else {
+              this->errorNumber = 1;
+            }   
+
         }
 
-        if (flashHP || flashXP || flashFood) { flashGold = true; }
+        if (flashHP || flashXP || flashFood || flashArmour) { flashGold = true; }
 
       }
 
@@ -109,19 +130,38 @@ void MerchantState::update(StateMachine & machine) {
     case ViewState::Selling:
 
       if ((justPressed & UP_BUTTON) && this->selectedItem > 0)            this->selectedItem--;
-      if ((justPressed & DOWN_BUTTON) && this->selectedItem < 3)          this->selectedItem++;
+      if ((justPressed & DOWN_BUTTON) && this->selectedItem < 4)          this->selectedItem++;
       
       if (justPressed & A_BUTTON) {
 
-        if (playerStats.items[this->selectedItem] > 0) {
+        if (this->selectedItem <= 2) {
 
-          playerStats.items[this->selectedItem]--;
-          playerStats.gold = playerStats.gold + 4;
-          flashGold = true;
+          if (playerStats.items[this->selectedItem] > 0) {
+
+            playerStats.items[this->selectedItem]--;
+            playerStats.gold = playerStats.gold + 4;
+            flashGold = true;
+
+          }
+          else {
+            this->errorNumber = 2;
+          }
 
         }
         else {
-          this->errorNumber = 2;
+
+          if (playerStats.armour > 0) {
+
+            playerStats.armour--;
+            playerStats.gold = playerStats.gold + 3;
+            flashGold = true;
+            flashArmour = true;
+
+          }
+          else {
+            this->errorNumber = 2;
+          }
+
         }
 
       } 
@@ -165,9 +205,9 @@ void MerchantState::render(StateMachine & machine) {
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Mask_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   
-  arduboy.drawFastHLine(2, 60, 85, WHITE);
-  arduboy.drawHorizontalDottedLine(3, 87, 62, WHITE);
-  arduboy.drawHorizontalDottedLine(4, 87, 63, WHITE);
+  arduboy.drawFastHLine(35, 60, 51, WHITE);
+  arduboy.drawHorizontalDottedLine(35, 87, 62, WHITE);
+  arduboy.drawHorizontalDottedLine(36, 87, 63, WHITE);
 
   {
     
@@ -192,8 +232,8 @@ void MerchantState::render(StateMachine & machine) {
 
   // Highlight ..
 
-  Sprites::drawOverwrite(2, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
-  Sprites::drawOverwrite(33, 8 + (selectedItem * 8), Images::Merchant_Highlight, 0);
+  Sprites::drawOverwrite(2, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
+  Sprites::drawOverwrite(33, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
 
 
   // Error Message ?
@@ -214,7 +254,7 @@ void MerchantState::render(StateMachine & machine) {
     true, // Overall
     flashXP, // XP
     flashHP, // HP
-    false, // Armour
+    flashArmour, // Armour
     flashGold, // Gold
     flashFood // Food
   );

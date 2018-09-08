@@ -63,7 +63,7 @@ struct PlayerStats {
 
     if (xp >= 6 && xpTrack < 4) {
 
-      xp = xp - 6;
+      xp = xp - 5;
       xpTrack++;
 
     }
@@ -92,10 +92,15 @@ struct PlayerStats {
 struct GameStats {
 
   uint8_t skillLevel = 1;
-  uint8_t level = 0;
+  uint8_t level = 1;
   uint8_t room = 0;
   uint8_t selectedCard = 0;
   bool monsterDefeated = false;
+
+  void resetGame() {
+    level = 1;
+    room = 0;
+  }
 
   void dropArea() {
 

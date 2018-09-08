@@ -51,6 +51,8 @@ void TitleScreenState::update(StateMachine & machine) {
 		playerStats.food = pgm_read_byte(&InitSettings[idx]);
 		playerStats.xpTrack = 1;
 
+		gameStats.resetGame();
+
 		machine.changeState(GameStateType::ShowCards);
 		
 	}
@@ -68,8 +70,6 @@ void TitleScreenState::render(StateMachine & machine) {
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
 	ardBitmap.drawCompressed(0, 0, Images::Title_Complete_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	// ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	// ardBitmap.drawCompressed(0, 0, Images::Title_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 	{
 		uint8_t x = 0;

@@ -78,12 +78,10 @@ void TrapState::update(StateMachine & machine) {
 
             case 6: 
               
-              if (playerStats.hp > 3) {
-                playerStats.hp = playerStats.hp - 3; 
+              playerStats.hp = clamp(playerStats.hp - 2, 0, 20); 
+              
+              if (playerStats.hp > 0) {
                 gameStats.dropArea();
-              }
-              else {
-                playerStats.hp = 0;
               }
 
             break;
@@ -188,7 +186,7 @@ void TrapState::render(StateMachine & machine) {
 
         if (this->counter < FLASH_COUNTER && flash) font3x5.setTextColor(BLACK);
 
-        if (this->dice <= playerStats.armour) {
+        if (this->dice <= playerStats.xpTrack) {
 
           if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(64, 3, 15, 7, WHITE);
           font3x5.print(F("Yes"));
@@ -263,7 +261,7 @@ char const trapDice_Caption_02[] PROGMEM = "Tripwire     ~-1~Gold";
 char const trapDice_Caption_03[] PROGMEM = "Rusted~Armour   -1~AR";
 char const trapDice_Caption_04[] PROGMEM = "Spring~Blade    -1~HP";
 char const trapDice_Caption_05[] PROGMEM = "Moving~Walls    -1~XP";
-char const trapDice_Caption_06[] PROGMEM = "Pit     ~-3~HP,~+Fall";
+char const trapDice_Caption_06[] PROGMEM = "Pit     ~-2~HP,~+Fall";
 
 char const * const trapDice_Captions[] = {
 	trapDice_Caption_01,
