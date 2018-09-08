@@ -101,10 +101,10 @@ struct PlayerStats {
   void resetGame() {
 
     items[0] = 0;
-    items[1] = 1;
-    items[2] = 1;
+    items[1] = 0;
+    items[2] = 0;
     items[3] = 0;//sjh
-    xpTrack = 1;
+    xpTrack = 0;
     xp = 0;
 
   }

@@ -55,7 +55,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 		}
 
 
-		machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
+		//machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
 		// machine.getContext().cards[1] = GameStateType::Treasure; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
 		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
@@ -206,7 +206,6 @@ void ShowCardsState::render(StateMachine & machine) {
 
         if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
 
-          // sjh arduboy.fillRect(x + 3, y + 4, 14, 21, BLACK);
           ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
           ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
