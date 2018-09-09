@@ -9,4 +9,4 @@
 #include "TrapState.h"
 #include "TreasureState.h"
 #include "TitleScreenState.h"
-#include "WinnerState.h"
+#include "GameOverState.h"

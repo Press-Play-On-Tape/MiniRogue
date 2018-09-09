@@ -38,7 +38,7 @@ class Game : public GameStateMachine<GameContext, GameStateType> {
       TitleScreenState titleScreenState;
       TrapState trapState;
       SplashScreenState splashScreenState;
-      WinnerState winnerState;
+      GameOverState gameOverState;
     };
 
   private:

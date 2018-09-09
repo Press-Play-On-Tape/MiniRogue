@@ -75,7 +75,7 @@ void EventState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
       if (justPressed & A_BUTTON) { 
-        machine.changeState(GameStateType::TitleScreen);
+        machine.changeState(GameStateType::PlayerDead);
 			}
 
 			break;

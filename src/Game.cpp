@@ -100,7 +100,8 @@ Game::State * Game::createState(const StateId & stateType) {
 		case GameStateType::Treasure:      		      	return new (&this->stateData[0])  TreasureState();
 		case GameStateType::Merchant:      		      	return new (&this->stateData[0])  MerchantState();
 		case GameStateType::SplashScreen:             return new (&this->stateData[0])  SplashScreenState();
-		case GameStateType::Winner: 			            return new (&this->stateData[0])  WinnerState();
+		case GameStateType::Winner: 			            return new (&this->stateData[0])  GameOverState();
+		case GameStateType::PlayerDead: 	            return new (&this->stateData[0])  GameOverState();
 
 		case GameStateType::Monster:   								
 		case GameStateType::BossMonster:

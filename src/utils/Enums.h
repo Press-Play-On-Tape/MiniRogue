@@ -36,7 +36,8 @@ enum class GameStateType : uint8_t {
   ShowCards,
 	SplashScreen,
 	TitleScreen,
-  Winner
+  Winner,
+  PlayerDead
 };
 
 

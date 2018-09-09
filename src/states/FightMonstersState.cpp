@@ -38,7 +38,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	nextState = ViewState::RollDice;
 
-	playerStats.xpTrack = 2; //SJH
+	//playerStats.xpTrack = 2; //SJH
 	/*SJH*/ //this->monsterStats.hp = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemIce = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemFire = 1;
@@ -322,7 +322,7 @@ void FightMonstersState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
 			if (justPressed & A_BUTTON) {
-				machine.changeState(GameStateType::TitleScreen);
+				machine.changeState(GameStateType::PlayerDead);
 			}
 
 			break;
@@ -414,8 +414,10 @@ void FightMonstersState::render(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
-
 	bool flash = arduboy.getFrameCountHalf(20);
+
+
+	// Draw background ..
 
   BaseState::renderBackground(machine, true);
 	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
@@ -551,6 +553,14 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	switch (this->viewState) {
 
+		case ViewState::HighlightPlayerStats:
+	
+			if (this->nextState == ViewState::PlayerDead) {
+				BaseState::renderPlayerDead();
+			}
+
+			break;
+			
 		case ViewState::MonsterDead:
 		//case ViewState::BossMonsterDead:
 
