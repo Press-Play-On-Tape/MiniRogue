@@ -55,7 +55,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 		}
 
 
-		//machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
+		machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
 		// machine.getContext().cards[1] = GameStateType::Treasure; 		//SJH
 		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
 		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
