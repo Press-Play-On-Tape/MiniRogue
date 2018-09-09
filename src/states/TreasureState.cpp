@@ -196,7 +196,8 @@ void TreasureState::render(StateMachine & machine) {
 	// Player statistics ..
 
   BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
+//    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
+    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
     (this->dice == 6), // XP
     (this->dice == 4), // HP
     (this->dice == 5), // Armour

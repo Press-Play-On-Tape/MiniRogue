@@ -76,7 +76,7 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     if (overallFlash && flag && flash) {
       font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, (x * 9), 5, 7, WHITE);
+      arduboy.fillRect(119, (x * 9), (val < 10 ? 5 : 10), 7, WHITE);
     }
 
     font3x5.setCursor(120, (x * 9));

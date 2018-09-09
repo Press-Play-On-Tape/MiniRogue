@@ -18,7 +18,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 	switch (machine.getContext().gameState) {
 
 		case GameStateType::Monster:
-			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7); //SJH
+			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7); 
 			this->monsterStats.dmg = gameStats.getMonsterDMG();
 			break;
 
