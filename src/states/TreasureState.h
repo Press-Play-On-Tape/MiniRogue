@@ -1,7 +1,5 @@
 #pragma once
 
-// #include "../utils/GameContext.h"
-// #include "../utils/GameState.h"
 #include "BaseState.h"
 #include "../utils/Enums.h"
 #include "../utils/FadeEffects.h"
@@ -11,7 +9,7 @@
 char const treasureDice_Caption_01[] PROGMEM = " Gain~a~Fire~Wand!";
 char const treasureDice_Caption_02[] PROGMEM = " Gain~an~Ice~Wand!";
 char const treasureDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
-char const treasureDice_Caption_04[] PROGMEM = "Heal~Potion~+~5HP!";
+char const treasureDice_Caption_04[] PROGMEM = "Gain~a~Healing~Wand!";
 char const treasureDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
 char const treasureDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
 char const treasureDice_Caption_07[] PROGMEM = "Open~chest:\nGold~and~treasure!";

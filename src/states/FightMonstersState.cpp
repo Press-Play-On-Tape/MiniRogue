@@ -3,6 +3,7 @@
 #include "../images/Images.h"
 #include "../fonts/Font3x5.h"
 #include "../utils/Utils.h"
+#include "../utils/TreasureDice.h"
 
 
 // ----------------------------------------------------------------------------
@@ -38,7 +39,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	nextState = ViewState::RollDice;
 
-	//playerStats.xpTrack = 2; //SJH
+	//playerStats.xpTrack = 4; //SJH
 	/*SJH*/ //this->monsterStats.hp = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemIce = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemFire = 1;
@@ -573,22 +574,17 @@ void FightMonstersState::render(StateMachine & machine) {
 				false // Food
 			);
 
-			//if (this->viewState == ViewState::BossMonsterDead) {
-			
-				BaseState::renderMonsterDead();
+			// if (machine.getContext().gameState == GameStateType::BossMonster) {
+
+    	// 	BaseState::renderMessageBox(machine);
+			// 	font3x5.setCursor(56, 28);
+			// 	font3x5.print(F("You killed the Boss!\n\n"));
+			// 	font3x5.print(FlashString(treasureDice_Captions[ this->diceMonster]));
 
 			// }
 			// else {
-
-			// 	arduboy.fillRect(31, 23, 64, 26, BLACK);
-			// 	arduboy.drawFastHLine(34, 25, 58);
-			// 	arduboy.drawFastHLine(34, 46, 58);
-			// 	arduboy.drawFastVLine(33, 26, 20);
-			// 	arduboy.drawFastVLine(92, 26, 20);
-			// 	ardBitmap.drawCompressed(36, 26, Images::Chest_Dice[this->diceMonster - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-			// 	font3x5.setCursor(56, 28);
-			// 	font3x5.print(F("You killed the Boss!\n\n"));
-			// 	font3x5.print(FlashString(bossDice_Captions[ this->diceMonster]));
+			
+				BaseState::renderMonsterDead();
 
 			// }
 			break;

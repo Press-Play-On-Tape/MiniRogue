@@ -32,7 +32,7 @@ void TrapState::update(StateMachine & machine) {
 
         if (justPressed & A_BUTTON) {
 
-          if (this->dice <= playerStats.armour) {
+          if (this->dice <= playerStats.xpTrack) {
 
             machine.changeState(gameStats.incRoom(playerStats)); 
 
@@ -157,9 +157,6 @@ void TrapState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(0, 40, Images::Trap_LHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(79, 40, Images::Trap_RHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 

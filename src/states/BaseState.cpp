@@ -5,6 +5,18 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+void BaseState::renderMessageBox(StateMachine & machine) {
+
+	auto & arduboy = machine.getContext().arduboy;
+
+  arduboy.fillRect(31, 23, 64, 26, BLACK);
+  arduboy.drawFastHLine(34, 25, 58);
+  arduboy.drawFastHLine(34, 46, 58);
+  arduboy.drawFastVLine(33, 26, 20);
+  arduboy.drawFastVLine(92, 26, 20);
+
+}
+
 void BaseState::renderPlayerDead() {
 
   Sprites::drawOverwrite(38, 25, Images::Message_PlayerDead, 0);

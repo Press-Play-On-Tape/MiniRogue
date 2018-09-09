@@ -105,7 +105,7 @@ struct PlayerStats {
     items[1] = 0;
     items[2] = 0;
     items[3] = 0;
-    xpTrack = 1;
+    xpTrack = 2; /*sjh*/
     xp = 0;
 
   }

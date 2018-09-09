@@ -199,9 +199,6 @@ void MerchantState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Mask_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   
@@ -240,11 +237,7 @@ void MerchantState::render(StateMachine & machine) {
 
   if (this->errorNumber > 0) {
 
-    arduboy.fillRect(31, 23, 64, 26, BLACK);
-    arduboy.drawFastHLine(34, 25, 58);
-    arduboy.drawFastHLine(34, 46, 58);
-    arduboy.drawFastVLine(33, 26, 20);
-    arduboy.drawFastVLine(92, 26, 20);
+    BaseState::renderMessageBox(machine);
     font3x5.setCursor(36, 28);
   	font3x5.print(FlashString(error_Captions[ this->errorNumber - 1]));
 

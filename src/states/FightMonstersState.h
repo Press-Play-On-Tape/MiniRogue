@@ -24,7 +24,7 @@ char const * const itemUsed_Captions[] = {
 char const bossDice_Caption_01[] PROGMEM = " Gain~a~Fire~Wand!";
 char const bossDice_Caption_02[] PROGMEM = " Gain~an~Ice~Wand!";
 char const bossDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
-char const bossDice_Caption_04[] PROGMEM = "Heal~Potion~+~5HP!";
+char const bossDice_Caption_04[] PROGMEM = "Gain~a~Healing~Wand!";
 char const bossDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
 char const bossDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
 
