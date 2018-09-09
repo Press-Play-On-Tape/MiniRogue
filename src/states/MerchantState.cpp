@@ -237,7 +237,7 @@ void MerchantState::render(StateMachine & machine) {
 
   if (this->errorNumber > 0) {
 
-    BaseState::renderMessageBox(machine);
+    BaseState::renderMessageBox(machine, 31, 23, 64, 26);
     font3x5.setCursor(36, 28);
   	font3x5.print(FlashString(error_Captions[ this->errorNumber - 1]));
 

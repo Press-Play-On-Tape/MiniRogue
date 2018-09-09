@@ -1,24 +1,25 @@
 #pragma once
-//
-//  Copyright (C) 2016 Ignacio Vina (@igvina)
+/*
+  Copyright (C) 2016 Ignacio Vina (@igvina)
 
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-//       http://www.apache.org/licenses/LICENSE-2.0
+      http://www.apache.org/licenses/LICENSE-2.0
 
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 
-//  Modified by Filmote and Vampirics
-//
+  Modified by Filmote and Vampirics
 
-// ArdBitmap: version 2.0.3
 
+  ArdBitmap: version 2.0.3
+
+*/
 
 //Uncomment NO_SPEED_HACK if speed is not important (reduce ~100 bytes)
 #define NO_SPEED_HACK
@@ -109,9 +110,9 @@ template<int16_t SB_WIDTH, int16_t SB_HEIGHT> class ArdBitmap
     void drawBitmapResized(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t w,uint8_t h, uint8_t color,uint8_t align, uint8_t mirror, float resize);
 };
 
-////////////////////////
-// COMPRESSED BITMAPS //
-////////////////////////
+/*
+  COMPRESSED BITMAPS 
+*/
 
 template<int16_t SB_WIDTH, int16_t SB_HEIGHT>
 void ArdBitmap<SB_WIDTH, SB_HEIGHT>::drawCompressed(int16_t sx, int16_t sy, const uint8_t *compBitmap, uint8_t color, uint8_t align, uint8_t mirror)
@@ -524,9 +525,9 @@ void ArdBitmap<SB_WIDTH, SB_HEIGHT>::drawCompressedResized(int16_t sx, int16_t s
 
 
 
-//////////////////////////
-// UNCOMPRESSED BITMAPS //
-//////////////////////////
+/*
+   UNCOMPRESSED BITMAPS 
+*/
 
 
 template<int16_t SB_WIDTH, int16_t SB_HEIGHT>

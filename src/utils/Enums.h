@@ -105,7 +105,8 @@ struct PlayerStats {
     items[1] = 0;
     items[2] = 0;
     items[3] = 0;
-    xpTrack = 2; /*sjh*/
+    xpTrack = 1;
+    //xpTrack = 2; /*sjh*/
     xp = 0;
 
   }
@@ -191,7 +192,7 @@ struct GameStats {
       case 5:   selectedCard = 6;   break;
       
     }
-    
+ 
     if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
 
       playerStats.incFood(-1);
@@ -207,7 +208,7 @@ struct GameStats {
       
     }
 
-    return (level == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
+    return (getAreaId() == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
 
   }
 

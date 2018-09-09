@@ -5,15 +5,15 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
-void BaseState::renderMessageBox(StateMachine & machine) {
+void BaseState::renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, uint8_t w, uint8_t h) {
 
 	auto & arduboy = machine.getContext().arduboy;
 
-  arduboy.fillRect(31, 23, 64, 26, BLACK);
-  arduboy.drawFastHLine(34, 25, 58);
-  arduboy.drawFastHLine(34, 46, 58);
-  arduboy.drawFastVLine(33, 26, 20);
-  arduboy.drawFastVLine(92, 26, 20);
+  arduboy.fillRect(x, y, w, h, BLACK);
+  arduboy.drawFastHLine(x + 3, y + 2, w - 6);
+  arduboy.drawFastHLine(x + 3, y + h - 3, w - 6);
+  arduboy.drawFastVLine(x + 2, y + 3, h - 6);
+  arduboy.drawFastVLine(x + w - 3, y + 3, h - 6);
 
 }
 
@@ -43,7 +43,6 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
-  auto & gameStats = machine.getContext().gameStats;
 
   const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
 
