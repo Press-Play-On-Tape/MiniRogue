@@ -38,6 +38,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	nextState = ViewState::RollDice;
 
+	playerStats.xpTrack = 2; //SJH
 	/*SJH*/ //this->monsterStats.hp = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemIce = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemFire = 1;
@@ -358,48 +359,49 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 
 		case GameStateType::Monster:
 			playerStats.incXP(gameStats.getMonsterReward());
-			this->viewState = ViewState::MonsterDead;
+//			this->viewState = ViewState::MonsterDead;
 			break;
 
-		// case GameStateType::BossMonster:
-		// 	{
-		// 		playerStats.incXP(2);
+		case GameStateType::BossMonster:
+		 	{
+				playerStats.incXP(2);
 
-		// 		if (playerStats.itemCount() == 2) {
-		// 			this->diceMonster = random(5, 7);
-		// 		}
-		// 		else {
-		// 			this->diceMonster = random(1, 7);
-		// 		}
+				if (playerStats.itemCount() == 2) {
+					this->diceMonster = random(5, 7);
+				}
+				else {
+					this->diceMonster = random(1, 7);
+				}
 
-		// 		switch (this->diceMonster) {
+				switch (this->diceMonster) {
 
-		// 			case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
-		// 			case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
-		// 			case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-		// 			case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
-		// 			case 5: playerStats.incArmour(1); break;
-		// 			case 6: playerStats.incXP(2); break;
+					case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
+					case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
+					case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
+					case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
+					case 5: playerStats.incArmour(1); break;
+					case 6: playerStats.incXP(2); break;
 
-		// 			break;
+					break;
 
-		// 		}
+				}
 
-		// 		this->viewState = ViewState::BossMonsterDead;
+//			this->viewState = ViewState::BossMonsterDead;
 
-		// 	}
+			}
 
-		//  	break;
+		  	break;
 
 		case GameStateType::MonsterFromEvent:
+//		this->viewState = ViewState::MonsterDead;
 			playerStats.incXP(2);
-			this->viewState = ViewState::MonsterDead;
 			break;
 
 		default: break;
 
 	}
 
+	this->viewState = ViewState::MonsterDead;
 	
 }
 
