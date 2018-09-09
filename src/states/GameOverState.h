@@ -4,7 +4,7 @@
 #include "../utils/GameState.h"
 #include "../utils/Enums.h"
 
-class WinnerState : public GameState<GameContext, GameStateType> {
+class GameOverState : public GameState<GameContext, GameStateType> {
 
   private:
 

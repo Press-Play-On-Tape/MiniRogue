@@ -19,4 +19,6 @@ class BaseState : public GameState<GameContext, GameStateType> {
     void renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood);
     void renderBackground(StateMachine & machine, bool renderCorners);
     void drawItem(uint8_t position, uint8_t const *imageName);
+    void renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+
 };

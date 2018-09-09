@@ -11,14 +11,13 @@
 void FightMonstersState::activate(StateMachine & machine) {
   
 	auto & gameStats = machine.getContext().gameStats;
-	auto & playerStats = machine.getContext().playerStats;
 
 	setDiceSelection(machine, false);
 
 	switch (machine.getContext().gameState) {
 
 		case GameStateType::Monster:
-			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7); //SJH
+			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7); 
 			this->monsterStats.dmg = gameStats.getMonsterDMG();
 			break;
 
@@ -38,6 +37,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	nextState = ViewState::RollDice;
 
+	//playerStats.xpTrack = 4; //SJH
 	/*SJH*/ //this->monsterStats.hp = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemIce = 1;
 	/*SJH*/ //machine.getContext().playerStats.itemFire = 1;
@@ -153,13 +153,14 @@ void FightMonstersState::update(StateMachine & machine) {
 								
 								counter = 0;
 								this->lastState = ViewState::DiceSelection;
-								this->selectedElement = canUseWand(machine);
+								this->selectedElement = SelectedElement::Action;
 
 								if (dmg != 0) {
 
-									if (this->selectedElement == SelectedElement::None) {
+									this->viewState = ViewState::HighlightMonsterStats;
 
-										this->viewState = ViewState::HighlightMonsterStats;
+									if (playerStats.itemCount() == 0) {
+
 										if (this->ice == 0) {
 											this->nextState = ViewState::Defend;
 										}
@@ -169,15 +170,15 @@ void FightMonstersState::update(StateMachine & machine) {
 										
 									}
 									else {
-										this->viewState = ViewState::HighlightMonsterStats;
+
 										this->nextState = ViewState::WandSelection;
-										this->selectedElement = SelectedElement::Action;
+
 									}
 
 								}
 								else {
 
-									if (this->selectedElement == SelectedElement::None) {
+									if (playerStats.itemCount() == 0) {
 
 										if (this->ice == 0) {
 											this->viewState = ViewState::Defend;
@@ -188,12 +189,13 @@ void FightMonstersState::update(StateMachine & machine) {
 
 									}
 									else {
-										this->selectedElement = SelectedElement::Action;
+
 										this->viewState = ViewState::WandSelection;
+
 									}
 
 								}
-
+								
 							}
 
 						}
@@ -290,7 +292,10 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::MonsterDead:
 
-			if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER - 1; }
+			if (justPressed & A_BUTTON) { 
+				gameStats.monsterDefeated = true;
+        machine.changeState(gameStats.incRoom(playerStats)); 
+			}
 			
 			if (this->counter < FLASH_COUNTER) {
 
@@ -321,13 +326,12 @@ void FightMonstersState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
 			if (justPressed & A_BUTTON) {
-				machine.changeState(GameStateType::TitleScreen);
+				machine.changeState(GameStateType::PlayerDead);
 			}
 
 			break;
 
 		case ViewState::ItemIceUsed:
-		case ViewState::ItemHealingUsed:
 
 			if (justPressed & A_BUTTON) {
 				this->viewState = ViewState::RollDice;
@@ -337,6 +341,7 @@ void FightMonstersState::update(StateMachine & machine) {
 			
 		case ViewState::ItemFireUsed:
 		case ViewState::ItemPoisonUsed:
+		case ViewState::ItemHealingUsed:
 
 			if (justPressed & A_BUTTON) {
 				this->viewState = ViewState::Defend;
@@ -358,48 +363,45 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 
 		case GameStateType::Monster:
 			playerStats.incXP(gameStats.getMonsterReward());
-			this->viewState = ViewState::MonsterDead;
 			break;
 
-		// case GameStateType::BossMonster:
-		// 	{
-		// 		playerStats.incXP(2);
+		case GameStateType::BossMonster:
+		 	{
+				playerStats.incXP(2);
 
-		// 		if (playerStats.itemCount() == 2) {
-		// 			this->diceMonster = random(5, 7);
-		// 		}
-		// 		else {
-		// 			this->diceMonster = random(1, 7);
-		// 		}
+				if (playerStats.itemCount() == 2) {
+					this->diceMonster = random(5, 7);
+				}
+				else {
+					this->diceMonster = random(1, 7);
+				}
 
-		// 		switch (this->diceMonster) {
+				switch (this->diceMonster) {
 
-		// 			case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
-		// 			case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
-		// 			case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-		// 			case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
-		// 			case 5: playerStats.incArmour(1); break;
-		// 			case 6: playerStats.incXP(2); break;
+					case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
+					case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
+					case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
+					case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
+					case 5: playerStats.incArmour(1); break;
+					case 6: playerStats.incXP(2); break;
 
-		// 			break;
+					break;
 
-		// 		}
+				}
 
-		// 		this->viewState = ViewState::BossMonsterDead;
+			}
 
-		// 	}
-
-		//  	break;
+		  break;
 
 		case GameStateType::MonsterFromEvent:
 			playerStats.incXP(2);
-			this->viewState = ViewState::MonsterDead;
 			break;
 
 		default: break;
 
 	}
 
+	this->viewState = ViewState::MonsterDead;
 	
 }
 
@@ -412,8 +414,10 @@ void FightMonstersState::render(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
-
 	bool flash = arduboy.getFrameCountHalf(20);
+
+
+	// Draw background ..
 
   BaseState::renderBackground(machine, true);
 	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
@@ -466,6 +470,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
 
 	// Inventory ..
+
 	if (viewState == ViewState::WandSelection || lastState == ViewState::WandSelection) {
 
 		ardBitmap.drawCompressed(0, 19, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
@@ -479,8 +484,8 @@ void FightMonstersState::render(StateMachine & machine) {
 		font3x5.setCursor(21, 53);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Healing)]);
 
-		// if (this->ice > 0) 	arduboy.drawVerticalDottedLine(32, 35 + (this->ice * 3), 0, 2); 
-		// if (this->poison) 	arduboy.drawVerticalDottedLine(42, 51, 0, 2); 
+		//if (this->ice > 0) 	arduboy.drawVerticalDottedLine(32, 35 + (this->ice * 3), 0, 2); 
+		//if (this->poison) 	arduboy.drawVerticalDottedLine(42, 51, 0, 2); 
 
 	}
 
@@ -496,12 +501,16 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	// Marker ..
 	
-	if (this->viewState == ViewState::DiceSelection && ((this->selectedElement == SelectedElement::Action && flash) || this->selectedElement != SelectedElement::Action)) {
-		SpritesB::drawOverwrite(3 + (playerStats.xpTrack * 10), 53, Images::Marker, 0);
-	}
+	if ((this->selectedElement == SelectedElement::Action && flash) || (this->selectedElement != SelectedElement::Action)) {
 
-	if (this->viewState == ViewState::WandSelection && ((this->selectedElement == SelectedElement::Action && flash) || this->selectedElement != SelectedElement::Action)) {
-		SpritesB::drawOverwrite(26, 53, Images::Marker, 0);
+		uint8_t x = 0;
+		uint8_t y = 0;
+
+		if (this->viewState == ViewState::DiceSelection) 			{	x = 3 + (playerStats.xpTrack * 10);	y = 53;	}
+		if (this->viewState == ViewState::WandSelection) 			{ x = 26; y = 53;	}
+
+		if (x > 0) SpritesB::drawOverwrite(x, y, Images::Marker, 0);
+
 	}
 
 
@@ -512,19 +521,26 @@ void FightMonstersState::render(StateMachine & machine) {
 
 		  if (!flash) {
 			
+				uint8_t x = 0;
+				uint8_t y = 0;
+
 				switch (this->selectedElement) {
 
 					case SelectedElement::ItemFire ... SelectedElement::ItemHealing:
-						SpritesB::drawPlusMask(3, 22 + (static_cast<uint8_t>(this->selectedElement) * 10), Images::Dice_Highlight_SelfMasked, 0);
+						x = 3;
+						y = 22 + (static_cast<uint8_t>(this->selectedElement) * 10);
 						break;
 
 					case SelectedElement::Dice1 ... SelectedElement::Dice4:
-						SpritesB::drawPlusMask(3 + ((static_cast<uint8_t>(this->selectedElement) - 4) * 10), 52, Images::Dice_Highlight_SelfMasked, 0);
+						x = 3 + ((static_cast<uint8_t>(this->selectedElement) - 4) * 10);
+						y = 52;
 						break;
 
 					default: break;
 		
 				}
+
+				if (x > 0) SpritesB::drawPlusMask(x, y, Images::Dice_Highlight_SelfMasked, 0);
 
 			}
 
@@ -549,40 +565,47 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	switch (this->viewState) {
 
+		case ViewState::HighlightPlayerStats:
+	
+			if (this->nextState == ViewState::PlayerDead) {
+				BaseState::renderPlayerDead();
+			}
+
+			break;
+			
 		case ViewState::MonsterDead:
-		//case ViewState::BossMonsterDead:
+		case ViewState::MonsterDead_Wait:
+			{
+				bool gold = (machine.getContext().gameState == GameStateType::BossMonster);
+				bool armour = gold && (this->diceMonster == 5);
 
-			BaseState::renderPlayerStatistics(machine,
-				true, // Overall
-				true, // XP
-				false, // HP
-				false, // Armour
-				(machine.getContext().gameState == GameStateType::BossMonster), // Gold
-				false // Food
-			);
+				if (this->viewState != ViewState::MonsterDead_Wait) {
+					BaseState::renderPlayerStatistics(machine,
+						true, 	// Overall
+						true, 	// XP
+						false, 	// HP
+						armour, // Armour
+						gold, 	// Gold
+						false 	// Food
+					);
 
-			//if (this->viewState == ViewState::BossMonsterDead) {
+				}
+
+			}
+
+			if (machine.getContext().gameState == GameStateType::BossMonster) {
+
+    	 	BaseState::renderMessageBox(machine, 20, 23, 88, 26);
+			 	font3x5.setCursor(26, 28);
+			 	font3x5.print(F("You~killed~the~Boss.\n"));
+			 	font3x5.print(FlashString(bossDice_Captions[this->diceMonster - 1]));
+
+			}
+			else {
 			
 				BaseState::renderMonsterDead();
 
-			// }
-			// else {
-
-			// 	arduboy.fillRect(31, 23, 64, 26, BLACK);
-			// 	arduboy.drawFastHLine(34, 25, 58);
-			// 	arduboy.drawFastHLine(34, 46, 58);
-			// 	arduboy.drawFastVLine(33, 26, 20);
-			// 	arduboy.drawFastVLine(92, 26, 20);
-			// 	ardBitmap.drawCompressed(36, 26, Images::Chest_Dice[this->diceMonster - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-			// 	font3x5.setCursor(56, 28);
-			// 	font3x5.print(F("You killed the Boss!\n\n"));
-			// 	font3x5.print(FlashString(bossDice_Captions[ this->diceMonster]));
-
-			// }
-			break;
-
-		case ViewState::MonsterDead_Wait:
-			BaseState::renderMonsterDead();
+			}
 			break;
 
 		case ViewState::PlayerDead:
@@ -595,12 +618,7 @@ void FightMonstersState::render(StateMachine & machine) {
 		case ViewState::ItemPoisonUsed:
 		case ViewState::ItemHealingUsed:
 
-			arduboy.fillRect(15, 17, 100, 32, BLACK);
-			arduboy.drawFastHLine(18, 18, 94);
-			arduboy.drawFastVLine(17, 19, 28);
-			arduboy.drawFastHLine(18, 47, 94);
-			arduboy.drawFastVLine(112, 19, 28);
-
+   	 	BaseState::renderMessageBox(machine, 15, 17, 100, 32);
 			font3x5.setCursor(20, 21);
 			font3x5.print(FlashString(itemUsed_Captions[ static_cast<uint8_t>(this->viewState) - static_cast<uint8_t>(ViewState::ItemIceUsed) ]));
 			break;
@@ -700,14 +718,14 @@ uint8_t FightMonstersState::getMonsterDMG(StateMachine & machine) {
 // ----------------------------------------------------------------------------
 //  Does the player have a wand to use?  If so, select it ..
 //
-SelectedElement FightMonstersState::canUseWand(StateMachine & machine) {
+// SelectedElement FightMonstersState::canUseWand(StateMachine & machine) {
 
-	SelectedElement test = SelectedElement::None;
-	test = nextWandSelection(machine, test);
+// 	SelectedElement test = SelectedElement::None;
+// 	test = nextWandSelection(machine, test);
 
-	return (test < SelectedElement::Dice1 ? test : SelectedElement::None);
+// 	return (test < SelectedElement::Dice1 ? test : SelectedElement::None);
 
-}
+// }
 
 
 // ----------------------------------------------------------------------------

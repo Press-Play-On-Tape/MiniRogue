@@ -31,7 +31,7 @@ void TreasureState::update(StateMachine & machine) {
     case ViewState::InitialRoll:
     case ViewState::RollDice:
 
-      if (justPressed & A_BUTTON) { 
+      if (this->counter < sizeof(DiceDelay) && (justPressed & A_BUTTON)) { 
         
         counter = sizeof(DiceDelay); 
         
@@ -43,8 +43,7 @@ void TreasureState::update(StateMachine & machine) {
         }
 
       }
-      
-      
+            
 			if (this->counter < sizeof(DiceDelay)) {
 				
 				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
@@ -86,14 +85,12 @@ void TreasureState::update(StateMachine & machine) {
           playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
 
         }
-        else {
-
-          // Initial Roll ..
+        else {  // Initial Roll ..
 
           if (this->dice >= 5) {
             
-            // if (arduboy.justPressed(A_BUTTON)) {
             if (justPressed & A_BUTTON) {
+
               this->counter = 0;
               this->viewState = ViewState::RollDice;
             }
@@ -196,9 +193,10 @@ void TreasureState::render(StateMachine & machine) {
 	// Player statistics ..
 
   BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
+//    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
+    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
     (this->dice == 6), // XP
-    (this->dice == 4), // HP
+    (this->foundTreasure && this->dice == 4), // HP
     (this->dice == 5), // Armour
     true, // Gold
     false // Food
@@ -206,7 +204,7 @@ void TreasureState::render(StateMachine & machine) {
 
   if (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER && flash) {
 
-    font3x5.setCursor(10, 0);
+    font3x5.setCursor(8, 0);
     printCaption(this->dice - 1); 
 
   }

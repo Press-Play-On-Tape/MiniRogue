@@ -1,4 +1,4 @@
-#include "WinnerState.h"
+#include "GameOverState.h"
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
 #include "../utils/FadeEffects.h"
@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------------
 //  Initialise state ..
 //
-void WinnerState::activate(StateMachine & machine) {
+void GameOverState::activate(StateMachine & machine) {
 
   (void)machine;
 
@@ -17,7 +17,7 @@ void WinnerState::activate(StateMachine & machine) {
 // ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
-void WinnerState::update(StateMachine & machine) { 
+void GameOverState::update(StateMachine & machine) { 
 
 	auto & arduboy = machine.getContext().arduboy;
   auto justPressed = arduboy.justPressedButtons();
@@ -30,11 +30,22 @@ void WinnerState::update(StateMachine & machine) {
 // ----------------------------------------------------------------------------
 //  Render the state .. 
 //
-void WinnerState::render(StateMachine & machine) {
+void GameOverState::render(StateMachine & machine) {
 
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-  ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(0, 0, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
+	if (machine.getContext().gameState == GameStateType::PlayerDead) {
+
+		ardBitmap.drawCompressed(29, 21, Images::Title_Game_Over_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+	}
+	else {
+
+		ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+	}
 
 }

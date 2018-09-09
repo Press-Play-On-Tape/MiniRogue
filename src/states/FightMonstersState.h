@@ -24,7 +24,7 @@ char const * const itemUsed_Captions[] = {
 char const bossDice_Caption_01[] PROGMEM = " Gain~a~Fire~Wand!";
 char const bossDice_Caption_02[] PROGMEM = " Gain~an~Ice~Wand!";
 char const bossDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
-char const bossDice_Caption_04[] PROGMEM = "Heal~Potion~+~5HP!";
+char const bossDice_Caption_04[] PROGMEM = "Gain~a~Healing~Wand!";
 char const bossDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
 char const bossDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
 
@@ -46,7 +46,6 @@ enum class ViewState : uint8_t {
   WandSelection,
   Defend,
   MonsterDead,
-//  BossMonsterDead,
   MonsterDead_Wait,
   PlayerDead,
   ItemIceUsed,
@@ -97,7 +96,7 @@ class FightMonstersState : public BaseState {
     SelectedElement prevWandSelection(StateMachine & machine, SelectedElement index);
     SelectedElement nextWandSelection(StateMachine & machine, SelectedElement index);
 
-    SelectedElement canUseWand(StateMachine & machine);
+    //SelectedElement canUseWand(StateMachine & machine);
     uint8_t getMonsterDMG(StateMachine & machine);
     void setDiceSelection(StateMachine & machine, bool value);
     void monsterIsDead(StateMachine & machine);

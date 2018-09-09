@@ -104,7 +104,6 @@ void RestingState::render(StateMachine & machine) {
 
   if (flash) {
 
-    // uint8_t idx = static_cast<uint8_t>(this->selectedItem) * 4;
     uint8_t a = 0;
     uint8_t b = 48;
     uint8_t c = 0;

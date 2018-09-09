@@ -5,6 +5,18 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+void BaseState::renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, uint8_t w, uint8_t h) {
+
+	auto & arduboy = machine.getContext().arduboy;
+
+  arduboy.fillRect(x, y, w, h, BLACK);
+  arduboy.drawFastHLine(x + 3, y + 2, w - 6);
+  arduboy.drawFastHLine(x + 3, y + h - 3, w - 6);
+  arduboy.drawFastVLine(x + 2, y + 3, h - 6);
+  arduboy.drawFastVLine(x + w - 3, y + 3, h - 6);
+
+}
+
 void BaseState::renderPlayerDead() {
 
   Sprites::drawOverwrite(38, 25, Images::Message_PlayerDead, 0);
@@ -31,7 +43,6 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
-  auto & gameStats = machine.getContext().gameStats;
 
   const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
 
@@ -76,7 +87,7 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     if (overallFlash && flag && flash) {
       font3x5.setTextColor(BLACK);
-      arduboy.fillRect(119, (x * 9), 5, 7, WHITE);
+      arduboy.fillRect(119, (x * 9), (val < 10 ? 5 : 10), 7, WHITE);
     }
 
     font3x5.setCursor(120, (x * 9));

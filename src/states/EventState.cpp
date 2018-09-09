@@ -48,6 +48,8 @@ void EventState::update(StateMachine & machine) {
 
     case ViewState::UpdateStats:
 
+      if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER; justPressed = A_BUTTON; }
+
       if (this->counter < FLASH_COUNTER) {
 
         this->counter++;
@@ -75,7 +77,7 @@ void EventState::update(StateMachine & machine) {
 		case ViewState::PlayerDead:
 
       if (justPressed & A_BUTTON) { 
-        machine.changeState(GameStateType::TitleScreen);
+        machine.changeState(GameStateType::PlayerDead);
 			}
 
 			break;
@@ -90,7 +92,6 @@ void EventState::update(StateMachine & machine) {
 //
 void EventState::render(StateMachine & machine) {
 
-  auto & gameStats = machine.getContext().gameStats;
   auto & ardBitmap = machine.getContext().ardBitmap;
   
 
@@ -101,9 +102,6 @@ void EventState::render(StateMachine & machine) {
   }
 
   BaseState::renderBackground(machine, true);
-  // ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(89, 0, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  // ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   
   switch (this->viewState) {
 
