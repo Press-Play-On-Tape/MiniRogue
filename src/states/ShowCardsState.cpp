@@ -3,7 +3,7 @@
 #include "../utils/Utils.h"
 #include "../fonts/Font3x5.h"
 
-constexpr const static uint8_t STARVED_TO_DEATH = 255; 
+constexpr const static int8_t STARVED_TO_DEATH = -1; 
 constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 7; 
 constexpr const static uint8_t DEAL_DELAY = 5; 
 constexpr const static uint8_t CARD_SHOW_NONE = -1;

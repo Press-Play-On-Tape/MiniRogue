@@ -9,7 +9,7 @@
 //  Initialise state ..
 //
 void FightMonstersState::activate(StateMachine & machine) {
-  
+machine.getContext().playerStats.food = 0;//sjh  
 	auto & gameStats = machine.getContext().gameStats;
 
 	setDiceSelection(machine, false);
@@ -26,10 +26,10 @@ void FightMonstersState::activate(StateMachine & machine) {
 			this->monsterStats.dmg = gameStats.getBossMonsterDMG();
 			break;
 
-		case GameStateType::MonsterFromEvent:
-			this->monsterStats.hp = (gameStats.level + 1) + random(1, 7);
-			this->monsterStats.dmg = 5;
-			break;
+//sjh		// case GameStateType::MonsterFromEvent:
+		// 	this->monsterStats.hp = (gameStats.level + 1) + random(1, 7);
+		// 	this->monsterStats.dmg = 5;
+		// 	break;
 
 		default: break;
 

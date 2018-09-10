@@ -151,11 +151,12 @@ struct GameStats {
 
     switch (level) {
 
-      case 0 ... 1:    return 0;
-      case 2 ... 3:    return 1;
-      case 4 ... 6:    return 2;
-      case 7 ... 9:    return 3;
-      default:         return 4;
+      case 0 ... 1:     return 0;
+      case 2 ... 3:     return 1;
+      case 4 ... 6:     return 2;
+      case 7 ... 9:     return 3;
+      case 10 ... 14:   return 4;
+      default:          return 5;
 
     }
     
