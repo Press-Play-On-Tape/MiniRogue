@@ -9,7 +9,7 @@
 //  Initialise state ..
 //
 void FightMonstersState::activate(StateMachine & machine) {
-machine.getContext().playerStats.food = 0;//sjh  
+
 	auto & gameStats = machine.getContext().gameStats;
 
 	setDiceSelection(machine, false);
@@ -26,23 +26,16 @@ machine.getContext().playerStats.food = 0;//sjh
 			this->monsterStats.dmg = gameStats.getBossMonsterDMG();
 			break;
 
-//SJH
-		// case GameStateType::MonsterFromEvent:
-		// 	this->monsterStats.hp = (gameStats.level + 1) * 2;
-		// 	this->monsterStats.dmg = 5;
-		// 	break;
+		case GameStateType::MonsterFromEvent:
+			this->monsterStats.hp = (gameStats.level + 1) * 2;
+			this->monsterStats.dmg = 5;
+			break;
 
 		default: break;
 
 	}
 
 	nextState = ViewState::RollDice;
-
-	//playerStats.xpTrack = 4; //SJH
-	/*SJH*/ //this->monsterStats.hp = 1;
-	/*SJH*/ //machine.getContext().playerStats.itemIce = 1;
-	/*SJH*/ //machine.getContext().playerStats.itemFire = 1;
-	/*SJH*/ //machine.getContext().playerStats.itemPoison = 1;
 
 }
 

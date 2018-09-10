@@ -27,12 +27,11 @@ void ShowCardsState::activate(StateMachine & machine) {
 	this->numberOfCardsToDisplay = (gameStats.isLastLevelInArea() ? 7 : 6);
   arduboy.resetFrameCount();
 
-	if (gameStats.room == 0) {
+	if (gameStats.room <= 0) {
 
 		this->viewState = ViewState::DealCards;
 		this->displayCard = 0;
 		this->counter = NO_OF_CARDS_IN_FLIP;
-		gameStats.room = 1;
 
 
 		// Shuffle cards ..
@@ -53,14 +52,9 @@ void ShowCardsState::activate(StateMachine & machine) {
       playerStats.food = 0;
   		gameStats.room = 0;
 		}
-
-
-		//machine.getContext().cards[0] = GameStateType::BossMonster; 			//SJH
-		// machine.getContext().cards[1] = GameStateType::Trap; 		//SJH
-		// machine.getContext().cards[2] = GameStateType::Resting;		//SJH
-		// machine.getContext().cards[3] = GameStateType::Merchant;			//SJH
-		// machine.getContext().cards[4] = GameStateType::Treasure;				//SJH
-		// machine.getContext().cards[5] = GameStateType::Event;		//SJH
+		else {
+			gameStats.room = 1;
+		}
 
 	}
 	else {

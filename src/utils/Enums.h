@@ -68,7 +68,7 @@ struct PlayerStats {
   void incFood(int8_t val) {
   
     food = food + val;
-    food = (food < 0 ? 0 : (food > 10 ? 10 : food));
+    food = (food < -1 ? -1 : (food > 10 ? 10 : food));
 
   }
 
@@ -106,7 +106,6 @@ struct PlayerStats {
     items[2] = 0;
     items[3] = 0;
     xpTrack = 1;
-    //xpTrack = 2; /*sjh*/
     xp = 0;
 
   }
@@ -184,7 +183,7 @@ struct GameStats {
 
   GameStateType incRoom(PlayerStats & playerStats) { 
   
-    room++;
+    room++; 
 
     switch (room) {
 
@@ -199,10 +198,10 @@ struct GameStats {
     if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
 
       playerStats.incFood(-1);
+      room = 0;
 
       if (playerStats.food >= 0) {
 
-        room = 0;
         level++;
         selectedCard = 0;
         monsterDefeated = false;
