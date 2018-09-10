@@ -268,7 +268,8 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::Defend:
 
-			playerStats.hp = clamp(playerStats.hp - this->monsterStats.dmg + playerStats.armour, 0, 20);	
+			playerStats.hp = clamp(playerStats.hp - clamp(this->monsterStats.dmg - playerStats.armour, 0, 50), 0, 20);	
+
 			if (playerStats.hp == 0) {
 
 				this->viewState = ViewState::HighlightPlayerStats;
@@ -361,7 +362,8 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 
 		case GameStateType::BossMonster:
 		 	{
-				playerStats.incXP(2);
+				playerStats.incXP(gameStats.getAreaId() + 2);
+				playerStats.incGold(gameStats.getAreaId() < 2 ? 2 : 3);
 
 				if (playerStats.itemCount() == 2) {
 					this->diceMonster = random(5, 7);
@@ -597,7 +599,7 @@ void FightMonstersState::render(StateMachine & machine) {
 			}
 			else {
 			
-				BaseState::renderMonsterDead();
+				BaseState::renderMonsterDead(machine);
 
 			}
 			break;

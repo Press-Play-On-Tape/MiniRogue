@@ -15,7 +15,7 @@ class BaseState : public GameState<GameContext, GameStateType> {
   public:
 
     void renderPlayerDead();
-    void renderMonsterDead();
+    void renderMonsterDead(StateMachine & machine);
     void renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood);
     void renderBackground(StateMachine & machine, bool renderCorners);
     void drawItem(uint8_t position, uint8_t const *imageName);

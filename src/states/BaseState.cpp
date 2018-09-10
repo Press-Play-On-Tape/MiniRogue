@@ -23,9 +23,11 @@ void BaseState::renderPlayerDead() {
 
 }
 
-void BaseState::renderMonsterDead() {
+void BaseState::renderMonsterDead(StateMachine & machine) {
 
-  Sprites::drawOverwrite(39, 25, Images::Message_MonsterDead, 0);
+  renderMessageBox(machine, 34, 24, 60, 18);
+  font3x5.setCursor(40, 29);
+  font3x5.print(F("Enemy Killed"));
 
 }
 
