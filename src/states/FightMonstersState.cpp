@@ -27,7 +27,7 @@ machine.getContext().playerStats.food = 0;//sjh
 			break;
 
 //sjh		// case GameStateType::MonsterFromEvent:
-		// 	this->monsterStats.hp = (gameStats.level + 1) + random(1, 7);
+		// 	this->monsterStats.hp = (gameStats.level + 1) * 2;
 		// 	this->monsterStats.dmg = 5;
 		// 	break;
 
@@ -240,7 +240,7 @@ void FightMonstersState::update(StateMachine & machine) {
 						break;
 
 					case SelectedElement::ItemIce:
-						this->ice = 2;
+						this->ice = 1;
 						this->viewState = ViewState::ItemIceUsed;
 						playerStats.items[static_cast<uint8_t>(Wand::Ice)]--;
 						break;
@@ -710,7 +710,7 @@ uint8_t FightMonstersState::getMonsterDMG(StateMachine & machine) {
 		}
 	}
 
-	return damage + (poison ? 2 : 0);
+	return damage + (poison ? 5 : 0);
 
 }
 
