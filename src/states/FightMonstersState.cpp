@@ -26,7 +26,8 @@ machine.getContext().playerStats.food = 0;//sjh
 			this->monsterStats.dmg = gameStats.getBossMonsterDMG();
 			break;
 
-//sjh		// case GameStateType::MonsterFromEvent:
+//SJH
+		// case GameStateType::MonsterFromEvent:
 		// 	this->monsterStats.hp = (gameStats.level + 1) * 2;
 		// 	this->monsterStats.dmg = 5;
 		// 	break;

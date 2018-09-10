@@ -129,10 +129,12 @@ struct GameStats {
   bool monsterDefeated = false;
 
   void resetGame() {
+
     level = 0;
     room = 0;
     monsterDefeated = false;
     selectedCard = 0;
+
   }
 
   void dropArea() {
@@ -198,7 +200,7 @@ struct GameStats {
 
       playerStats.incFood(-1);
 
-      if (playerStats.food > 0) {
+      if (playerStats.food >= 0) {
 
         room = 0;
         level++;

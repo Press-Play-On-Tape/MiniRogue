@@ -189,6 +189,9 @@ void ShowCardsState::render(StateMachine & machine) {
 
 			}
 
+
+      // Draw card highlight ..
+      
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
 
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
