@@ -26,16 +26,16 @@ void Game::setup(void) {
 
 	auto & arduboy = this->context.arduboy;
 
+	arduboy.boot();
+	arduboy.flashlight();
+	arduboy.systemButtons();
+	arduboy.audio.begin();
+	arduboy.initRandomSeed();
+	arduboy.setFrameRate(60);
+
 	this->currentStateId = GameStateType::SplashScreen;
 	this->currentState = createState(this->currentStateId);
 	this->nextStateId = this->currentStateId;
-
-  arduboy.boot();
-  arduboy.flashlight();
-  arduboy.systemButtons();
-  arduboy.audio.begin();
-  arduboy.initRandomSeed();
-  arduboy.setFrameRate(60);
 
 	this->currentState->activate(*this);
 
