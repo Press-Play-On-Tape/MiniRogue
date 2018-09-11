@@ -173,17 +173,10 @@ struct GameStats {
 
   uint8_t getAreaId() {
 
-    switch (level) {
+	static const uint8_t ids[] PROGMEM = { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, };
 
-      case 0 ... 1:     return 0;
-      case 2 ... 3:     return 1;
-      case 4 ... 6:     return 2;
-      case 7 ... 9:     return 3;
-      case 10 ... 14:   return 4;
-      default:          return 5;
+	return (level < 15) ? pgm_read_byte(&ids[level]) : 5;
 
-    }
-    
   }
 
   bool isLastLevelInArea() {
