@@ -128,7 +128,7 @@ struct PlayerStats {
     items[1] = 0;
     items[2] = 0;
     items[3] = 0;
-    xpTrack = 3; //1; sjh
+    xpTrack = 1;
     xp = 0;
 
   }
@@ -152,10 +152,10 @@ struct GameStats {
 
   void resetGame() {
 
-    level = 13; //sjh 0
-    room = 4; //SJH 0 
+    level = 0;
+    room = 0;
     monsterDefeated = false;
-    selectedCard = 4; //0; sjh 0
+    selectedCard = 0;
 
   }
 

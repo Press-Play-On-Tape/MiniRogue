@@ -706,19 +706,6 @@ uint8_t FightMonstersState::getMonsterDMG(StateMachine & machine) {
 
 
 // ----------------------------------------------------------------------------
-//  Does the player have a wand to use?  If so, select it ..
-//
-// SelectedElement FightMonstersState::canUseWand(StateMachine & machine) {
-
-// 	SelectedElement test = SelectedElement::None;
-// 	test = nextWandSelection(machine, test);
-
-// 	return (test < SelectedElement::Dice1 ? test : SelectedElement::None);
-
-// }
-
-
-// ----------------------------------------------------------------------------
 //  Clear dice selection array ready to roll again ..
 //
 void  FightMonstersState::setDiceSelection(StateMachine & machine, bool value) {

@@ -29,19 +29,54 @@ void TreasureState::update(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::InitialRoll:
+
+      if (this->counter < sizeof(DiceDelay) && (justPressed & A_BUTTON)) { 
+        
+        counter = sizeof(DiceDelay); 
+        this->dice = random(1, 7);
+
+      }
+            
+			if (this->counter < sizeof(DiceDelay)) {
+				
+				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
+
+					this->dice = random(1, 7);
+					this->counter++;
+					arduboy.resetFrameCount();
+
+				}
+
+			}
+			else {
+
+        if (this->dice >= 5) {
+          
+          if (justPressed & A_BUTTON) {
+
+            this->counter = 0;
+            this->viewState = ViewState::RollDice;
+          }
+
+        }
+        else {
+
+          playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
+          this->counter = 0;
+          this->viewState = ViewState::UpdateStats;   
+
+        }
+
+			}
+			break;
+
     case ViewState::RollDice:
 
       if (this->counter < sizeof(DiceDelay) && (justPressed & A_BUTTON)) { 
         
         counter = sizeof(DiceDelay); 
-        
-        // if (playerStats.itemCount() == 2) {
-        //   this->dice = random(5, 7);
-        // }
-        // else {
-          this->dice = random(1, 7);
-          if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
-        // }
+        this->dice = random(1, 7);
+        if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
 
       }
             
@@ -59,49 +94,25 @@ void TreasureState::update(StateMachine & machine) {
 
 			}
 			else {
+          
+        this->foundTreasure = true;
 
-        if (this->viewState == ViewState::RollDice) {
-            
-          this->foundTreasure = true;
-          uint8_t itemCount = playerStats.itemCount();
+        switch (this->dice) {
 
-          switch (this->dice) {
-
-  					case 1 ... 4:   playerStats.items[this->dice - 1]++; break;
-            case 5:         playerStats.incArmour(1); break;
-            case 6:         playerStats.incXP(2); break;
-            case 7:         playerStats.incGold(2); break;
-
-          }
-            
-          this->counter = 0;
-          this->viewState = ViewState::UpdateStats;
-          playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
+          case 1 ... 4:   playerStats.items[this->dice - 1]++; break;
+          case 5:         playerStats.incArmour(1); break;
+          case 6:         playerStats.incXP(2); break;
+          case 7:         playerStats.incGold(2); break;
 
         }
-        else {  // Initial Roll ..
-
-          if (this->dice >= 5) {
-            
-            if (justPressed & A_BUTTON) {
-
-              this->counter = 0;
-              this->viewState = ViewState::RollDice;
-            }
-
-          }
-          else {
-
-            playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
-            this->counter = 0;
-            this->viewState = ViewState::UpdateStats;   
-
-          }
-
-        }
+          
+        this->counter = 0;
+        this->viewState = ViewState::UpdateStats;
+        playerStats.incGold(gameStats.monsterDefeated ? 2 : 1);
 
 			}
 			break;
+
 
     case ViewState::UpdateStats:
 
@@ -187,7 +198,6 @@ void TreasureState::render(StateMachine & machine) {
 	// Player statistics ..
 
   BaseState::renderPlayerStatistics(machine,
-//    (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER), // Overall
     (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
     (this->dice == 6), // XP
     (this->foundTreasure && this->dice == 4), // HP
