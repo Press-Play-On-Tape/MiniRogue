@@ -161,13 +161,9 @@ struct GameStats {
 
   void dropArea() {
 
-    switch (level) {
-      
-      case 0 ... 3:     level = level + 2;    break;
-      case 4 ... 9:     level = level + 3;    break;
-      case 10 ... 14:   break;
+	static const uint8_t drops[] PROGMEM = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, };
 
-    }
+	level = (level < 10) ? (level + pgm_read_byte(&drops[level])) : level;
 
   }
 
