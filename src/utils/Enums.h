@@ -252,17 +252,10 @@ struct GameStats {
 
   uint8_t getBossMonsterDMG() {
 
-    switch (getAreaId()) {
+	static const uint8_t damage[] PROGMEM = { 3, 5, 7, 9, 12, };
 
-      case 0:   return 3;
-      case 1:   return 5;
-      case 2:   return 7;
-      case 3:   return 9;
-      case 4:   return 12;
-      
-      default:  return 0;
-
-    }
+	auto areaId = getAreaId();
+	return (areaId < 5) ? pgm_read_byte(&damage[areaId]) : 0;
 
   }
   
