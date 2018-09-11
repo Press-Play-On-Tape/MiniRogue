@@ -1,10 +1,7 @@
 #pragma once
 
-#include <stdint.h>
 #include <stddef.h>
-#include "GameContext.h"
-#include "GameState.h"
-#include "GameStateMachine.h"
+#include <Print.h>
 
 // ----------------------------------------------------------------------------
 //  Swap two elements .. 
@@ -30,9 +27,9 @@ template<typename T> T absT(const T & v) {
 // ----------------------------------------------------------------------------
 //  Clamp the value within the range .. 
 //
-template <typename T> T clamp(const T& value, const T& low, const T& high) {
+template <typename T> inline T clamp(const T& value, const T& low, const T& high) {
 
-  return value < low ? low : (value > high ? high : value); 
+  return (value < low) ? low : (value > high) ? high : value; 
 
 }
 
