@@ -268,7 +268,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 		case ViewState::Defend:
 
-			playerStats.hp = clamp(playerStats.hp - clamp(this->monsterStats.dmg - playerStats.armour, 0, 50), 0, 20);	
+			playerStats.decHP(clamp(this->monsterStats.dmg - playerStats.armour, 0, 50));
 
 			if (playerStats.hp == 0) {
 

@@ -102,7 +102,7 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     uint8_t position = 0;
 
-    for (uint8_t x = 0; x < 3; x ++ ) {
+    for (uint8_t x = 0; x < 4; x ++ ) {
 
       if (playerStats.items[x] > 0) { drawItem(position, Images::Wands[x]); position++; }
       if (playerStats.items[x] > 1) { drawItem(position, Images::Wands[x]); position++; }

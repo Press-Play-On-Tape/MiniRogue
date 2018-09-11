@@ -37,7 +37,7 @@ void RestingState::update(StateMachine & machine) {
             break;
 
           case SelectedItem::Heal:
-            playerStats.hp = playerStats.hp + 2;
+            playerStats.incHP(2);
             break;
 
         }

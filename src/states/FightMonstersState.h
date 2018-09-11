@@ -9,7 +9,7 @@ struct MonsterStats {
   uint8_t dmg;
 };
 
-char const itemUsed_Caption_01[] PROGMEM = " You~used~an~ice~spell.\n  ~Monster~is~frozen\n    ~for~two~turns.";
+char const itemUsed_Caption_01[] PROGMEM = " You~used~an~ice~spell.\n  ~Monster~is~frozen\n     for~one~turn.";
 char const itemUsed_Caption_02[] PROGMEM = " You~used~a~fire~spell.\n   ~Monster~loses~10\n      HP~points.";
 char const itemUsed_Caption_03[] PROGMEM = "~You~used~a~poison~spell.\n  ~Deal~2~extra~damage\n       per~turn.";
 char const itemUsed_Caption_04[] PROGMEM = "You~used~a~healing~spell.\n   ~You~have~gained~8\n    ~extra~HP~points.";
