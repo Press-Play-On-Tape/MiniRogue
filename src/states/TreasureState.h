@@ -24,7 +24,6 @@ class TreasureState : public BaseState {
     uint8_t counter = 0;
     uint8_t dice = 0;
     bool foundTreasure = false;
-    bool substituteGold = false;
 
   public:
 

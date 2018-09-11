@@ -97,7 +97,6 @@ class FightMonstersState : public BaseState {
     SelectedElement prevWandSelection(StateMachine & machine, SelectedElement index);
     SelectedElement nextWandSelection(StateMachine & machine, SelectedElement index);
 
-    //SelectedElement canUseWand(StateMachine & machine);
     uint8_t getMonsterDMG(StateMachine & machine);
     void setDiceSelection(StateMachine & machine, bool value);
     void monsterIsDead(StateMachine & machine);

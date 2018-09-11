@@ -49,9 +49,11 @@ void TitleScreenState::update(StateMachine & machine) {
 		playerStats.hp = pgm_read_byte(&InitSettings[idx++]);
 		playerStats.gold = pgm_read_byte(&InitSettings[idx++]);
 		playerStats.food = pgm_read_byte(&InitSettings[idx]);
-		playerStats.xpTrack = 3; //1; sjh
+		playerStats.xpTrack = 1;
 
 		machine.getContext().resetGame();
+
+//  machine.getContext().cards[0] = GameStateType::Treasure;    //sjh
 
 		machine.changeState(GameStateType::ShowCards);
 		
@@ -75,34 +77,10 @@ void TitleScreenState::render(StateMachine & machine) {
 	ardBitmap.drawCompressed(19, 56, Images::Title_Levels_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 	{
-		uint8_t x = 0;
-		uint8_t w = 0;
 
-		switch (gameStats.skillLevel) {
-
-			case 0:
-				x = 19;
-				w = 15; 
-				break;
-
-			case 1:
-				x = 42;
-				w = 23; 
-				break;
-
-			case 2:
-				x = 74;
-				w = 14; 
-				break;
-
-			case 3:
-				x = 96;
-				w = 11; 
-				break;
-
-		}
-				
-		arduboy.drawFastHLine(x, 63, w);
+    static const uint8_t xPos[] PROGMEM = { 19, 42, 74, 96 };
+    static const uint8_t width[] PROGMEM = { 15, 23, 14, 11 };
+		arduboy.drawFastHLine(pgm_read_byte(&xPos[gameStats.skillLevel]), 63, pgm_read_byte(&width[gameStats.skillLevel]));
 
 	}
 
