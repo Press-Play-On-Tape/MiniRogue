@@ -49,7 +49,7 @@ Mini Rogue has four starting levels that dictate the amount of armour, HP, gold 
 These statistics and others are displayed on the right-hand side of the screen, as shown below.
 
 
-![Screenshot](/distributable/Images/MR_Icons_001.png)&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
+![Screenshot](/distributable/Images/MR_Icons_001.png =50x22)&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ability to fight the various monsters you will find in the dungeon, refer **Monster Card** and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Boss Monster Card** below.
 
