@@ -71,8 +71,7 @@ void TitleScreenState::render(StateMachine & machine) {
 	auto & gameStats = machine.getContext().gameStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	BaseState::renderBackground(machine);
 	ardBitmap.drawCompressed(28, 17, Images::Title_Mini_Rogue_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(19, 56, Images::Title_Levels_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 

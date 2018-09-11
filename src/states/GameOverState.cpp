@@ -34,8 +34,7 @@ void GameOverState::render(StateMachine & machine) {
 
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	BaseState::renderBackground(machine);
 
 	if (machine.getContext().gameState == GameStateType::PlayerDead) {
 

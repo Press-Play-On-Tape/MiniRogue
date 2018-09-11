@@ -3,8 +3,9 @@
 #include "../utils/GameContext.h"
 #include "../utils/GameState.h"
 #include "../utils/Enums.h"
+#include "BaseState.h"
 
-class GameOverState : public GameState<GameContext, GameStateType> {
+class GameOverState : public BaseState {
 
   private:
 
