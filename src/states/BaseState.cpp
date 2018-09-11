@@ -11,6 +11,25 @@ void BaseState::renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, u
   ardBitmap.drawCompressed(x, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(x, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_NONE);
 
+  ardBitmap.drawCompressed(x + 9, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+  ardBitmap.drawCompressed(x + 9, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
+  ardBitmap.drawCompressed(x, y + 16, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_VERTICAL);
+  ardBitmap.drawCompressed(x, y + 16, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_VERTICAL);
+
+  ardBitmap.drawCompressed(x + 9, y + 16, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HOR_VER);
+  ardBitmap.drawCompressed(x + 9, y + 16, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_HOR_VER);
+
+}
+
+void BaseState::renderLargeSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i) {
+
+  auto & ardBitmap = machine.getContext().ardBitmap;
+  ardBitmap.drawCompressed(x, y, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(x + 16, y, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+  ardBitmap.drawCompressed(x, y + 16, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_VERTICAL);
+  ardBitmap.drawCompressed(x + 16, y + 16, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_HOR_VER);
+
 }
 
 void BaseState::renderBackground(StateMachine & machine) {
