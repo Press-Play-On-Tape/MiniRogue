@@ -49,23 +49,23 @@ Mini Rogue has four starting levels that dictate the amount of armour, HP, gold 
 These statistics and others are displayed on the right-hand side of the screen, as shown below.
 
 
-![MR_Icons_001|50x22](upload://h2Rn9r8G6aeGu37BSY8QRpL7Sjd.png)&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
+<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/Images/MR_Icons_001.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ability to fight the various monsters you will find in the dungeon, refer **Monster Card** and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Boss Monster Card** below.
 
-![MR_Icons_002|50x22](upload://uJZk8sSlH0WOOr4vspNyECBBBzp.png)&nbsp;&nbsp;&nbsp;&nbsp;**XP**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You will be rewarded XP as you defeat monsters or stumble across treasures in the 
+<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/Images/MR_Icons_002.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**XP**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You will be rewarded XP as you defeat monsters or stumble across treasures in the 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dungeon.
 
-![MR_Icons_003|50x22](upload://LYQW7BsRXDviJ5lQNyV2QHM4js.png)&nbsp;&nbsp;&nbsp;&nbsp;**HP**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your health will take a beating as you battle monsters but you can top it up when you visit 
+<img src="/distributable/Images/MR_Icons_003.png" data-canonical-src="/distributable/Images/MR_Icons_003.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**HP**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your health will take a beating as you battle monsters but you can top it up when you visit 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a Merchant or discover it hidden in the dungeon.
 
-![MR_Icons_004|50x22](upload://2KkBS3maDQAOJdNHKj4TnfnxuMH.png)&nbsp;&nbsp;&nbsp;&nbsp;**Armour**: Armour will protect you when you inevitably encounter a monster in the dungeon. Armour
+<img src="/distributable/Images/MR_Icons_004.png" data-canonical-src="/distributable/Images/MR_Icons_004.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Armour**: Armour will protect you when you inevitably encounter a monster in the dungeon. Armour
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can be bought at the Merchant or destroyed through acid rain.
 
-![MR_Icons_005|50x22](upload://eZmYViV1whf3W3ViS1wnckZ42vJ.png)&nbsp;&nbsp;&nbsp;&nbsp;**Gold**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can buy your way out of trouble with enough gold. Gain extra gold be killing monsters 
+<img src="/distributable/Images/MR_Icons_005.png" data-canonical-src="/distributable/Images/MR_Icons_005.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Gold**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can buy your way out of trouble with enough gold. Gain extra gold be killing monsters 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and finding treasures.
 
-![MR_Icons_006|50x22](upload://rHFHEFRg5GKJhOCt7Ej1nmYr29i.png)&nbsp;&nbsp;&nbsp;&nbsp;**Food**:&nbsp;&nbsp;&nbsp;&nbsp;Food is essential to life in the dungeon.  You will need consume a food ration every time
+<img src="/distributable/Images/MR_Icons_006.png" data-canonical-src="/distributable/Images/MR_Icons_006.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Food**:&nbsp;&nbsp;&nbsp;&nbsp;Food is essential to life in the dungeon.  You will need consume a food ration every time
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uou complete an area in the dungeon.
 
 <br/>
@@ -87,7 +87,7 @@ Each level in the dungeon has a number of areas and each area has a number of ro
 
 When starting a level or area, the room cards are dealt in the pattern shown below. If the current area is not the last one for the level, the last card shown will be a ‘delving’ card that will take you to the next area (as shown on the left). If not, the last card will be a Boss Monster which will hamper your movement between areas (as shown on the right).
 
-![MR_Init_001|320x160](upload://9ncT1UqqftF2L77WKTtsfaGLOGG.png)&nbsp;&nbsp; ![MR_Init_002|320x160](upload://m8nLSEoKXfUlx5jPi97HzIsHtHK.png) 
+<img src="/distributable/Images/MR_Init_001.png" data-canonical-src="/distributable/Images/MR_Init_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Init_002.png" data-canonical-src="/distributable/Images/MR_Init_002.png" width="320" height="160" />
 
 As you can see, the current level and area are displayed in the top left hand corner.
 
@@ -97,15 +97,15 @@ Once you have completed the last room in an area you must consume 1 Food before 
 
 The dungeon levels and area are laid out as shown below:
 
-![MR_Levels_001|200x320](upload://2a5Oe32LDfTSVgdtP6O2zeb8uRz.png) 
+<img src="/distributable/Images/MR_Levels_001.png" data-canonical-src="/distributable/Images/MR_Levels_001.png" width="200" height="320" />
 
 ### The Rooms
 
 **Treasure Card**
 
-![MR_Treasure_001|320x160](upload://qNjkyufR9qsKCavujDhyQjncFYb.png)&nbsp;&nbsp; ![MR_Treasure_002|320x160](upload://55o3zKCZy8GZajcXRHKdnMnFs4I.png) 
+<img src="/distributable/Images/MR_Treasure_001.png" data-canonical-src="/distributable/Images/MR_Treasure_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Treasure_002.png" data-canonical-src="/distributable/Images/MR_Treasure_002.png" width="320" height="160" /> 
 
-![MR_Treasure_003|320x160](upload://bF7yUOORqx468U73kfZ10ceL6QZ.png) 
+<img src="/distributable/Images/MR_Treasure_003.png" data-canonical-src="/distributable/Images/MR_Treasure_003.png" width="320" height="200" />
 
 On your journey, you will find forgotten stashes of loot in varying quantities. Monsters still protect the most valuable treasures in the dungeon.
 
@@ -129,9 +129,9 @@ Possible rewards include:
 
 **Trap Card**
 
-![MR_Trap_002|320x160](upload://ki9fQClBAo6npgTZipdqLK9sOxO.png)&nbsp;&nbsp; ![MR_Trap_001|320x160](upload://vs8i3aZpcysNBhgBZrTxddpTmTV.png) 
+<img src="/distributable/Images/MR_Trap_001.png" data-canonical-src="/distributable/Images/MR_Trap_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Trap_002.png" data-canonical-src="/distributable/Images/MR_Trap_002.png" width="320" height="160" />
 
-![MR_Trap_003|320x160](upload://mlo92sl0XAKVW6oRNxRT5D4mT4q.png) 
+<img src="/distributable/Images/MR_Trap_003.png" data-canonical-src="/distributable/Images/MR_Trap_003.png" width="320" height="200" />
 
 Dungeon means danger, and danger sometimes means traps. Many adventurers perished not through combat, but through lack of scrutiny. You can avoid a trap if you are sufficiently skilled. This is determined by a roll of a die – if the result is less than or equal to your rank you can skip the trap. If not, you must endure one of the following traps:
 
@@ -151,7 +151,7 @@ Dungeon means danger, and danger sometimes means traps. Many adventurers perishe
 
 **Event Card**
 
-![MR_Event_001|320x160](upload://7GFoj3LiZjmFfkkGtOvuP9BX3aw.png) 
+<img src="/distributable/Images/MR_Event_001.png" data-canonical-src="/distributable/Images/MR_Event_001.png" width="320" height="160" />
 
 You may even stumble upon items of great assistance. Most of the rewards are good but occasionally you will be forced to fight a monster.
 
@@ -171,7 +171,7 @@ You may even stumble upon items of great assistance. Most of the rewards are goo
 
 **Resting Card**
 
-![MR_Rest_001|320x160](upload://o0zQxDxmKJ3yqx6FHs8TyIAoIoS.png) 
+<img src="/distributable/Images/MR_Rest_001.png" data-canonical-src="/distributable/Images/MR_Rest_001.png" width="320" height="160" /> 
 
 Every man needs respite, for death could come anytime soon. When resting, you may choose only one of the available options by scrolling the highlight and pressing the A button to select.
 
@@ -185,7 +185,7 @@ Every man needs respite, for death could come anytime soon. When resting, you ma
 
 **Merchant Card**
 
-![MR_Merchant_001|320x160](upload://lM5LYYk6Alhbx7U0R5doM91HyGN.png)&nbsp;&nbsp; ![MR_Merchant_002|320x160](upload://kcqXAAalZoMVIcP7zRJlpdIZ0MB.png) 
+<img src="/distributable/Images/MR_Merchant_001.png" data-canonical-src="/distributable/Images/MR_Merchant_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Merchant_002.png" data-canonical-src="/distributable/Images/MR_Merchant_001.png" width="320" height="160" /> 
 
 Some unsettling beings that call themselves merchants can be seen wandering in the dungeon. Surely a peculiar place for them to be doing business..
 
@@ -196,16 +196,16 @@ Scroll through the available choices using the **Up** and **Down Buttons**. Comm
 | Item | Buy Price | Sell Price | Effect |
 | --- | --- | --- | --- |
 | Ration | 1 Gold | | Gain 1 Food. |
-|Health Potion|1 Gold||Gain 1 HP.|
-|Big Health Potion&nbsp;&nbsp;|3 Gold||Gain 4 HP.|
-|Armor Piece|6 Gold|3 Gold|Gain 1 Armour.|
-|Any 1 Spell|8 Gold|4 Gold|Gain any 1 Spell.|
+| Health Potion|1 Gold||Gain 1 HP.|
+| Big Health Potion&nbsp;&nbsp;|3 Gold||Gain 4 HP.|
+| Armor Piece|6 Gold|3 Gold|Gain 1 Armour.|
+| Any 1 Spell|8 Gold|4 Gold|Gain any 1 Spell.|
 
 <br/>
 
 **Monster Card**
 
-![MR_Monster_001|320x160](upload://bO4XEzYXUmDFGZIgT0EoojUean2.png)&nbsp;&nbsp; ![MR_Monster_002|320x160](upload://rivGquMe1ykAz2gkcO1meJBTUuR.png) 
+<img src="/distributable/Images/MR_Monster_001.png" data-canonical-src="/distributable/Images/MR_Monster_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Monster_002.png" data-canonical-src="/distributable/Images/MR_Monster_002.png" width="320" height="160" />
 
 You have encountered a Monster and must defeat him in order to progress. The monsters HP increases in line with your own level and is calculated by adding a dice roll to the level value. If you are on level 2, the monster could have an HP in the range of 3 to 8 (ie. level 2 plus a dice roll of 1 – 6). The damage a monster inflicts and the reward you will receive if you defeat it are also dependent on your level and are detailed in the card below:
 
@@ -225,7 +225,7 @@ The monster will now attack. The damage inflicted is shown in the top left hand 
 Play continues until you or the monster is dead. If you are victorious then you will be rewarded with gold and XP before returning to the dungeon.
 
 | Level | HP&nbsp;&nbsp;&nbsp; | Reward&nbsp;&nbsp;&nbsp; |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | 1 Undead Soldier | 2 | 1XP |
 | 2 Skeleton | 2 | 1XP |
 | 3 Undead Knight | 6 | 2XP |
@@ -236,7 +236,7 @@ Play continues until you or the monster is dead. If you are victorious then you 
 
 **Boss Monster Card**
 
-![MR_Boss_001|320x160](upload://oCRsZY76OdOITIVPCDTm9h0E5Gf.png)&nbsp;&nbsp; ![MR_Boss_002|320x160](upload://3kHuePo3OgTuojtICQ22IG54SmJ.png) 
+<img src="/distributable/Images/MR_Boss_001.png" data-canonical-src="/distributable/Images/MR_Boss_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Boss_002.png" data-canonical-src="/distributable/Images/MR_Boss_002.png" width="320" height="160" />
 
 These fallen titans were once great Lords. Only cats and hags know their original identities, for their names have been forsaken.
 
