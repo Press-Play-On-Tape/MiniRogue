@@ -161,29 +161,18 @@ struct GameStats {
 
   void dropArea() {
 
-    switch (level) {
-      
-      case 0 ... 3:     level = level + 2;    break;
-      case 4 ... 9:     level = level + 3;    break;
-      case 10 ... 14:   break;
+	static const uint8_t drops[] PROGMEM = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, };
 
-    }
+	level = (level < 10) ? (level + pgm_read_byte(&drops[level])) : level;
 
   }
 
   uint8_t getAreaId() {
 
-    switch (level) {
+	static const uint8_t ids[] PROGMEM = { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, };
 
-      case 0 ... 1:     return 0;
-      case 2 ... 3:     return 1;
-      case 4 ... 6:     return 2;
-      case 7 ... 9:     return 3;
-      case 10 ... 14:   return 4;
-      default:          return 5;
+	return (level < 15) ? pgm_read_byte(&ids[level]) : 5;
 
-    }
-    
   }
 
   bool isLastLevelInArea() {
@@ -263,17 +252,10 @@ struct GameStats {
 
   uint8_t getBossMonsterDMG() {
 
-    switch (getAreaId()) {
+	static const uint8_t damage[] PROGMEM = { 3, 5, 7, 9, 12, };
 
-      case 0:   return 3;
-      case 1:   return 5;
-      case 2:   return 7;
-      case 3:   return 9;
-      case 4:   return 12;
-      
-      default:  return 0;
-
-    }
+	auto areaId = getAreaId();
+	return (areaId < 5) ? pgm_read_byte(&damage[areaId]) : 0;
 
   }
   
