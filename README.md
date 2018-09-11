@@ -49,25 +49,23 @@ Mini Rogue has four starting levels that dictate the amount of armour, HP, gold 
 These statistics and others are displayed on the right-hand side of the screen, as shown below.
 
 
-<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/Images/MR_Icons_001.png" width="200" height="22" />
-
-![Screenshot](/distributable/Images/MR_Icons_001.png | width=50)&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
+<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/Images/MR_Icons_001.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Rank**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you accumulate experience (XP) in the dungeon your rank.  This will assist in your
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ability to fight the various monsters you will find in the dungeon, refer **Monster Card** and
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Boss Monster Card** below.
 
-![MR_Icons_002|50x22](upload://uJZk8sSlH0WOOr4vspNyECBBBzp.png)&nbsp;&nbsp;&nbsp;&nbsp;**XP**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You will be rewarded XP as you defeat monsters or stumble across treasures in the 
+<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/Images/MR_Icons_002.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**XP**: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You will be rewarded XP as you defeat monsters or stumble across treasures in the 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dungeon.
 
-![MR_Icons_003|50x22](upload://LYQW7BsRXDviJ5lQNyV2QHM4js.png)&nbsp;&nbsp;&nbsp;&nbsp;**HP**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your health will take a beating as you battle monsters but you can top it up when you visit 
+<img src="/distributable/Images/MR_Icons_003.png" data-canonical-src="/distributable/Images/MR_Icons_003.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**HP**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your health will take a beating as you battle monsters but you can top it up when you visit 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a Merchant or discover it hidden in the dungeon.
 
-![MR_Icons_004|50x22](upload://2KkBS3maDQAOJdNHKj4TnfnxuMH.png)&nbsp;&nbsp;&nbsp;&nbsp;**Armour**: Armour will protect you when you inevitably encounter a monster in the dungeon. Armour
+<img src="/distributable/Images/MR_Icons_004.png" data-canonical-src="/distributable/Images/MR_Icons_004.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Armour**: Armour will protect you when you inevitably encounter a monster in the dungeon. Armour
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can be bought at the Merchant or destroyed through acid rain.
 
-![MR_Icons_005|50x22](upload://eZmYViV1whf3W3ViS1wnckZ42vJ.png)&nbsp;&nbsp;&nbsp;&nbsp;**Gold**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can buy your way out of trouble with enough gold. Gain extra gold be killing monsters 
+<img src="/distributable/Images/MR_Icons_005.png" data-canonical-src="/distributable/Images/MR_Icons_005.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Gold**:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can buy your way out of trouble with enough gold. Gain extra gold be killing monsters 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and finding treasures.
 
-![MR_Icons_006|50x22](upload://rHFHEFRg5GKJhOCt7Ej1nmYr29i.png)&nbsp;&nbsp;&nbsp;&nbsp;**Food**:&nbsp;&nbsp;&nbsp;&nbsp;Food is essential to life in the dungeon.  You will need consume a food ration every time
+<img src="/distributable/Images/MR_Icons_006.png" data-canonical-src="/distributable/Images/MR_Icons_006.png" width="50" height="22" />&nbsp;&nbsp;&nbsp;&nbsp;**Food**:&nbsp;&nbsp;&nbsp;&nbsp;Food is essential to life in the dungeon.  You will need consume a food ration every time
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uou complete an area in the dungeon.
 
 <br/>
