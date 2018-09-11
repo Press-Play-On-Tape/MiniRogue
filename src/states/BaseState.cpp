@@ -5,11 +5,11 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
-void BaseState::renderSpinningCard(StateMachine & machine, uint8_t x, uint8_t y, uint8_t i) {
+void BaseState::renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i) {
 
   auto & ardBitmap = machine.getContext().ardBitmap;
   ardBitmap.drawCompressed(x, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_NONE);
-ardBitmap.drawCompressed(x, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(x, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_NONE);
 
 }
 
