@@ -102,18 +102,6 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     uint8_t position = 0;
 
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 0) { drawItem(position, Images::IceWand); position++; }
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Ice)] > 1) { drawItem(position, Images::IceWand); position++; }
-
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 0) { drawItem(position, Images::FireWand); position++; }
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Fire)] > 1) { drawItem(position, Images::FireWand); position++; }
-
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 0) { drawItem(position, Images::PoisonWand); position++; }
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Poison)] > 1) { drawItem(position, Images::PoisonWand); position++; }
-
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Healing)] > 0) { drawItem(position, Images::HealingWand); position++; }
-    // if (playerStats.items[static_cast<uint8_t>(Wand::Healing)] > 1) { drawItem(position, Images::HealingWand); position++; }
-
     for (uint8_t x = 0; x < 3; x ++ ) {
 
       if (playerStats.items[x] > 0) { drawItem(position, Images::Wands[x]); position++; }
