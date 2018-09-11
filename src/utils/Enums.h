@@ -50,39 +50,59 @@ enum class Wand : uint8_t {
 
 struct PlayerStats {
 
-  int8_t armour;
+  uint8_t armour;
   int8_t food;
-  int8_t gold;
-  int8_t hp;
+  uint8_t gold;
+  uint8_t hp;
   uint8_t xpTrack = 1; 
   uint8_t xp;
   uint8_t items[4];
 
-  void incArmour(int8_t val) {
-  
-    armour = armour + val;
-    armour = (armour < 0 ? 0 : (armour > 5 ? 5 : armour));
+  void decArmour(uint8_t val) {
+
+    if (armour >= val) armour = armour - val;
 
   }
 
-  void incFood(int8_t val) {
+  void incArmour(uint8_t val) {
   
-    food = food + val;
-    food = (food < -1 ? -1 : (food > 10 ? 10 : food));
+    if (armour + val <= 5) armour = armour + val;
 
   }
 
-  void incGold(int8_t val) {
+  void decFood(uint8_t val) {
+
+    food = food - val;
   
-    gold = gold + val;
-    gold = (gold < 0 ? 0 : (gold > 10 ? 10 : gold));
+  }
+
+  void incFood(uint8_t val) {
+  
+    if (food + val <= 10) food = food + val;
 
   }
 
-  void incHP(int8_t val) {
+  void decGold(uint8_t val) {
+
+    if (gold >= val) gold = gold - val;
+
+  }
+
+  void incGold(uint8_t val) {
   
-    hp = hp + val;
-    hp = (hp < 0 ? 0 : (hp > 20 ? 20 : hp));
+    if (gold + val <= 10) gold = gold + val;
+
+  }
+
+  void decHP(uint8_t val) {
+
+    if (hp >= val) hp = hp - val;
+
+  }
+
+  void incHP(uint8_t val) {
+  
+    if (hp + val <= 20) hp = hp + val;
 
   }
 
@@ -211,7 +231,7 @@ struct GameStats {
 
       if (room == 6 || (room == 5 && !isLastLevelInArea())) {
 
-        playerStats.incFood(-1);
+        playerStats.decFood(1);
         room = 0;
 
         if (playerStats.food >= 0) {

@@ -39,7 +39,7 @@ void MerchantState::update(StateMachine & machine) {
             else {
               this->flashFood = true; 
               playerStats.incFood(1); 
-              playerStats.incGold(-1); 
+              playerStats.decGold(1); 
             }   
             
             break;
@@ -55,7 +55,7 @@ void MerchantState::update(StateMachine & machine) {
             else { 
               this->flashHP = true; 
               playerStats.incHP(1); 
-              playerStats.incGold(-1); 
+              playerStats.decGold(1);
             }   
             
             break;
@@ -71,7 +71,7 @@ void MerchantState::update(StateMachine & machine) {
             else { 
               this->flashHP = true; 
               playerStats.incHP(4); 
-              playerStats.incGold(-3); 
+              playerStats.decGold(3); 
             }   
             
             break;
@@ -83,7 +83,7 @@ void MerchantState::update(StateMachine & machine) {
               if (playerStats.itemCount() < 2) { 
 
                 playerStats.items[this->selectedItem - 3]++; 
-                playerStats.incGold(-8); 
+                playerStats.decGold(8); 
                 flashGold = true;
 
               }
@@ -105,7 +105,7 @@ void MerchantState::update(StateMachine & machine) {
               if (playerStats.armour < 5) { 
 
                 playerStats.incArmour(1); 
-                playerStats.incGold(-6); 
+                playerStats.decGold(6); 
                 flashArmour = true;
 
               }
@@ -151,7 +151,7 @@ void MerchantState::update(StateMachine & machine) {
 
           if (playerStats.armour > 0) {
 
-            playerStats.incArmour(-1);
+            playerStats.decArmour(1);
             playerStats.incGold(3);
             flashGold = true;
             flashArmour = true;
