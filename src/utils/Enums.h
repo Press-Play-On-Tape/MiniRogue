@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "Utils.h"
 
 #define _DEBUG
 
@@ -47,7 +48,6 @@ enum class Wand : uint8_t {
   Poison,
   Healing
 };
-#include "Utils.h"
 
 struct PlayerStats {
 
