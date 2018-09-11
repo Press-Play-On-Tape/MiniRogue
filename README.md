@@ -225,7 +225,7 @@ The monster will now attack. The damage inflicted is shown in the top left hand 
 Play continues until you or the monster is dead. If you are victorious then you will be rewarded with gold and XP before returning to the dungeon.
 
 | Level | HP&nbsp;&nbsp;&nbsp; | Reward&nbsp;&nbsp;&nbsp; |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | 1 Undead Soldier | 2 | 1XP |
 | 2 Skeleton | 2 | 1XP |
 | 3 Undead Knight | 6 | 2XP |
