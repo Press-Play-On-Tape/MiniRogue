@@ -107,15 +107,17 @@ struct PlayerStats {
 
   }
 
-  const uint8_t xpLevel[5] = {0, 6, 12, 18, 99};
-
   void incXP(uint8_t value) {
-    
+  
+    static const uint8_t PROGMEM xpLevels[] = {0, 6, 12, 18, 99};
+
+    uint8_t xpLevel = pgm_read_byte(&xpLevels[xpTrack]);
+
     xp = xp + value;
 
-    if (xp > xpLevel[xpTrack]) {
+    if (xp > xpLevel) {
     
-       xp = xp - (xpLevel[xpTrack] - 1);
+       xp = xp - (xpLevel - 1);
        xpTrack++;
 
     }
@@ -124,17 +126,14 @@ struct PlayerStats {
 
   void resetGame() {
 
-    items[0] = 0;
-    items[1] = 0;
-    items[2] = 0;
-    items[3] = 0;
+    for (uint8_t x = 0; x < 4; x++) { items[x] = 0; }
     xpTrack = 1;
     xp = 0;
 
   }
 
   uint8_t itemCount() {
-
+    
     return items[0] + items[1] + items[2] + items[3];
 
   }
@@ -161,17 +160,15 @@ struct GameStats {
 
   void dropArea() {
 
-	static const uint8_t drops[] PROGMEM = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, };
-
-	level = (level < 10) ? (level + pgm_read_byte(&drops[level])) : level;
+	  static const uint8_t drops[] PROGMEM = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, };
+	  level = (level < 10) ? (level + pgm_read_byte(&drops[level])) : level;
 
   }
 
   uint8_t getAreaId() {
 
-	static const uint8_t ids[] PROGMEM = { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, };
-
-	return (level < 15) ? pgm_read_byte(&ids[level]) : 5;
+	  static const uint8_t ids[] PROGMEM = { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, };
+  	return (level < 15) ? pgm_read_byte(&ids[level]) : 5;
 
   }
 
@@ -207,11 +204,6 @@ struct GameStats {
       
     }
  
-//    if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
-
-// Serial.print(room);
-// Serial.print(" ");
-// Serial.println(level);
     if ((room == 6) && (level == 13)) {
 
       return GameStateType::Winner;
@@ -238,8 +230,6 @@ struct GameStats {
 
     }
 
-//    return (getAreaId() == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
-
   }
 
 
@@ -252,10 +242,10 @@ struct GameStats {
 
   uint8_t getBossMonsterDMG() {
 
-	static const uint8_t damage[] PROGMEM = { 3, 5, 7, 9, 12, };
+	  static const uint8_t damage[] PROGMEM = { 3, 5, 7, 9, 12, };
 
-	auto areaId = getAreaId();
-	return (areaId < 5) ? pgm_read_byte(&damage[areaId]) : 0;
+  	auto areaId = getAreaId();
+	  return (areaId < 5) ? pgm_read_byte(&damage[areaId]) : 0;
 
   }
   
