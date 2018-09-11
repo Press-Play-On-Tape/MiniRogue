@@ -194,9 +194,7 @@ void ShowCardsState::render(StateMachine & machine) {
 				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
 
 			}
-// Serial.print(this->numberOfCardsToDisplay);
-// Serial.print(" ");
-// Serial.println((i == 6 && this->numberOfCardsToDisplay == 6 ? 7 : static_cast<uint8_t>(machine.getContext().cards[i]) - 1));
+
       if (room != 0) {
 
         if ((room > r) || (room == r && this->counter == 0) || (i == 6 && this->numberOfCardsToDisplay == 6)) {
@@ -208,8 +206,9 @@ void ShowCardsState::render(StateMachine & machine) {
 
         if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
 
-          ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-          ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+					BaseState::renderSpinningCard(machine, x, y, this->counter - 1);
+          // ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
+          // ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
         }
 

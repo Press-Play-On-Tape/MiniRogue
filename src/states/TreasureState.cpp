@@ -5,6 +5,8 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 7; 
+
 
 // ----------------------------------------------------------------------------
 //  Initialise state ..
@@ -49,13 +51,15 @@ void TreasureState::update(StateMachine & machine) {
 
 			}
 			else {
-
+this->dice =5;//sjh
         if (this->dice >= 5) {
           
           if (justPressed & A_BUTTON) {
 
-            this->counter = 0;
+            this->counter = NO_OF_CARDS_IN_FLIP;
             this->viewState = ViewState::RollDice;
+            this->dice = random(1, 7);
+
           }
 
         }
@@ -72,27 +76,15 @@ void TreasureState::update(StateMachine & machine) {
 
     case ViewState::RollDice:
 
-      if (this->counter < sizeof(DiceDelay) && (justPressed & A_BUTTON)) { 
-        
-        counter = sizeof(DiceDelay); 
-        this->dice = random(1, 7);
-        if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
+			if (counter > 0) {
 
-      }
-            
-			if (this->counter < sizeof(DiceDelay)) {
-				
-				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
+        if (arduboy.everyXFrames(8)) {
+				this->dice = random(1, 7);
+				counter--;
+        //Serial.println(counter);
+        }
 
-					this->dice = random(1, 7);
-          if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
-
-					this->counter++;
-					arduboy.resetFrameCount();
-
-				}
-
-			}
+			} 
 			else {
           
         this->foundTreasure = true;
@@ -175,6 +167,9 @@ void TreasureState::render(StateMachine & machine) {
     case ViewState::RollDice:
 
       renderSelectTreasure(machine);
+
+	//if (this->counter > 0) this->counter --;
+
       break;
 
     case ViewState::UpdateStats:
@@ -225,9 +220,21 @@ void TreasureState::printCaption(uint8_t index) {
 void TreasureState::renderSelectTreasure(StateMachine & machine) {
 	
   auto & ardBitmap = machine.getContext().ardBitmap;
-  
+
   ardBitmap.drawCompressed(14, 8, Images::Chest_Open_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+        if (this->viewState == ViewState::RollDice && this->counter > 0) {
+BaseState::renderSpinningCard(machine, 34, 13, this->counter - 1);
+          // ardBitmap.drawCompressed(33, 13, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
+          // ardBitmap.drawCompressed(33, 13, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+        }
+        else {
+BaseState::renderSpinningCard(machine, 34, 13, 0);
+  
   ardBitmap.drawCompressed(35, 15, Images::Chest_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+        }
 
 }
 
