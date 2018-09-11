@@ -105,7 +105,7 @@ The dungeon levels and area are laid out as shown below:
 
 <img src="/distributable/Images/MR_Treasure_001.png" data-canonical-src="/distributable/Images/MR_Treasure_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Treasure_002.png" data-canonical-src="/distributable/Images/MR_Treasure_002.png" width="320" height="160" /> 
 
-<img src="/distributable/Images/MR_Treasure_003.png" data-canonical-src="/distributable/Images/MR_Treasure_003.png" width="200" height="320" />
+<img src="/distributable/Images/MR_Treasure_003.png" data-canonical-src="/distributable/Images/MR_Treasure_003.png" width="320" height="200" />
 
 On your journey, you will find forgotten stashes of loot in varying quantities. Monsters still protect the most valuable treasures in the dungeon.
 
@@ -131,7 +131,7 @@ Possible rewards include:
 
 <img src="/distributable/Images/MR_Trap_001.png" data-canonical-src="/distributable/Images/MR_Trap_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Trap_002.png" data-canonical-src="/distributable/Images/MR_Trap_002.png" width="320" height="160" />
 
-<img src="/distributable/Images/MR_Trap_003.png" data-canonical-src="/distributable/Images/MR_Trap_003.png" width="200" height="320" />
+<img src="/distributable/Images/MR_Trap_003.png" data-canonical-src="/distributable/Images/MR_Trap_003.png" width="320" height="200" />
 
 Dungeon means danger, and danger sometimes means traps. Many adventurers perished not through combat, but through lack of scrutiny. You can avoid a trap if you are sufficiently skilled. This is determined by a roll of a die – if the result is less than or equal to your rank you can skip the trap. If not, you must endure one of the following traps:
 
@@ -196,10 +196,10 @@ Scroll through the available choices using the **Up** and **Down Buttons**. Comm
 | Item | Buy Price | Sell Price | Effect |
 | --- | --- | --- | --- |
 | Ration | 1 Gold | | Gain 1 Food. |
-|Health Potion|1 Gold||Gain 1 HP.|
-|Big Health Potion&nbsp;&nbsp;|3 Gold||Gain 4 HP.|
-|Armor Piece|6 Gold|3 Gold|Gain 1 Armour.|
-|Any 1 Spell|8 Gold|4 Gold|Gain any 1 Spell.|
+| Health Potion|1 Gold||Gain 1 HP.|
+| Big Health Potion&nbsp;&nbsp;|3 Gold||Gain 4 HP.|
+| Armor Piece|6 Gold|3 Gold|Gain 1 Armour.|
+| Any 1 Spell|8 Gold|4 Gold|Gain any 1 Spell.|
 
 <br/>
 
