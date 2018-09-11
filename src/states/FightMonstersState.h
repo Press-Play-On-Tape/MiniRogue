@@ -27,6 +27,7 @@ char const bossDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
 char const bossDice_Caption_04[] PROGMEM = "Gain~a~Healing~Wand!";
 char const bossDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
 char const bossDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
+char const bossDice_Caption_07[] PROGMEM = "Gain 2 Gold Pieces!";
 
 char const * const bossDice_Captions[] = {
 	bossDice_Caption_01,
