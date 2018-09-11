@@ -47,6 +47,7 @@ enum class Wand : uint8_t {
   Poison,
   Healing
 };
+#include "Utils.h"
 
 struct PlayerStats {
 
@@ -59,30 +60,26 @@ struct PlayerStats {
   uint8_t items[4];
 
   void incArmour(int8_t val) {
-  
-    armour = armour + val;
-    armour = (armour < 0 ? 0 : (armour > 5 ? 5 : armour));
+
+	armour = clamp<int8_t>(armour + val, 0, 5);
 
   }
 
   void incFood(int8_t val) {
-  
-    food = food + val;
-    food = (food < -1 ? -1 : (food > 10 ? 10 : food));
+
+	food = clamp<int8_t>(food + val, -1, 10);
 
   }
 
   void incGold(int8_t val) {
-  
-    gold = gold + val;
-    gold = (gold < 0 ? 0 : (gold > 10 ? 10 : gold));
+
+	gold = clamp<int8_t>(gold + val, 0, 10);
 
   }
 
   void incHP(int8_t val) {
-  
-    hp = hp + val;
-    hp = (hp < 0 ? 0 : (hp > 20 ? 20 : hp));
+
+	hp = clamp<int8_t>(hp + val, 0, 10);
 
   }
 
