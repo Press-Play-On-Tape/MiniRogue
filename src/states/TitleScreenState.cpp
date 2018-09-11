@@ -49,7 +49,7 @@ void TitleScreenState::update(StateMachine & machine) {
 		playerStats.hp = pgm_read_byte(&InitSettings[idx++]);
 		playerStats.gold = pgm_read_byte(&InitSettings[idx++]);
 		playerStats.food = pgm_read_byte(&InitSettings[idx]);
-		playerStats.xpTrack = 1;
+		playerStats.xpTrack = 3; //1; sjh
 
 		machine.getContext().resetGame();
 

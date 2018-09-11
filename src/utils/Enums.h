@@ -51,49 +51,75 @@ enum class Wand : uint8_t {
 
 struct PlayerStats {
 
-  int8_t armour;
+  uint8_t armour;
   int8_t food;
-  int8_t gold;
-  int8_t hp;
-  uint8_t xpTrack = 1;
+  uint8_t gold;
+  uint8_t hp;
+  uint8_t xpTrack = 1; 
   uint8_t xp;
   uint8_t items[4];
 
-  void incArmour(int8_t val) {
+  void decArmour(uint8_t val) {
 
-	armour = clamp<int8_t>(armour + val, 0, 5);
-
-  }
-
-  void incFood(int8_t val) {
-
-	food = clamp<int8_t>(food + val, -1, 10);
+    if (armour >= val) armour = armour - val;
 
   }
 
-  void incGold(int8_t val) {
+  void incArmour(uint8_t val) {
+  
+    if (armour + val <= 5) armour = armour + val;
 
-	gold = clamp<int8_t>(gold + val, 0, 10);
+  }
+
+  void decFood(uint8_t val) {
+
+    food = food - val;
+  
+  }
+
+  void incFood(uint8_t val) {
+  
+    if (food + val <= 10) food = food + val;
 
   }
 
-  void incHP(int8_t val) {
+  void decGold(uint8_t val) {
 
-	hp = clamp<int8_t>(hp + val, 0, 10);
+    if (gold >= val) gold = gold - val;
 
   }
+
+  void incGold(uint8_t val) {
+  
+    if (gold + val <= 10) gold = gold + val;
+
+  }
+
+  void decHP(uint8_t val) {
+
+    if (hp >= val) hp = hp - val;
+
+  }
+
+  void incHP(uint8_t val) {
+  
+    if (hp + val <= 20) hp = hp + val;
+
+  }
+
+  const uint8_t xpLevel[5] = {0, 6, 12, 18, 99};
 
   void incXP(uint8_t value) {
-
+    
     xp = xp + value;
 
-    if (xp >= 6 && xpTrack < 4) {
-
-      xp = xp - 5;
-      xpTrack++;
+    if (xp > xpLevel[xpTrack]) {
+    
+       xp = xp - (xpLevel[xpTrack] - 1);
+       xpTrack++;
 
     }
-  
+
   }
 
   void resetGame() {
@@ -102,7 +128,7 @@ struct PlayerStats {
     items[1] = 0;
     items[2] = 0;
     items[3] = 0;
-    xpTrack = 1;
+    xpTrack = 3; //1; sjh
     xp = 0;
 
   }
@@ -126,10 +152,10 @@ struct GameStats {
 
   void resetGame() {
 
-    level = 0;
-    room = 0;
+    level = 13; //sjh 0
+    room = 4; //SJH 0 
     monsterDefeated = false;
-    selectedCard = 0;
+    selectedCard = 4; //0; sjh 0
 
   }
 
@@ -192,22 +218,38 @@ struct GameStats {
       
     }
  
-    if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
+//    if ((room == 6 && isLastLevelInArea()) || (room == 5 && !isLastLevelInArea())) {
 
-      playerStats.incFood(-1);
-      room = 0;
+// Serial.print(room);
+// Serial.print(" ");
+// Serial.println(level);
+    if ((room == 6) && (level == 13)) {
 
-      if (playerStats.food >= 0) {
+      return GameStateType::Winner;
 
-        level++;
-        selectedCard = 0;
-        monsterDefeated = false;
+    }
+    else {
 
+      if (room == 6 || (room == 5 && !isLastLevelInArea())) {
+
+        playerStats.decFood(1);
+        room = 0;
+
+        if (playerStats.food >= 0) {
+
+          level++;
+          selectedCard = 0;
+          monsterDefeated = false;
+
+        }
+        
       }
-      
+
+      return GameStateType::ShowCards;
+
     }
 
-    return (getAreaId() == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
+//    return (getAreaId() == WINNER_LEVEL ? GameStateType::Winner : GameStateType::ShowCards);
 
   }
 

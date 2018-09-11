@@ -365,21 +365,15 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 				playerStats.incXP(gameStats.getAreaId() + 2);
 				playerStats.incGold(gameStats.getAreaId() < 2 ? 2 : 3);
 
-				if (playerStats.itemCount() == 2) {
-					this->diceMonster = random(5, 7);
-				}
-				else {
-					this->diceMonster = random(1, 7);
-				}
+        this->diceMonster = random(1, 7);
+        if (playerStats.itemCount() == 2 && this->diceMonster < 5) this->diceMonster = 7;
 
 				switch (this->diceMonster) {
 
-					case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
-					case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
-					case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-					case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
-					case 5: playerStats.incArmour(1); break;
-					case 6: playerStats.incXP(2); break;
+					case 1 ... 4:   playerStats.items[this->diceMonster - 1]++; break;
+					case 5:         playerStats.incArmour(1); break;
+					case 6:         playerStats.incXP(2); break;
+					case 7:         playerStats.incGold(2); break;
 
 					break;
 

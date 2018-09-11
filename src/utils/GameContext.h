@@ -28,8 +28,9 @@ char const treasureDice_Caption_03[] PROGMEM = "Gain~a~Poison~Wand!";
 char const treasureDice_Caption_04[] PROGMEM = "Gain~a~Healing~Wand!";
 char const treasureDice_Caption_05[] PROGMEM = "  Gain~an~Armour!";
 char const treasureDice_Caption_06[] PROGMEM = "Upgrade~your~Weapon!";
-char const treasureDice_Caption_07[] PROGMEM = "Open~chest:\nGold~and~treasure!";
-char const treasureDice_Caption_08[] PROGMEM = "Open~chest:\nYou~found~gold~only!";
+char const treasureDice_Caption_07[] PROGMEM = "Gain~2~Gold~Pieces!";
+char const treasureDice_Caption_08[] PROGMEM = "Open~chest:\nGold~and~treasure!";
+char const treasureDice_Caption_09[] PROGMEM = "Open~chest:\nYou~found~gold~only!";
 
 char const * const treasureDice_Captions[] = {
 	treasureDice_Caption_01,
@@ -40,6 +41,7 @@ char const * const treasureDice_Captions[] = {
 	treasureDice_Caption_06,
 	treasureDice_Caption_07,
 	treasureDice_Caption_08,
+	treasureDice_Caption_09,
 }; 
 
 class GameContext {

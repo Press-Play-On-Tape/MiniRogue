@@ -25,6 +25,8 @@ GameContext::GameContext() {
     this->cards[i] = static_cast<GameStateType>(i + 1); 
   }
 
+  this->cards[6] = GameStateType::BossMonster;
+
 }
 
 void GameContext::resetGame() {

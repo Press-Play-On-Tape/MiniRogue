@@ -35,12 +35,13 @@ void TreasureState::update(StateMachine & machine) {
         
         counter = sizeof(DiceDelay); 
         
-        if (playerStats.itemCount() == 2) {
-          this->dice = random(5, 7);
-        }
-        else {
+        // if (playerStats.itemCount() == 2) {
+        //   this->dice = random(5, 7);
+        // }
+        // else {
           this->dice = random(1, 7);
-        }
+          if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
+        // }
 
       }
             
@@ -48,12 +49,8 @@ void TreasureState::update(StateMachine & machine) {
 				
 				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
 
-          if (playerStats.itemCount() == 2) {
-  					this->dice = random(5, 7);
-          }
-          else {
-  					this->dice = random(1, 7);
-          }
+					this->dice = random(1, 7);
+          if (playerStats.itemCount() == 2 && this->dice < 5) this->dice = 7;
 
 					this->counter++;
 					arduboy.resetFrameCount();
@@ -66,17 +63,14 @@ void TreasureState::update(StateMachine & machine) {
         if (this->viewState == ViewState::RollDice) {
             
           this->foundTreasure = true;
+          uint8_t itemCount = playerStats.itemCount();
 
           switch (this->dice) {
 
-            case 1: playerStats.items[static_cast<uint8_t>(Wand::Fire)]++; break;
-            case 2: playerStats.items[static_cast<uint8_t>(Wand::Ice)]++; break;
-            case 3: playerStats.items[static_cast<uint8_t>(Wand::Poison)]++; break;
-            case 4: playerStats.items[static_cast<uint8_t>(Wand::Healing)]++; break;
-            case 5: playerStats.incArmour(1); break;
-            case 6: playerStats.incXP(2); break;
-
-            break;
+  					case 1 ... 4:   playerStats.items[this->dice - 1]++; break;
+            case 5:         playerStats.incArmour(1); break;
+            case 6:         playerStats.incXP(2); break;
+            case 7:         playerStats.incGold(2); break;
 
           }
             
@@ -239,12 +233,12 @@ void TreasureState::renderChestResults(StateMachine & machine) {
   
   if (this->dice >= 5) {
 
-    printCaption(6);
+    printCaption(7);
 
   }
   else {
 
-    printCaption(7);
+    printCaption(8);
 
   }
 
