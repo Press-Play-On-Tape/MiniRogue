@@ -52,7 +52,7 @@ void TrapState::update(StateMachine & machine) {
     case ViewState::SkillCheck:
     case ViewState::RollDice:
       
-			if (counter < NO_OF_CARDS_IN_FLIP) {
+			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 
         this->dice = random(1, 7);
         counter++;

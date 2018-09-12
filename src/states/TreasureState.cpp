@@ -78,11 +78,11 @@ this->dice =5;//sjh
 
 			if (counter > 0) {
 
-        if (arduboy.everyXFrames(8)) {
+//        if (arduboy.everyXFrames(8)) {
 				this->dice = random(1, 7);
 				counter--;
         //Serial.println(counter);
-        }
+//        }
 
 			} 
 			else {
@@ -223,18 +223,19 @@ void TreasureState::renderSelectTreasure(StateMachine & machine) {
 
   ardBitmap.drawCompressed(14, 8, Images::Chest_Open_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-        if (this->viewState == ViewState::RollDice && this->counter > 0) {
-BaseState::renderSpinningCard(machine, 34, 13, this->counter - 1);
-          // ardBitmap.drawCompressed(33, 13, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-          // ardBitmap.drawCompressed(33, 13, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+  if (this->viewState == ViewState::RollDice && this->counter > 0) {
 
-        }
-        else {
-BaseState::renderSpinningCard(machine, 34, 13, 0);
-  
-  ardBitmap.drawCompressed(35, 15, Images::Chest_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+    BaseState::renderSpinningCard(machine, 34, 13, this->counter - 1, 5);
+    // ardBitmap.drawCompressed(33, 13, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
+    // ardBitmap.drawCompressed(33, 13, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
-        }
+  }
+  else {
+
+    BaseState::renderSpinningCard(machine, 34, 13, 0, 5);
+    ardBitmap.drawCompressed(35, 15, Images::Chest_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
+  }
 
 }
 

@@ -192,10 +192,7 @@ void ShowCardsState::render(StateMachine & machine) {
       
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
 
-        ardBitmap.drawCompressed(x, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_NONE);
-        ardBitmap.drawCompressed(x + 10, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
-        ardBitmap.drawCompressed(x, y + 13, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_VERTICAL);
-        ardBitmap.drawCompressed(x + 10, y + 13, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HOR_VER);
+        ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
 
 			}
 
