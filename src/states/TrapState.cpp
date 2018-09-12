@@ -52,7 +52,7 @@ void TrapState::update(StateMachine & machine) {
     case ViewState::SkillCheck:
     case ViewState::RollDice:
       
-			if (counter < NO_OF_CARDS_IN_FLIP) {
+			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 
         this->dice = random(1, 7);
         counter++;
@@ -199,7 +199,7 @@ void TrapState::render(StateMachine & machine) {
 
     case ViewState::RollDice:
 
-      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[this->counter], WHITE, ALIGN_NONE, MIRROR_NONE);
+      BaseState::renderLargeSpinningCard(machine, 28, 8, this->counter);
 
       if (counter < NO_OF_CARDS_IN_FLIP) {
 
@@ -220,7 +220,7 @@ void TrapState::render(StateMachine & machine) {
 
     case ViewState::UpdateStats:
 
-      ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Cards[12], WHITE, ALIGN_NONE, MIRROR_NONE);
+      BaseState::renderLargeSpinningCard(machine, 28, 8, 0);
       ardBitmap.drawCompressed(30, 10, Images::Trap_Dice[this->dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
       font3x5.setCursor(4, 0);
       printTrapName();

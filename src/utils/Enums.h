@@ -8,6 +8,8 @@
 constexpr const static uint8_t FLASH_DELAY = 24;
 constexpr const static uint8_t FLASH_COUNTER = 70;
 constexpr const static uint8_t WINNER_LEVEL = 5;
+constexpr const static uint8_t DO_NOT_EDIT_SLOT = 255;
+constexpr const static uint8_t MAX_NUMBER_OF_SCORES         = 5;
 
 const uint8_t InitSettings[] PROGMEM = {
 	1, 5, 5, 6,
@@ -61,13 +63,13 @@ struct PlayerStats {
 
   void decArmour(uint8_t val) {
 
-    if (armour >= val) armour = armour - val;
+    armour = max(armour - val, 0);
 
   }
 
   void incArmour(uint8_t val) {
   
-    if (armour + val <= 5) armour = armour + val;
+    armour = min(armour + val, 5);
 
   }
 
@@ -79,31 +81,31 @@ struct PlayerStats {
 
   void incFood(uint8_t val) {
   
-    if (food + val <= 10) food = food + val;
+    food = min(food + val, 10);
 
   }
 
   void decGold(uint8_t val) {
 
-    if (gold >= val) gold = gold - val;
+    gold = max(gold - val, 0);
 
   }
 
   void incGold(uint8_t val) {
   
-    if (gold + val <= 10) gold = gold + val;
+    gold = min(gold + val, 10);
 
   }
 
   void decHP(uint8_t val) {
 
-    if (hp >= val) hp = hp - val;
+    hp = max(hp - val, 0);
 
   }
 
   void incHP(uint8_t val) {
   
-    if (hp + val <= 20) hp = hp + val;
+    hp = min(hp + val, 20);
 
   }
 
