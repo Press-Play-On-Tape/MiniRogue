@@ -51,7 +51,7 @@ void TreasureState::update(StateMachine & machine) {
 
 			}
 			else {
-this->dice =5;//sjh
+
         if (this->dice >= 5) {
           
           if (justPressed & A_BUTTON) {
@@ -78,11 +78,8 @@ this->dice =5;//sjh
 
 			if (counter > 0) {
 
-//        if (arduboy.everyXFrames(8)) {
 				this->dice = random(1, 7);
 				counter--;
-        //Serial.println(counter);
-//        }
 
 			} 
 			else {

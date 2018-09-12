@@ -53,7 +53,7 @@ void TitleScreenState::update(StateMachine & machine) {
 
 		machine.getContext().resetGame();
 
-  machine.getContext().cards[0] = GameStateType::Treasure;    //sjh
+  //machine.getContext().cards[0] = GameStateType::Event;    //sjh
 
 		machine.changeState(GameStateType::ShowCards);
 		
