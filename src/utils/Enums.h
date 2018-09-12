@@ -63,13 +63,13 @@ struct PlayerStats {
 
   void decArmour(uint8_t val) {
 
-    armour = min (armour - val, 0);
+    armour = max(armour - val, 0);
 
   }
 
   void incArmour(uint8_t val) {
   
-    armour = max(armour + val, 5);
+    armour = min(armour + val, 5);
 
   }
 
@@ -81,31 +81,31 @@ struct PlayerStats {
 
   void incFood(uint8_t val) {
   
-    food = max(food + val, 10);
+    food = min(food + val, 10);
 
   }
 
   void decGold(uint8_t val) {
 
-    gold = min(gold - val, 0);
+    gold = max(gold - val, 0);
 
   }
 
   void incGold(uint8_t val) {
   
-    gold = max(gold + val, 10);
+    gold = min(gold + val, 10);
 
   }
 
   void decHP(uint8_t val) {
 
-    hp = min(hp - val, 0);
+    hp = max(hp - val, 0);
 
   }
 
   void incHP(uint8_t val) {
   
-    hp = max(hp + val, 20);
+    hp = min(hp + val, 20);
 
   }
 
