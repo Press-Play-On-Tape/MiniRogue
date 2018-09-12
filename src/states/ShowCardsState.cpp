@@ -181,8 +181,9 @@ void ShowCardsState::render(StateMachine & machine) {
 
 			if (this->counter == NO_OF_CARDS_IN_FLIP || (room != r && this->counter > 0) || this->counter == 0) {
 
-				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+        BaseState::renderSpinningCard(machine, x, y, 6);
+				// ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				// ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 			}
 
@@ -191,7 +192,10 @@ void ShowCardsState::render(StateMachine & machine) {
       
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
 
-				ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
+        ardBitmap.drawCompressed(x, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_NONE);
+        ardBitmap.drawCompressed(x + 10, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+        ardBitmap.drawCompressed(x, y + 13, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_VERTICAL);
+        ardBitmap.drawCompressed(x + 10, y + 13, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HOR_VER);
 
 			}
 
@@ -207,8 +211,6 @@ void ShowCardsState::render(StateMachine & machine) {
         if (room == r && this->counter > 0 && this->displayCard == CARD_SHOW_ALL) {
 
 					BaseState::renderSpinningCard(machine, x, y, this->counter - 1);
-          // ardBitmap.drawCompressed(x, y, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-          // ardBitmap.drawCompressed(x, y, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
         }
 
