@@ -177,8 +177,6 @@ void ShowCardsState::render(StateMachine & machine) {
 			if (this->counter == NO_OF_CARDS_IN_FLIP || (room != r && this->counter > 0) || this->counter == 0) {
 
         BaseState::renderSpinningCard(machine, x, y, 6);
-				// ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-				// ardBitmap.drawCompressed(x, y, Images::Card_Outline_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 			}
 

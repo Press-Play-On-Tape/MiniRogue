@@ -6,6 +6,42 @@
 #include "../utils/FadeEffects.h"
 #include "../fonts/Font3x5.h"
 
+enum FlashSettings : uint8_t {
+	None = 0,
+	FlashXP = (1 << 0),
+	FlashHP = (1 << 1),
+	FlashArmour = (1 << 2),
+	FlashGold = (1 << 3),
+	FlashFood = (1 << 4),
+};
+
+constexpr inline FlashSettings operator |(FlashSettings left, FlashSettings right) {
+	return static_cast<FlashSettings>(static_cast<uint8_t>(left) | static_cast<uint8_t>(right));
+}
+
+constexpr inline FlashSettings operator &(FlashSettings left, FlashSettings right) {
+	return static_cast<FlashSettings>(static_cast<uint8_t>(left) & static_cast<uint8_t>(right));
+}
+
+constexpr inline FlashSettings operator ^(FlashSettings left, FlashSettings right) {
+	return static_cast<FlashSettings>(static_cast<uint8_t>(left) ^ static_cast<uint8_t>(right));
+}
+
+inline FlashSettings & operator |=(FlashSettings & left, FlashSettings right) {
+	left = (left | right);
+	return left;
+}
+
+inline FlashSettings & operator &=(FlashSettings & left, FlashSettings right) {
+	left = (left & right);
+	return left;
+}
+
+inline FlashSettings & operator ^=(FlashSettings & left, FlashSettings right) {
+	left = (left ^ right);
+	return left;
+}
+
 class BaseState : public GameState<GameContext, GameStateType> {
 
   protected:

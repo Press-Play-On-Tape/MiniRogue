@@ -164,9 +164,6 @@ void TreasureState::render(StateMachine & machine) {
     case ViewState::RollDice:
 
       renderSelectTreasure(machine);
-
-	//if (this->counter > 0) this->counter --;
-
       break;
 
     case ViewState::UpdateStats:
@@ -227,8 +224,6 @@ void TreasureState::renderSelectTreasure(StateMachine & machine) {
   if (this->viewState == ViewState::RollDice && this->counter > 0) {
 
     BaseState::renderSpinningCard(machine, 34, 13, this->counter - 1, 5);
-    // ardBitmap.drawCompressed(33, 13, Images::spinning_mask[this->counter - 1], BLACK, ALIGN_NONE, MIRROR_NONE);
-    // ardBitmap.drawCompressed(33, 13, Images::spinning_card[this->counter - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
 
   }
   else {
