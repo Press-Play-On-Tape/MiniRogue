@@ -541,7 +541,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-	const FlashSettings settings = ((this->viewState == ViewState::HighlightPlayerStats) ? FlashSettings::FlashHP : FlashSettings::FlashHP);
+	const FlashSettings settings = ((this->viewState == ViewState::HighlightPlayerStats) ? FlashSettings::FlashHP : FlashSettings::None);
 
 	BaseState::renderPlayerStatistics(machine, true, settings);
 
