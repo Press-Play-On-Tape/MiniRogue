@@ -28,13 +28,8 @@ class MerchantState : public BaseState {
     
     uint8_t selectedItem = 0;
     uint8_t errorNumber = 0;
-    
-    bool flashXP = false;
-    bool flashHP = false;
-    bool flashGold = false;
-    bool flashFood = false;
-    bool flashArmour = false;
 
+    FlashSettings settings;
 
   public:
 

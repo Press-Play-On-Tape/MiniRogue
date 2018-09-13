@@ -86,7 +86,7 @@ void BaseState::renderBackground(StateMachine & machine, bool renderCorners) {
 
 }
 
-void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood) {
+void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash, FlashSettings settings){
 
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
@@ -106,27 +106,27 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
       case 1:   
         val = playerStats.xp;       
-        flag = flashXP;
+        flag = ((settings & FlashSettings::FlashXP) != 0);
         break;
 
       case 2:   
         val = playerStats.hp;
-        flag = flashHP;
+        flag = ((settings & FlashSettings::FlashHP) != 0);
         break;
 
       case 3:   
         val = playerStats.armour;
-        flag = flashArmour;
+        flag = ((settings & FlashSettings::FlashArmour) != 0);
         break;
 
       case 4:   
         val = playerStats.gold;
-        flag = flashGold;
+        flag = ((settings & FlashSettings::FlashGold) != 0);
         break;
 
       case 5:   
         val = playerStats.food;
-        flag = flashFood;
+        flag = ((settings & FlashSettings::FlashFood) != 0);
         break;
 
     }

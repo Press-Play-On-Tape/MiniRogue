@@ -541,14 +541,9 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    true, // Overall
-    false, // XP
-    (this->viewState == ViewState::HighlightPlayerStats), // HP
-    false, // Armour
-    false, // Gold
-    false // Food
-  );
+	const FlashSettings settings = ((this->viewState == ViewState::HighlightPlayerStats) ? FlashSettings::FlashHP : FlashSettings::FlashHP);
+
+	BaseState::renderPlayerStatistics(machine, true, settings);
 
 
 	// Messages ..
@@ -565,21 +560,19 @@ void FightMonstersState::render(StateMachine & machine) {
 			
 		case ViewState::MonsterDead:
 		case ViewState::MonsterDead_Wait:
-			{
-				bool gold = (machine.getContext().gameState == GameStateType::BossMonster);
-				bool armour = gold && (this->diceMonster == 5);
+			if (this->viewState != ViewState::MonsterDead_Wait) {
 
-				if (this->viewState != ViewState::MonsterDead_Wait) {
-					BaseState::renderPlayerStatistics(machine,
-						true, 	// Overall
-						true, 	// XP
-						false, 	// HP
-						armour, // Armour
-						gold, 	// Gold
-						false 	// Food
-					);
+				FlashSettings settings = FlashSettings::FlashXP;
 
+				if(machine.getContext().gameState == GameStateType::BossMonster)
+				{
+					settings |= FlashSettings::FlashGold;
+
+					if(this->diceMonster == 5)
+						settings |= FlashSettings::FlashArmour;
 				}
+
+				BaseState::renderPlayerStatistics(machine, true, settings);
 
 			}
 

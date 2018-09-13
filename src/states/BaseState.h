@@ -18,7 +18,7 @@ class BaseState : public GameState<GameContext, GameStateType> {
     void renderLargeSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i);
     void renderPlayerDead();
     void renderMonsterDead(StateMachine & machine);
-    void renderPlayerStatistics(StateMachine & machine, bool overallFlash, bool flashXP, bool flashHP, bool flashArmour, bool flashGold, bool flashFood);
+    void renderPlayerStatistics(StateMachine & machine, bool overallFlash, FlashSettings settings);
     void renderBackground(StateMachine & machine, bool renderCorners);
     void drawItem(uint8_t position, uint8_t const *imageName);
     void renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, uint8_t w, uint8_t h);

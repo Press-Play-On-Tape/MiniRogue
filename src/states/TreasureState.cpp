@@ -189,14 +189,18 @@ void TreasureState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
-    (this->dice == 6), // XP
-    (this->foundTreasure && this->dice == 4), // HP
-    (this->dice == 5), // Armour
-    true, // Gold
-    false // Food
-  );
+	FlashSettings settings = FlashSettings::FlashGold;
+
+	if(this->dice == 6)
+		settings |= FlashSettings::FlashXP;
+	else if(this->dice == 5)
+		settings|= FlashSettings::FlashArmour;
+	else if(this->dice == 4 && this->foundTreasure)
+		settings|= FlashSettings::FlashHP;
+
+	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
+
+	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
 
   if (this->viewState == ViewState::UpdateStats && this->foundTreasure && this->counter < FLASH_COUNTER && flash) {
 

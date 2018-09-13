@@ -157,14 +157,9 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    true,  // Overall
-    false, // XP
-    false, // HP
-    false, // Armour
-    false, // Gold
-    (viewState == ViewState::PlayerDead)  // Food
-  );
+	const FlashSettings settings = ((viewState == ViewState::PlayerDead) ? FlashSettings::FlashFood : FlashSettings::None);
+
+	BaseState::renderPlayerStatistics(machine, true, settings);
 
   const bool flash = arduboy.getFrameCountHalf(12);
 
