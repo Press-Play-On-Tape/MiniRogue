@@ -91,8 +91,7 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
 
-  const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
-
+  const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY) && overallFlash;
 
   for (uint8_t x = 0; x < 6; x++) {
     
@@ -132,7 +131,7 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
     }
 
-    if (overallFlash && flag && flash) {
+    if (flag && flash) {
       font3x5.setTextColor(BLACK);
       arduboy.fillRect(119, (x * 9), (val < 10 ? 5 : 10), 7, WHITE);
     }
