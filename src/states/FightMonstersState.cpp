@@ -435,7 +435,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
 		}
 
-		ardBitmap.drawCompressed(58, 0, maskName, BLACK, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(85, 0, maskName, BLACK, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(58, 0, imageName, WHITE, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(35, 0, Images::Monster_LHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
