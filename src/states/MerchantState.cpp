@@ -193,8 +193,6 @@ void MerchantState::render(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
   auto & ardBitmap = machine.getContext().ardBitmap;
 
-  const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
-
 
   // Render common parts ..
 
