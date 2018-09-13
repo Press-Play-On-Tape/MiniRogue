@@ -5,29 +5,41 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
+const uint8_t mirrorSequence[] PROGMEM = { MIRROR_NONE, MIRROR_HORIZONTAL, MIRROR_VERTICAL, MIRROR_HOR_VER };
+const uint8_t commonXOffsets[] PROGMEM = { 0, 16, 0, 16 };
+
 void BaseState::renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i, uint8_t ySpacing) {
 
   auto & ardBitmap = machine.getContext().ardBitmap;
-  ardBitmap.drawCompressed(x, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(x + 10, y, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
-  ardBitmap.drawCompressed(x, y + ySpacing, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_VERTICAL);
-  ardBitmap.drawCompressed(x + 10, y + ySpacing, Images::spinning_mask[i], BLACK, ALIGN_NONE, MIRROR_HOR_VER);
 
-  ardBitmap.drawCompressed(x, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(x + 10, y, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
-  ardBitmap.drawCompressed(x, y + ySpacing, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_VERTICAL);
-  ardBitmap.drawCompressed(x + 10, y + ySpacing, Images::spinning_card[i], WHITE, ALIGN_NONE, MIRROR_HOR_VER);
+  const auto spinning_mask = Images::spinning_mask[i];
+  const auto spinning_card = Images::spinning_card[i];
 
+  for(uint8_t j = 0; j < 4; ++j)
+  {
+      const uint8_t xOffset = (x + pgm_read_byte(&commonXOffsets[j]));
+      const uint8_t yOffset = ((j < 2) ? y : y + ySpacing);
+      const uint8_t mirror = pgm_read_byte(&mirrorSequence[j]);
+
+      ardBitmap.drawCompressed(xOffset, yOffset, spinning_mask, BLACK, ALIGN_NONE, mirror);
+      ardBitmap.drawCompressed(xOffset, yOffset, spinning_card, WHITE, ALIGN_NONE, mirror);
+  }
 }
 
 void BaseState::renderLargeSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i) {
 
-  auto & ardBitmap = machine.getContext().ardBitmap;
-  ardBitmap.drawCompressed(x, y, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(x + 16, y, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
-  ardBitmap.drawCompressed(x, y + 16, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_VERTICAL);
-  ardBitmap.drawCompressed(x + 16, y + 16, Images::Large_Spinning_Cards[i], WHITE, ALIGN_NONE, MIRROR_HOR_VER);
+	auto & ardBitmap = machine.getContext().ardBitmap;
 
+	const auto spinning_card = Images::Large_Spinning_Cards[i];
+
+	for(uint8_t j = 0; j < 4; ++j)
+	{
+		const uint8_t xOffset = (x + pgm_read_byte(&commonXOffsets[j]));
+		const uint8_t yOffset = ((j < 2) ? y : y + 16);
+		const uint8_t mirror = pgm_read_byte(&mirrorSequence[j]);
+
+		ardBitmap.drawCompressed(xOffset, yOffset, spinning_card, WHITE, ALIGN_NONE, mirror);
+	}
 }
 
 void BaseState::renderBackground(StateMachine & machine) {
