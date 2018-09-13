@@ -37,7 +37,7 @@ void MerchantState::update(StateMachine & machine) {
               this->errorNumber = 3;
             } 
             else {
-              this->flashFood = true; 
+              this->settings |= FlashSettings::FlashFood; 
               playerStats.incFood(1); 
               playerStats.decGold(1); 
             }   
@@ -53,7 +53,7 @@ void MerchantState::update(StateMachine & machine) {
               this->errorNumber = 3;
             } 
             else { 
-              this->flashHP = true; 
+              this->settings |= FlashSettings::FlashHP;
               playerStats.incHP(1); 
               playerStats.decGold(1);
             }   
@@ -69,7 +69,7 @@ void MerchantState::update(StateMachine & machine) {
               this->errorNumber = 3;
             } 
             else { 
-              this->flashHP = true; 
+              this->settings |= FlashSettings::FlashHP;
               playerStats.incHP(4); 
               playerStats.decGold(3); 
             }   
@@ -84,7 +84,7 @@ void MerchantState::update(StateMachine & machine) {
 
                 playerStats.items[this->selectedItem - 3]++; 
                 playerStats.decGold(8); 
-                flashGold = true;
+                this->settings |= FlashSettings::FlashGold;
 
               }
               else {
@@ -106,7 +106,7 @@ void MerchantState::update(StateMachine & machine) {
 
                 playerStats.incArmour(1); 
                 playerStats.decGold(6); 
-                flashArmour = true;
+                this->settings |= FlashSettings::FlashArmour;
 
               }
               else {
@@ -120,7 +120,10 @@ void MerchantState::update(StateMachine & machine) {
 
         }
 
-        if (flashHP || flashXP || flashFood || flashArmour) { flashGold = true; }
+		constexpr FlashSettings flashTest = (FlashSettings::FlashHP | FlashSettings::FlashXP | FlashSettings::FlashFood| FlashSettings::FlashArmour);
+
+		if ((this->settings & flashTest) != FlashSettings::None)
+			this->settings |= FlashSettings::FlashGold;
 
       }
 
@@ -139,7 +142,7 @@ void MerchantState::update(StateMachine & machine) {
 
             playerStats.items[this->selectedItem]--;
             playerStats.incGold(4);
-            flashGold = true;
+            this->settings |= FlashSettings::FlashGold;
 
           }
           else {
@@ -153,8 +156,7 @@ void MerchantState::update(StateMachine & machine) {
 
             playerStats.decArmour(1);
             playerStats.incGold(3);
-            flashGold = true;
-            flashArmour = true;
+            this->settings |= (FlashSettings::FlashGold | FlashSettings::FlashArmour);
 
           }
           else {
@@ -241,13 +243,6 @@ void MerchantState::render(StateMachine & machine) {
 
   }
 
-  BaseState::renderPlayerStatistics(machine,
-    true, // Overall
-    flashXP, // XP
-    flashHP, // HP
-    flashArmour, // Armour
-    flashGold, // Gold
-    flashFood // Food
-  );
+  BaseState::renderPlayerStatistics(machine, true, this->settings);
 
 }

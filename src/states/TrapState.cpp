@@ -234,17 +234,22 @@ void TrapState::render(StateMachine & machine) {
 
   }
 
+  static const FlashSettings diceHelper[] PROGMEM =
+  {
+	FlashSettings::None,
+	FlashSettings::FlashFood,
+	FlashSettings::FlashGold,
+	FlashSettings::FlashArmour,
+	FlashSettings::FlashHP,
+	FlashSettings::FlashXP,
+  };
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
-    (this->dice == 5), // XP
-    (this->dice == 4), // HP
-    (this->dice == 3), // Armour
-    (this->dice == 2), // Gold
-    (this->dice == 1) // Food
-  );
+	const FlashSettings settings = (this->dice < 6) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice])) : FlashSettings::None;
+	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
+
+	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
 
 }
 

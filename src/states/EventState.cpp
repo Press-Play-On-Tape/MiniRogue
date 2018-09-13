@@ -143,17 +143,21 @@ void EventState::render(StateMachine & machine) {
 
   }
 
-
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER), // Overall
-    (this->dice == 4), // XP
-    (this->dice == 2), // HP
-    (this->dice == 5), // Armour
-    (this->dice == 1), // Gold
-    (this->dice == 3) // Food
-  );
+	static const FlashSettings diceHelper[] PROGMEM =
+	{
+		FlashSettings::None,
+		FlashSettings::FlashGold,
+		FlashSettings::FlashHP,
+		FlashSettings::FlashFood,
+		FlashSettings::FlashXP,
+	};
+
+	const FlashSettings settings = (this->dice < 5) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice])) : FlashSettings::None;
+	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
+
+	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
 
 }
 

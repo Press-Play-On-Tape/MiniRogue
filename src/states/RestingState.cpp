@@ -93,14 +93,25 @@ void RestingState::render(StateMachine & machine) {
 
 	// Player statistics ..
 
-  BaseState::renderPlayerStatistics(machine,
-    (this->viewState == ViewState::UpdateStats), // Overall
-    (this->selectedItem == SelectedItem::Weapon), // XP
-    (this->selectedItem == SelectedItem::Heal), // HP
-    false, // Armour
-    false, // Gold
-    (this->selectedItem == SelectedItem::Food) // Food
-  );
+	static_assert(SelectedItem::Food == static_cast<SelectedItem>(0), "SelectedItem enum changed, please update the settingsHelper array.");
+	static_assert(SelectedItem::Heal == static_cast<SelectedItem>(1), "SelectedItem enum changed, please update the settingsHelper array.");
+	static_assert(SelectedItem::Weapon == static_cast<SelectedItem>(2), "SelectedItem enum changed, please update the settingsHelper array.");
+
+	static const FlashSettings settingsHelper[] PROGMEM = 
+	{
+		//SelectedItem::Food
+		FlashSettings::FlashFood,
+		//SelectedItem::Heal
+		FlashSettings::FlashHP,
+		//SelectedItem::Weapon
+		FlashSettings::FlashXP,
+	};
+
+	const uint8_t index = static_cast<uint8_t>(this->selectedItem);
+	const FlashSettings settings = static_cast<FlashSettings>(pgm_read_byte(&settingsHelper[index]));
+	const bool shouldFlash = (this->viewState == ViewState::UpdateStats);
+
+	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
 
   if (flash) {
 
