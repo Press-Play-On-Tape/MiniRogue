@@ -188,12 +188,9 @@ void TreasureState::render(StateMachine & machine) {
 
 	FlashSettings settings = FlashSettings::FlashGold;
 
-	if(this->dice == 6)
-		settings |= FlashSettings::FlashXP;
-	else if(this->dice == 5)
-		settings|= FlashSettings::FlashArmour;
-	else if(this->dice == 4 && this->foundTreasure)
-		settings|= FlashSettings::FlashHP;
+	if (this->dice == 6)        		                    settings |= FlashSettings::FlashXP;
+	else if (this->dice == 5)    		                    settings |= FlashSettings::FlashArmour;
+	else if (this->dice == 4 && this->foundTreasure)		settings |= FlashSettings::FlashHP;
 
 	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
 

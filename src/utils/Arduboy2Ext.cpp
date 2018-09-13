@@ -53,8 +53,12 @@ bool Arduboy2Ext::getFrameCountHalf(uint8_t mod) const {
 void Arduboy2Ext::drawHorizontalDottedLine(uint8_t x1, uint8_t x2, uint8_t y, uint8_t colour) {
 
 	uint8_t diff = (x2 - x1);
-	for (uint8_t x = 0; x <= diff; x += 2)
+
+	for (uint8_t x = 0; x <= diff; x += 2) {
+
 		drawPixel(x1 + x, y, colour);
+
+  }
 
 }
 
@@ -64,8 +68,12 @@ void Arduboy2Ext::drawHorizontalDottedLine(uint8_t x1, uint8_t x2, uint8_t y, ui
  */
 void Arduboy2Ext::drawVerticalDottedLine(uint8_t y1, uint8_t y2, uint8_t x, uint8_t colour) {
 
-  for (uint8_t y3 = y1; y3 <= y2; y3+=2) {
-    drawPixel(x, y3, colour);
+	uint8_t diff = (y2 - y1);
+
+	for (uint8_t y = 0; y <= diff; y += 2) {
+
+		drawPixel(x, y1 + y, colour);
+
   }
   
 }
