@@ -5,6 +5,8 @@
 
 #define _DEBUG
 
+extern uint8_t hpISR;
+
 constexpr const static uint8_t FLASH_DELAY = 24;
 constexpr const static uint8_t FLASH_COUNTER = 70;
 constexpr const static uint8_t WINNER_LEVEL = 5;
@@ -19,9 +21,9 @@ const uint8_t InitSettings[] PROGMEM = {
 };
 
 
-const uint8_t DiceDelay[] PROGMEM = { 
-  1, 1, 1, 1, 1, 1, 1, 1, 
-  2, 2, 2, 2, 4, 4, 4, 8, 8,   
+const uint8_t DiceDelay[] PROGMEM = {
+  1, 1, 1, 1, 1, 1, 1, 1,
+  2, 2, 2, 2, 4, 4, 4, 8, 8,
 };
 
 
@@ -44,7 +46,7 @@ enum class GameStateType : uint8_t {
 };
 
 
-enum class Wand : uint8_t { 
+enum class Wand : uint8_t {
   Fire,
   Ice,
   Poison,
@@ -57,7 +59,7 @@ struct PlayerStats {
   int8_t food;
   uint8_t gold;
   uint8_t hp;
-  uint8_t xpTrack = 1; 
+  uint8_t xpTrack = 1;
   uint8_t xp;
   uint8_t bossesKilled;
   uint8_t items[4];
@@ -69,7 +71,7 @@ struct PlayerStats {
   }
 
   void incArmour(uint8_t val) {
-  
+
     armour = min(armour + val, 5);
 
   }
@@ -77,11 +79,11 @@ struct PlayerStats {
   void decFood(uint8_t val) {
 
     food = food - val;
-  
+
   }
 
   void incFood(uint8_t val) {
-  
+
     food = min(food + val, 10);
 
   }
@@ -93,7 +95,7 @@ struct PlayerStats {
   }
 
   void incGold(uint8_t val) {
-  
+
     gold = min(gold + val, 10);
 
   }
@@ -101,17 +103,19 @@ struct PlayerStats {
   void decHP(uint8_t val) {
 
     hp = max(hp - val, 0);
+    hpISR = 46 - (hp * 2);
 
   }
 
   void incHP(uint8_t val) {
-  
+
     hp = min(hp + val, 20);
+    hpISR = 46 - (hp * 2);
 
   }
 
   void incXP(uint8_t value) {
-  
+
     static const uint8_t PROGMEM xpLevels[] = {0, 6, 12, 18, 99};
 
     uint8_t xpLevel = pgm_read_byte(&xpLevels[xpTrack]);
@@ -119,7 +123,7 @@ struct PlayerStats {
     xp = xp + value;
 
     if (xp > xpLevel) {
-    
+
        xp = xp - (xpLevel - 1);
        xpTrack++;
 
@@ -137,7 +141,7 @@ struct PlayerStats {
   }
 
   uint8_t itemCount() {
-    
+
     return items[0] + items[1] + items[2] + items[3];
 
   }
@@ -179,7 +183,7 @@ struct GameStats {
   bool isLastLevelInArea() {
 
     switch (level) {
-      
+
       case 1:
       case 3:
       case 6:
@@ -191,12 +195,12 @@ struct GameStats {
         return false;
 
     }
-  
+
   }
 
-  GameStateType incRoom(PlayerStats & playerStats) { 
-  
-    room++; 
+  GameStateType incRoom(PlayerStats & playerStats) {
+
+    room++;
 
     switch (room) {
 
@@ -205,9 +209,9 @@ struct GameStats {
       case 3:   selectedCard = 3;   break;
       case 4:   selectedCard = 4;   break;
       case 5:   selectedCard = 6;   break;
-      
+
     }
- 
+
     if ((room == 6) && (level == 13)) {
 
       return GameStateType::Winner;
@@ -227,7 +231,7 @@ struct GameStats {
           monsterDefeated = false;
 
         }
-        
+
       }
 
       return GameStateType::ShowCards;
@@ -252,7 +256,7 @@ struct GameStats {
 	  return (areaId < 5) ? pgm_read_byte(&damage[areaId]) : 0;
 
   }
-  
+
   uint8_t getMonsterReward() {
 
     return (getAreaId() + 1);
