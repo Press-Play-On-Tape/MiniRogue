@@ -12,6 +12,25 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	auto & gameStats = machine.getContext().gameStats;
 
+	viewState = ViewState::RollDice;
+	nextState = ViewState::RollDice;
+	lastState = ViewState::RollDice;
+
+	selectedElement = SelectedElement::None;
+
+	for (uint8_t i = 0; i < 4; i++) {
+
+		dice[i] = 0;
+		dice_Sixes[i] = 0;
+		dice_Retain[i] = false;
+
+	}
+
+	diceMonster = 0;
+	counter = 0;
+	ice = 0;
+	poison = false;
+
 	setDiceSelection(machine, false);
 
 	switch (machine.getContext().gameState) {
@@ -35,6 +54,7 @@ void FightMonstersState::activate(StateMachine & machine) {
 
 	}
 
+	viewState = ViewState::RollDice;
 	nextState = ViewState::RollDice;
 
 }

@@ -28,8 +28,8 @@ class GameOverState : public BaseState {
   private:
 
     ViewState viewState = ViewState::PlayerDead;
-    uint8_t score = 123;
-    uint8_t highScore = 456;
+    uint8_t score = 0;
+    uint8_t highScore = 0;
 
   public:
 

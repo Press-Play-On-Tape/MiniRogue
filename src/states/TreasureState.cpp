@@ -15,6 +15,11 @@ void TreasureState::activate(StateMachine & machine) {
 
   (void)machine;
 
+  viewState = ViewState::InitialRoll;
+  counter = 0;
+  dice = 0;
+  foundTreasure = false;
+  
 }
 
 

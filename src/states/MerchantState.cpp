@@ -6,6 +6,20 @@
 
 
 // ----------------------------------------------------------------------------
+//  Initialise state ..
+//
+void MerchantState::activate(StateMachine & machine) {
+
+  (void)machine;
+
+  viewState = ViewState::Buying;
+  selectedItem = 0;
+  errorNumber = 0;
+  
+}
+
+
+// ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
 void MerchantState::update(StateMachine & machine) { 

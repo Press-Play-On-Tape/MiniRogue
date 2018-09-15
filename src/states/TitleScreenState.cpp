@@ -7,6 +7,17 @@ constexpr const static uint8_t UPLOAD_DELAY = 16;
 
 
 // ----------------------------------------------------------------------------
+//  Initialise state ..
+//
+void TitleScreenState::activate(StateMachine & machine) {
+
+	(void)machine;
+  restart = 0;
+		
+}
+
+
+// ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
 void TitleScreenState::update(StateMachine & machine) {

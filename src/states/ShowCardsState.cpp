@@ -24,6 +24,12 @@ void ShowCardsState::activate(StateMachine & machine) {
   auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;
 
+	viewState = ViewState::DealCards;
+	
+	counter = 0;           
+	displayCard = 0;           
+	numberOfCardsToDisplay = 6;
+
 	this->numberOfCardsToDisplay = (gameStats.isLastLevelInArea() ? 7 : 6);
   arduboy.resetFrameCount();
 

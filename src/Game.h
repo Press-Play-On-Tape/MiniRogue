@@ -28,41 +28,20 @@ class Game : public GameStateMachine<GameContext, GameStateType> {
 
   private:
 
-    union StateData {
-      EventState eventState;
-      TreasureState treasureState;
-      ShowCardsState showCardsState;
-      FightMonstersState fightMonstersState;
-      MerchantState merchantState;
-      RestingState restingState;
-      TitleScreenState titleScreenState;
-      TrapState trapState;
-      SplashScreenState splashScreenState;
-      GameOverState gameOverState;
-    };
-
-  private:
-
-    Context context;
-    StateId nextStateId;
-    bool changePending;
-    State * currentState;
-    char stateData[sizeof(StateData)];
+    EventState eventState;
+    TreasureState treasureState;
+    ShowCardsState showCardsState;
+    FightMonstersState fightMonstersState;
+    MerchantState merchantState;
+    RestingState restingState;
+    TitleScreenState titleScreenState;
+    TrapState trapState;
+    SplashScreenState splashScreenState;
+    GameOverState gameOverState;
     
   public:
 
     void setup(void);
     void loop(void);
-
-    Context & getContext(void) override;
-    const Context & getContext(void) const override;
-
-    void changeState(const StateId & stateId) override;
-
-    StateId currentStateId;
-
-  private:
-  
-    State * createState(const StateId & stateType);
 
 };

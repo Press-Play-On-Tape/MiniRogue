@@ -6,6 +6,21 @@
 
 
 // ----------------------------------------------------------------------------
+//  Initialise state ..
+//
+void RestingState::activate(StateMachine & machine) {
+
+  (void)machine;
+  
+  viewState = ViewState::SelectReward;
+  selectedItem = SelectedItem::Food;
+  prevSelection = SelectedItem::Food;
+  counter = 0;
+  
+}
+
+
+// ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
 void RestingState::update(StateMachine & machine) { 

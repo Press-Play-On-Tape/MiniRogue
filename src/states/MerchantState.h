@@ -33,6 +33,7 @@ class MerchantState : public BaseState {
 
   public:
 
+    void activate(StateMachine & machine) override;
     void update(StateMachine & machine) override;
     void render(StateMachine & machine) override;
 

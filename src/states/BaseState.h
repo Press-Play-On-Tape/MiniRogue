@@ -52,7 +52,7 @@ class BaseState : public GameState<GameContext, GameStateType> {
 
     void renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i, uint8_t ySpacing = 13);
     void renderLargeSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i);
-    void renderPlayerDead();
+    void renderPlayerDead(uint8_t y = 25);
     void renderMonsterDead(StateMachine & machine);
     void renderPlayerStatistics(StateMachine & machine, bool overallFlash, FlashSettings settings);
     void renderBackground(StateMachine & machine, bool renderCorners);

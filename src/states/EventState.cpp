@@ -8,6 +8,19 @@ constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 13;
 
 
 // ----------------------------------------------------------------------------
+//  Initialise state ..
+//
+void EventState::activate(StateMachine & machine) {
+
+  (void)machine;
+  
+  viewState = ViewState::RollDice;
+  counter = 0;
+  dice = 0;
+
+}
+
+// ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
 void EventState::update(StateMachine & machine) { 

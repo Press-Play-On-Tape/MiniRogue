@@ -19,6 +19,12 @@ void GameOverState::activate(StateMachine & machine) {
 	auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;
 
+	initEEPROM(false);
+	
+	viewState = ViewState::PlayerDead;
+	score = 0;
+	highScore = 0;
+	
 	switch (machine.getContext().gameState) {
 
 		case GameStateType::PlayerDead:
@@ -89,7 +95,6 @@ void GameOverState::update(StateMachine & machine) {
 //
 void GameOverState::render(StateMachine & machine) {
 
-	auto & arduboy = machine.getContext().arduboy;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;

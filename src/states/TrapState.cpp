@@ -8,6 +8,20 @@ constexpr const static uint8_t NO_OF_CARDS_IN_FLIP = 13;
 
 
 // ----------------------------------------------------------------------------
+//  Initialise state ..
+//
+void TrapState::activate(StateMachine & machine) {
+
+	(void)machine;
+  
+  viewState = ViewState::SkillCheck;
+  counter = 0;
+  dice = 0;
+  
+}
+
+
+// ----------------------------------------------------------------------------
 //  Handle state updates .. 
 //
 void TrapState::update(StateMachine & machine) { 
@@ -229,19 +243,22 @@ void TrapState::render(StateMachine & machine) {
 
     case ViewState::PlayerDead:
 
-      BaseState::renderPlayerDead();
+      font3x5.setCursor(4, 0);
+      printTrapName();
+      renderLargeSpinningCard(machine, 28, 8, 0);
+      ardBitmap.drawCompressed(30, 10, Images::Trap_Dice[dice - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+      renderPlayerDead(35);
       break;
 
   }
 
-  static const FlashSettings diceHelper[] PROGMEM =
-  {
-	FlashSettings::None,
-	FlashSettings::FlashFood,
-	FlashSettings::FlashGold,
-	FlashSettings::FlashArmour,
-	FlashSettings::FlashHP,
-	FlashSettings::FlashXP,
+  static const FlashSettings diceHelper[] PROGMEM = {
+    FlashSettings::None,
+    FlashSettings::FlashFood,
+    FlashSettings::FlashGold,
+    FlashSettings::FlashArmour,
+    FlashSettings::FlashHP,
+    FlashSettings::FlashXP,
   };
 
 	// Player statistics ..

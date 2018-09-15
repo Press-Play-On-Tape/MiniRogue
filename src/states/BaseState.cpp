@@ -74,9 +74,9 @@ void BaseState::renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, u
 
 }
 
-void BaseState::renderPlayerDead() {
+void BaseState::renderPlayerDead(uint8_t y) {
 
-  Sprites::drawOverwrite(38, 25, Images::Message_PlayerDead, 0);
+  Sprites::drawOverwrite(38, y, Images::Message_PlayerDead, 0);
 
 }
 

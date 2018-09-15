@@ -33,12 +33,8 @@ void Game::setup(void) {
 	arduboy.initRandomSeed();
 	arduboy.setFrameRate(60);
 
-	this->currentStateId = GameStateType::SplashScreen;
-	this->currentState = createState(this->currentStateId);
-	this->nextStateId = this->currentStateId;
-
-	this->currentState->activate(*this);
-
+	this->currentState = GameStateType::SplashScreen;
+	this->splashScreenState.activate(*this);
 }
 
 void Game::loop(void) {
@@ -47,68 +43,127 @@ void Game::loop(void) {
 	if (!arduboy.nextFrame()) return;
 
 	arduboy.pollButtons();
-
-	if (this->currentState != nullptr) this->currentState->update(*this);
-		
 	arduboy.clear();
 
-	if (this->currentState != nullptr) this->currentState->render(*this);
+	switch (currentState) {
+
+		case GameStateType::Resting:
+		
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->restingState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->restingState.update(*this);
+			this->restingState.render(*this);
+			break;
+
+		case GameStateType::Treasure:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->treasureState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->treasureState.update(*this);
+			this->treasureState.render(*this);
+			break;
+
+		case GameStateType::Event:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->eventState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->eventState.update(*this);
+			this->eventState.render(*this);
+			break;
+
+		case GameStateType::Merchant:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->merchantState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->merchantState.update(*this);
+			this->merchantState.render(*this);
+			break;
+
+		case GameStateType::Trap:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->trapState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->trapState.update(*this);
+			this->trapState.render(*this);
+			break;
+
+		case GameStateType::Monster:
+		case GameStateType::BossMonster:
+		case GameStateType::MonsterFromEvent:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->fightMonstersState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->fightMonstersState.update(*this);
+			this->fightMonstersState.render(*this);
+			break;
+
+		case GameStateType::ShowCards:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->showCardsState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->showCardsState.update(*this);
+			this->showCardsState.render(*this);
+			break;
+
+		case GameStateType::SplashScreen:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->splashScreenState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->splashScreenState.update(*this);
+			this->splashScreenState.render(*this);
+			break;
+
+		case GameStateType::TitleScreen: 
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->titleScreenState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->titleScreenState.update(*this);
+			this->titleScreenState.render(*this);
+			break;
+
+		case GameStateType::Winner:
+		case GameStateType::PlayerDead:
+
+			if (currentState != savedCurrentState) {
+				this->context.gameState = this->currentState;
+				this->gameOverState.activate(*this);
+				this->savedCurrentState = this->currentState;
+			}
+			this->gameOverState.update(*this);
+			this->gameOverState.render(*this);
+			break;
+
+		default: break;	
+
+	}
 
 	arduboy.display();
 	
-	while (this->changePending) {
-
-		this->currentState->deactivate(*this);
-
-		if (this->currentStateId != this->nextStateId) {
-			// Strictly speaking this does nothing, but I'm keeping it for the sake of correctness
-			this->currentState->~GameState();
-			this->currentState = this->createState(this->nextStateId);
-			this->currentStateId = this->nextStateId;
-		}
-
-		this->changePending = false;
-  	this->context.gameState = this->currentStateId;
-		this->currentState->activate(*this);
-
-	}
-
-}
-
-Game::Context & Game::getContext(void) {
-	return this->context;
-}
-
-const Game::Context & Game::getContext(void) const {
-	return this->context;
-}
-
-void Game::changeState(const StateId & stateId) {
-	this->nextStateId = stateId;
-	this->changePending = true;
-}
-
-Game::State * Game::createState(const StateId & stateType) {
-
-	switch (stateType) {
-
-		case GameStateType::Event: 		      					return new (&this->stateData[0])  EventState();
-		case GameStateType::ShowCards:       					return new (&this->stateData[0])  ShowCardsState();
-		case GameStateType::Resting:                  return new (&this->stateData[0])  RestingState();
-		case GameStateType::TitleScreen:              return new (&this->stateData[0])  TitleScreenState();
-		case GameStateType::Trap:              				return new (&this->stateData[0])  TrapState();
-		case GameStateType::Treasure:      		      	return new (&this->stateData[0])  TreasureState();
-		case GameStateType::Merchant:      		      	return new (&this->stateData[0])  MerchantState();
-		case GameStateType::SplashScreen:             return new (&this->stateData[0])  SplashScreenState();
-		case GameStateType::Winner: 			            return new (&this->stateData[0])  GameOverState();
-		case GameStateType::PlayerDead: 	            return new (&this->stateData[0])  GameOverState();
-
-		case GameStateType::Monster:   								
-		case GameStateType::BossMonster:
-		case GameStateType::MonsterFromEvent: 				return new (&this->stateData[0])  FightMonstersState();
-
-		default: return nullptr;
-
-	}
-
 }
