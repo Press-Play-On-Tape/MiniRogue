@@ -85,6 +85,7 @@ void TreasureState::update(StateMachine & machine) {
 			else {
           
         this->foundTreasure = true;
+        if (playerStats.itemCount() >= 2 && this->dice < 5) this->dice = 7;
 
         switch (this->dice) {
 

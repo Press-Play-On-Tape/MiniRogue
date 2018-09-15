@@ -364,9 +364,10 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 		 	{
 				playerStats.incXP(gameStats.getAreaId() + 2);
 				playerStats.incGold(gameStats.getAreaId() < 2 ? 2 : 3);
+				playerStats.bossesKilled++;
 
         this->diceMonster = random(1, 7);
-        if (playerStats.itemCount() == 2 && this->diceMonster < 5) this->diceMonster = 7;
+        if (playerStats.itemCount() >= 2 && this->diceMonster < 5) this->diceMonster = 7;
 
 				switch (this->diceMonster) {
 

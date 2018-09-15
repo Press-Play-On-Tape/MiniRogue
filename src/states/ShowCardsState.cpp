@@ -47,14 +47,20 @@ void ShowCardsState::activate(StateMachine & machine) {
 		}
 
 		if (playerStats.food == STARVED_TO_DEATH) {
+
   		this->displayCard = CARD_SHOW_ALL;
 			this->viewState = ViewState::PlayerDead;
       playerStats.food = 0;
   		gameStats.room = 0;
+
 		}
 		else {
+
 			gameStats.room = 1;
+			
 		}
+
+		//SJH  machine.getContext().cards[0] = GameStateType::BossMonster;
 
 	}
 	else {
@@ -148,11 +154,11 @@ void ShowCardsState::render(StateMachine & machine) {
 	// Draw background ..
 
 	ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
-	for (uint8_t i = 0; i < 94; i = i + 10) {
+	for (int8_t i = -1; i < 93; i = i + 10) {
 		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	}
-	ardBitmap.drawCompressed(98, 18, Images::Card_Border_Right_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(97, 18, Images::Card_Border_Right_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 
 	// Player statistics ..

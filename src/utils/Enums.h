@@ -59,6 +59,7 @@ struct PlayerStats {
   uint8_t hp;
   uint8_t xpTrack = 1; 
   uint8_t xp;
+  uint8_t bossesKilled;
   uint8_t items[4];
 
   void decArmour(uint8_t val) {
@@ -131,6 +132,7 @@ struct PlayerStats {
     for (uint8_t x = 0; x < 4; x++) { items[x] = 0; }
     xpTrack = 1;
     xp = 0;
+    bossesKilled = 0;
 
   }
 

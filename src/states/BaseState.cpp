@@ -46,12 +46,20 @@ void BaseState::renderLargeSpinningCard(StateMachine & machine, int8_t x, int8_t
 
 }
 
-void BaseState::renderBackground(StateMachine & machine) {
+void BaseState::renderTitleBackground(StateMachine & machine, bool drawLowerLines) {
 
 	auto & ardBitmap = machine.getContext().ardBitmap;
+  auto & arduboy = machine.getContext().arduboy;
+
 	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
   
+  if (drawLowerLines) {
+    arduboy.drawFastHLine(17, 49, 94);
+    arduboy.drawFastHLine(17, 51, 94);
+    arduboy.drawHorizontalDottedLine(17, 110, 53);
+  }
+
 }
 
 void BaseState::renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, uint8_t w, uint8_t h) {

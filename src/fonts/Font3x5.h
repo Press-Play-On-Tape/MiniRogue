@@ -7,14 +7,14 @@ class Font3x5 : public Print {
     
   public:
 
-    Font3x5(uint8_t lineSpacing = 8);   
+    Font3x5(uint8_t lineHeight = 8);   
 
     virtual size_t write(uint8_t); // used by the Arduino Print class
     void printChar(const char c, const int8_t x, int8_t y);
     void setCursor(const int8_t x, const int8_t y);
 
     void setTextColor(const uint8_t color);
-    void setHeight(const uint8_t color);
+    void setHeight(const uint8_t lineHeight);
     
 
   private:

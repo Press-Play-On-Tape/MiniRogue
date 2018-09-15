@@ -101,9 +101,9 @@ const uint8_t PROGMEM font_images[] = {
 };
 
 
-Font3x5::Font3x5(uint8_t lineSpacing) {
+Font3x5::Font3x5(uint8_t lineHeight) {
 
-  _lineHeight = lineSpacing;
+  _lineHeight = lineHeight;
   _letterSpacing = 1;
 
   _cursorX = _cursorY = _baseX = 0;
@@ -195,6 +195,6 @@ void Font3x5::setTextColor(const uint8_t color){
   _textColor = color;
 }
 
-void Font3x5::setHeight(const uint8_t color){
-  _lineHeight = color;
+void Font3x5::setHeight(const uint8_t lineHeight){
+  _lineHeight = lineHeight;
 }

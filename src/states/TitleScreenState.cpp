@@ -52,10 +52,11 @@ void TitleScreenState::update(StateMachine & machine) {
 		playerStats.xpTrack = 1;
 
 		machine.getContext().resetGame();
-
-  //machine.getContext().cards[0] = GameStateType::Event;    //sjh
-
 		machine.changeState(GameStateType::ShowCards);
+	
+		//SJH playerStats.hp = 20; 
+		//SJH playerStats.items[0] = 1; 
+		//SJH playerStats.items[1] = 1; 
 		
 	}
 
@@ -71,7 +72,7 @@ void TitleScreenState::render(StateMachine & machine) {
 	auto & gameStats = machine.getContext().gameStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-	BaseState::renderBackground(machine);
+	BaseState::renderTitleBackground(machine, true);
 	ardBitmap.drawCompressed(28, 17, Images::Title_Mini_Rogue_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(19, 56, Images::Title_Levels_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
