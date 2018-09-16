@@ -26,8 +26,26 @@ uint8_t hpISR = 46;
 
 ISR(TIMER3_COMPA_vect)
 {
-    t++;
-    OCR4A = ((t*(t>>8|t>>9)&hpISR&t>>8))^(t&t>>13|t>>6); // by xpansive
+	union ByteSplit
+	{
+		uint16_t value;
+		struct Parts { uint8_t low; uint8_t high; } parts;
+	};
+
+	// "Digital Dungeon" By Pharap
+	
+	ByteSplit split;
+	split.value = t;
+	
+	const uint8_t high = split.parts.high;
+	const uint8_t low = split.parts.low;
+	
+	const uint16_t n = ((t & high) - t);
+	const uint8_t a = n << 1;
+	const uint8_t b = a << 1;
+	const uint8_t v = a ^ b;
+	
+	OCR4A = v;
 }
 
 void Game::setup(void) {
