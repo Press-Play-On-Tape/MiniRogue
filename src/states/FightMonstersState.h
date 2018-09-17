@@ -41,7 +41,7 @@ char const * const bossDice_captions[] = {
 
 
 char const monster_caption_01[] PROGMEM = "Undead\nSoldier";
-char const monster_caption_02[] PROGMEM = "Skeleton!";
+char const monster_caption_02[] PROGMEM = "Skeleton";
 char const monster_caption_03[] PROGMEM = "Undead\nKnight";
 char const monster_caption_04[] PROGMEM = "Serpent\nKnight";
 char const monster_caption_05[] PROGMEM = "Ogs\nSanctum\nGuard";

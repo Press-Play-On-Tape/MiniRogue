@@ -20,14 +20,13 @@ char const * const level_Captions[] = {
 class GameOverState : public BaseState {
   
   enum class ViewState : uint8_t {
-    PlayerDead,
     Winner,
     HighScore
   };
 
   private:
 
-    ViewState viewState = ViewState::PlayerDead;
+    ViewState viewState = ViewState::Winner;
     uint8_t score = 0;
     uint8_t highScore = 0;
 

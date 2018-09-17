@@ -21,21 +21,19 @@ void GameOverState::activate(StateMachine & machine) {
 
 	initEEPROM(false);
 	
-	viewState = ViewState::PlayerDead;
+	viewState = ViewState::Winner;
 	score = 0;
 	highScore = 0;
 	
 	switch (machine.getContext().gameState) {
 
-		case GameStateType::PlayerDead:
-			viewState = ViewState::PlayerDead; 
-			break;
-
 		case GameStateType::Winner:
 			viewState = ViewState::Winner; 
 			break;
 
-		default: break;
+		default:
+			viewState = ViewState::HighScore; 
+			break;
 
 	}
 
@@ -74,7 +72,6 @@ void GameOverState::update(StateMachine & machine) {
 		
 		switch (this->viewState) {
 
-			case ViewState::PlayerDead:
 			case ViewState::Winner: 
 				viewState = ViewState::HighScore; 
 				break;
@@ -103,10 +100,6 @@ void GameOverState::render(StateMachine & machine) {
 
 	switch (this->viewState) {
 
-		case ViewState::PlayerDead:
-			ardBitmap.drawCompressed(29, 21, Images::Title_Game_Over_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-			break;
-
 		case ViewState::Winner:
 			ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 			break;
@@ -114,7 +107,7 @@ void GameOverState::render(StateMachine & machine) {
 		case ViewState::HighScore:
 			{
 				ardBitmap.drawCompressed(20, 21, Images::High_Score_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-
+				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
 				font3x5.setCursor(23, 20);
 				font3x5.print(FlashString(level_Captions[ static_cast<uint8_t>(gameStats.skillLevel) ]));
 				font3x5.setCursor(56, 20);
