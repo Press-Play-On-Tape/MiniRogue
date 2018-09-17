@@ -423,6 +423,7 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 void FightMonstersState::render(StateMachine & machine) {
 
 	auto & arduboy = machine.getContext().arduboy;
+	auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	bool flash = arduboy.getFrameCountHalf(20);
@@ -504,6 +505,11 @@ void FightMonstersState::render(StateMachine & machine) {
 	// Dice ..
 
 	if (viewState == ViewState::DiceSelection || viewState == ViewState::RollDice || lastState == ViewState::DiceSelection) {
+
+		uint8_t captionIndex = gameStats.getAreaId() + (machine.getContext().gameState == GameStateType::BossMonster ? 5 : 0);
+		font3x5.setCursor(3, 22 + (monster_captions_offsets[captionIndex] * 4));
+		font3x5.print(FlashString(monster_captions[captionIndex]));
+
 		for (uint8_t i = 0; i < playerStats.xpTrack; i++) {
 			SpritesB::drawOverwrite(3 + (i * 10), 52, Images::Dice, this->dice[i]);
 		}
@@ -602,7 +608,7 @@ void FightMonstersState::render(StateMachine & machine) {
     	 	BaseState::renderMessageBox(machine, 20, 23, 88, 26);
 			 	font3x5.setCursor(26, 28);
 			 	font3x5.print(F("You~killed~the~Boss.\n"));
-			 	font3x5.print(FlashString(bossDice_Captions[this->diceMonster - 1]));
+			 	font3x5.print(FlashString(bossDice_captions[this->diceMonster - 1]));
 
 			}
 			else {
@@ -624,7 +630,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
    	 	BaseState::renderMessageBox(machine, 15, 17, 100, 32);
 			font3x5.setCursor(20, 21);
-			font3x5.print(FlashString(itemUsed_Captions[ static_cast<uint8_t>(this->viewState) - static_cast<uint8_t>(ViewState::ItemIceUsed) ]));
+			font3x5.print(FlashString(itemUsed_captions[ static_cast<uint8_t>(this->viewState) - static_cast<uint8_t>(ViewState::ItemIceUsed) ]));
 			break;
 
 		default: break;

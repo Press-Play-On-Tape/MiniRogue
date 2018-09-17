@@ -66,7 +66,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 			
 		}
 
-		//SJH  machine.getContext().cards[0] = GameStateType::BossMonster;
+		// machine.getContext().cards[0] = GameStateType::Merchant; //sjh
 
 	}
 	else {
@@ -160,11 +160,11 @@ void ShowCardsState::render(StateMachine & machine) {
 	// Draw background ..
 
 	ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
-	for (int8_t i = -1; i < 93; i = i + 10) {
+	for (int8_t i = -2; i < 93; i = i + 10) {
 		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	}
-	ardBitmap.drawCompressed(97, 18, Images::Card_Border_Right_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	// ardBitmap.drawCompressed(97, 18, Images::Card_Border_Right_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 
 	// Player statistics ..

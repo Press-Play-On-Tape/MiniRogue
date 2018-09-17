@@ -215,7 +215,8 @@ void MerchantState::render(StateMachine & machine) {
   BaseState::renderBackground(machine, true);
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Mask_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
   ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  
+	if (arduboy.getFrameCount(50) < 4) { arduboy.drawFastHLine(58, 11, 7, WHITE); }
+
   arduboy.drawFastHLine(35, 60, 51, WHITE);
   arduboy.drawHorizontalDottedLine(35, 87, 62, WHITE);
   arduboy.drawHorizontalDottedLine(36, 87, 63, WHITE);
