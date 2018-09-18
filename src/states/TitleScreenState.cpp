@@ -65,6 +65,7 @@ void TitleScreenState::update(StateMachine & machine) {
 		machine.getContext().resetGame();
 		machine.changeState(GameStateType::ShowCards);
 	
+		playerStats.xpTrack = 10;  //sjh
 		// playerStats.hp = 20;  //sjh
 		// playerStats.items[0] = 1; //sjh
 		// playerStats.items[1] = 1; //sjh

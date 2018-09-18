@@ -7,7 +7,7 @@
 
 extern uint8_t hpISR;
 
-constexpr const static uint8_t FLASH_DELAY = 24;
+constexpr const static uint8_t FLASH_DELAY = 16;
 constexpr const static uint8_t FLASH_COUNTER = 70;
 constexpr const static uint8_t WINNER_LEVEL = 5;
 constexpr const static uint8_t DO_NOT_EDIT_SLOT = 255;
