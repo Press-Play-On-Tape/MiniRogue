@@ -62,19 +62,13 @@ void EventState::update(StateMachine & machine) {
 
           viewState = ViewState::UpdateStats; 
           this->selection = 1; 
-          counter= 0; 
+          counter = 0; 
 
-        }
-        else if (justPressed & RIGHT_BUTTON) {
-
-          counter = FLASH_COUNTER; 
-          this->selection = 1;
-          
         }
         else if (justPressed > 0) {
 
           counter = FLASH_COUNTER; 
-          this->selection = 0;
+          this->selection = (justPressed & RIGHT_BUTTON ? 1 : 0);
 
         }
         else {
@@ -182,7 +176,7 @@ void EventState::update(StateMachine & machine) {
 
       if (counter == 0) {
 
-        switch (this->dice[1]) {
+        switch (this->dice[this->selection]) {
 
           case 1: playerStats.incGold(2);     break;
           case 2: playerStats.incHP(2);       break;
@@ -206,7 +200,7 @@ void EventState::update(StateMachine & machine) {
 
         if (justPressed & A_BUTTON) { 
 
-          if (this->dice[1] < 6) {
+          if (this->dice[this->selection] < 6) {
             
             machine.changeState(gameStats.incRoom(playerStats)); 
 
@@ -309,7 +303,7 @@ void EventState::render(StateMachine & machine) {
     case ViewState::SkillCheckResult:
 
       font3x5.setCursor(3, 3);
-      font3x5.print(F("Select~card?"));
+      font3x5.print(F("Select~cards?"));
       font3x5.setCursor(66, 3);
       SpritesB::drawOverwrite(51, 2, Images::Dice, this->skillCheck);
 
@@ -317,7 +311,7 @@ void EventState::render(StateMachine & machine) {
 
         if (this->counter < FLASH_COUNTER && flash) font3x5.setTextColor(BLACK);
 
-        if (this->dice[1] <= playerStats.xpTrack) {
+        if (this->skillCheck <= playerStats.xpTrack) {
 
           if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(64, 3, 15, 7, WHITE);
           font3x5.print(F("Yes"));
@@ -376,7 +370,7 @@ void EventState::render(StateMachine & machine) {
 
     case ViewState::UpdateStats:
 
-      renderLargeSpinningCard(machine, 28, 8, this->dice[1]);
+      renderLargeSpinningCard(machine, 28, 8, this->dice[this->selection]);
       // BaseState::renderLargeSpinningCard(machine, 28, 8, 0);
       // ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice[1] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
       font3x5.setCursor(4, 0);
@@ -402,7 +396,7 @@ void EventState::render(StateMachine & machine) {
 		FlashSettings::FlashXP,
 	};
 
-	const FlashSettings settings = (this->dice[1] < 5) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice[1]])) : FlashSettings::None;
+	const FlashSettings settings = (this->dice[this->selection] < 5) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice[this->selection]])) : FlashSettings::None;
 	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
 
 	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
