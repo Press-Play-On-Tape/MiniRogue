@@ -92,6 +92,7 @@ void GameOverState::update(StateMachine & machine) {
 //
 void GameOverState::render(StateMachine & machine) {
 
+	auto & arduboy = machine.getContext().arduboy;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;
@@ -102,6 +103,7 @@ void GameOverState::render(StateMachine & machine) {
 
 		case ViewState::Winner:
 			ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+			if (arduboy.getFrameCount(70) < 7) { SpritesB::drawOverwrite(51, 4, Images::Blink_Eyes, 0); }
 			break;
 
 		case ViewState::HighScore:
