@@ -80,8 +80,12 @@ void EventState::update(StateMachine & machine) {
       }
       else {
 
-        if (justPressed & LEFT_BUTTON && this->selection == 1)  { this->selection = 0; } 
-        if (justPressed & RIGHT_BUTTON && this->selection == 0) { this->selection = 1; } 
+        if (this->dice[1] != 6) { // You can not choose to take a skill test if you rolled a 6 (monster) ..
+
+          if (justPressed & LEFT_BUTTON && this->selection == 1)  { this->selection = 0; } 
+          if (justPressed & RIGHT_BUTTON && this->selection == 0) { this->selection = 1; } 
+        
+        }
 
         if (justPressed & A_BUTTON) { 
           
@@ -274,15 +278,15 @@ void EventState::render(StateMachine & machine) {
     case ViewState::TakeOrKeep:
 
       renderLargeSpinningCard(machine, 28, 8, this->dice[1]);
-      // BaseState::renderLargeSpinningCard(machine, 28, 8, 0);
-      // ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice[1] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-
       font3x5.setCursor(4, 0);
-      if (counter < FLASH_COUNTER) {
+
+      if (counter < FLASH_COUNTER || this->dice[1] == 6) {
+
         printEventName(this->dice[1]);
+
       }
       else {
-        
+
         font3x5.print(" Take~skill~test? ");
         arduboy.fillRect(71 + (this->selection == 0 ? 0 : 6), 0, 5, 7, WHITE);
 
@@ -293,7 +297,6 @@ void EventState::render(StateMachine & machine) {
         if (this->selection == 1) { font3x5.setTextColor(BLACK); }
         font3x5.print("Y");
         font3x5.setTextColor(WHITE);
-
 
       }
 
