@@ -303,7 +303,7 @@ void EventState::render(StateMachine & machine) {
     case ViewState::SkillCheckResult:
 
       font3x5.setCursor(3, 3);
-      font3x5.print(F("Select~cards?"));
+      font3x5.print(F("Select~card?"));
       font3x5.setCursor(66, 3);
       SpritesB::drawOverwrite(51, 2, Images::Dice, this->skillCheck);
 
