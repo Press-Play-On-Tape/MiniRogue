@@ -66,7 +66,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 			
 		}
 
-		// machine.getContext().cards[0] = GameStateType::Merchant; //sjh
+		//machine.getContext().cards[0] = GameStateType::Event; //sjh
 
 	}
 	else {
