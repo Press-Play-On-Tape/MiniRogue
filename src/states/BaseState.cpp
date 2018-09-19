@@ -53,7 +53,25 @@ void BaseState::renderTitleBackground(StateMachine & machine, bool drawLowerLine
 
 	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
+	ardBitmap.drawCompressed(5, 20, Images::Flames[(this->leftFlame == 3 ? 1: this->leftFlame)], WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(107, 20, Images::Flames[(this->rightFlame == 3 ? 1: this->rightFlame)], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
+  if (arduboy.everyXFrames(this->leftFlame_Frame)) { 
+    this->leftFlame++;
+    this->leftFlame_Frame = random(3, 6);
+    if (this->leftFlame % 4 == 0) this->leftFlame = 0;
+  }
+
+  if (arduboy.everyXFrames(this->rightFlame_Frame)) { 
+    this->rightFlame++;
+    this->rightFlame_Frame = random(3, 6);
+    if (this->rightFlame % 4 == 0) this->rightFlame = 0;
+  }
   
+Serial.print(this->leftFlame);
+Serial.print(" ");
+Serial.println(this->rightFlame);
   if (drawLowerLines) {
     arduboy.drawFastHLine(17, 49, 94);
     arduboy.drawFastHLine(17, 51, 94);
