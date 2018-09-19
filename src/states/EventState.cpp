@@ -306,9 +306,9 @@ void EventState::render(StateMachine & machine) {
     case ViewState::SkillCheckResult:
 
       font3x5.setCursor(3, 3);
-      font3x5.print(F("Select~card?"));
-      font3x5.setCursor(66, 3);
-      SpritesB::drawOverwrite(51, 2, Images::Dice, this->skillCheck);
+      font3x5.print(F("Enough~skill?"));
+      font3x5.setCursor(71, 3);
+      SpritesB::drawOverwrite(56, 2, Images::Dice, this->skillCheck);
 
       if (viewState == ViewState::SkillCheckResult) {
 
@@ -316,18 +316,20 @@ void EventState::render(StateMachine & machine) {
 
         if (this->skillCheck <= playerStats.xpTrack) {
 
-          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(64, 3, 15, 7, WHITE);
+          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(69, 3, 15, 7, WHITE);
           font3x5.print(F("Yes"));
+          font3x5.setTextColor(WHITE);
 
         }
         else {
 
-          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(64, 3, 11, 7, WHITE);
+          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(69, 3, 11, 7, WHITE);
           font3x5.print(F("No"));
+          font3x5.setTextColor(WHITE);
+          font3x5.setCursor(4, 18);
+          font3x5.print(F(" You lost the skill\ntest and your prize!"));
 
         }
-
-        font3x5.setTextColor(WHITE);
 
       }
 
