@@ -48,6 +48,13 @@ class BaseState : public GameState<GameContext, GameStateType> {
 
     Font3x5 font3x5 = Font3x5();
 
+	private:
+
+		uint8_t leftFlame = 0;
+		uint8_t leftFlame_Frame = 2;
+		uint8_t rightFlame = 1;
+		uint8_t rightFlame_Frame = 2;
+
   public:
 
     void renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, uint8_t i, uint8_t ySpacing = 13);
