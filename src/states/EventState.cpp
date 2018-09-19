@@ -4,9 +4,11 @@
 #include "../utils/Enums.h"
 #include "../fonts/Font3x5.h"
 
-const static uint8_t NO_OF_CARDS_IN_FLIP = 13; 
+static const uint8_t NO_OF_CARDS_IN_FLIP = 13; 
+static const uint8_t CARD_DRAW_ORDER[] = { 2, 1, 0, 2, 0, 1, 0, 1, 2 };
+static const uint8_t imageX[] = { 2, 28, 54 };
+static const uint8_t imageY[] = { 15, 8, 15 };
 
-const static uint8_t CARD_DRAW_ORDER[] = { 2, 1, 0, 2, 0, 1, 0, 1, 2 };
 
 // ----------------------------------------------------------------------------
 //  Initialise state ..
@@ -111,12 +113,24 @@ void EventState::update(StateMachine & machine) {
 
     case ViewState::SkillCheck:
       
+      //SJH
 			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
 
         this->skillCheck = random(1, 7);
         counter++;
 
 			}
+			// if (this->counter < sizeof(DiceDelay)) {
+				
+			// 	if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
+
+			// 		this->skillCheck = random(1, 7);
+			// 		this->counter++;
+			// 		arduboy.resetFrameCount();
+
+			// 	}
+
+			// }
 			else {
         
         this->counter = 0;
@@ -143,7 +157,6 @@ void EventState::update(StateMachine & machine) {
             
             this->counter = 0;
             this->selection = 1;
-
             this->dice[0] = this->dice[1] - 1;  if (this->dice[0] < 1) this->dice[0] = 6;
             this->dice[2] = this->dice[1] + 1;  if (this->dice[2] > 6) this->dice[2] = 1;
             
@@ -163,8 +176,8 @@ void EventState::update(StateMachine & machine) {
 
     case ViewState::SelectCard:
 
-      if (justPressed & LEFT_BUTTON && this->selection > 0)   { arduboy.resetFrameCount(); this->selection--; } 
-      if (justPressed & RIGHT_BUTTON && this->selection < 2)  { arduboy.resetFrameCount(); this->selection++; } 
+      if (justPressed & LEFT_BUTTON && this->selection > 0)   { this->selection--; } 
+      if (justPressed & RIGHT_BUTTON && this->selection < 2)  { this->selection++; } 
 
       if (justPressed & A_BUTTON)  { 
 
@@ -260,11 +273,11 @@ void EventState::render(StateMachine & machine) {
       
       if (counter < NO_OF_CARDS_IN_FLIP) {
 
-        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
+        //if (Images::Large_Spinning_Inlays[this->counter] > 0) {
           for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
             ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
           }
-        }
+        //}
 
       }
       else {
@@ -312,18 +325,21 @@ void EventState::render(StateMachine & machine) {
 
       if (viewState == ViewState::SkillCheckResult) {
 
-        if (this->counter < FLASH_COUNTER && flash) font3x5.setTextColor(BLACK);
+        if (this->counter < FLASH_COUNTER && flash) {
+
+          font3x5.setTextColor(BLACK);
+          arduboy.fillRect(69, 3, ((this->skillCheck <= playerStats.xpTrack) ? 15 : 11), 7, WHITE);
+
+        }
 
         if (this->skillCheck <= playerStats.xpTrack) {
 
-          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(69, 3, 15, 7, WHITE);
           font3x5.print(F("Yes"));
           font3x5.setTextColor(WHITE);
 
         }
         else {
 
-          if (this->counter < FLASH_COUNTER && flash) arduboy.fillRect(69, 3, 11, 7, WHITE);
           font3x5.print(F("No"));
           font3x5.setTextColor(WHITE);
           font3x5.setCursor(4, 18);
@@ -341,32 +357,11 @@ void EventState::render(StateMachine & machine) {
 
         uint8_t renderIdx = CARD_DRAW_ORDER[(this->selection * 3) + i];
 
-        switch (renderIdx) {
-
-          case 0:
-            renderLargeSpinningCard(machine, 2, 15, this->dice[0]);
-            if (flash && this->selection == 0) ardBitmap.drawCompressed(2, 15, Images::Large_Spinning_Card_Highlight, BLACK, ALIGN_NONE, MIRROR_NONE);
-            break;
-
-          case 1:
-            renderLargeSpinningCard(machine, 28, 8, this->dice[1]);
-            if (flash && this->selection == 1) ardBitmap.drawCompressed(28, 8, Images::Large_Spinning_Card_Highlight, BLACK, ALIGN_NONE, MIRROR_NONE);
-            break;
-
-          case 2:
-            renderLargeSpinningCard(machine, 54, 15, this->dice[2]);
-            if (flash && this->selection == 2) ardBitmap.drawCompressed(54, 15, Images::Large_Spinning_Card_Highlight, BLACK, ALIGN_NONE, MIRROR_NONE);
-            break;
-
-        }
+        renderLargeSpinningCard(machine, imageX[renderIdx], imageY[renderIdx], this->dice[renderIdx]);
+        if (flash && this->selection == renderIdx) ardBitmap.drawCompressed(imageX[renderIdx], imageY[renderIdx], Images::Large_Spinning_Card_Highlight, BLACK, ALIGN_NONE, MIRROR_NONE);
 
       }
-      // BaseState::renderLargeSpinningCard(machine, 2, 11, 0);
-      // BaseState::renderLargeSpinningCard(machine, 54, 11, 0);
-      // BaseState::renderLargeSpinningCard(machine, 28, 8, 0);
-      // ardBitmap.drawCompressed(4, 13, Images::Event_Dice[this->dice[0] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-      // ardBitmap.drawCompressed(56, 13, Images::Event_Dice[this->dice[2] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-      // ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice[1] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
+
       font3x5.setCursor(4, 0);
       printEventName(this->dice[this->selection]);
 
@@ -376,8 +371,6 @@ void EventState::render(StateMachine & machine) {
     case ViewState::UpdateStats:
 
       renderLargeSpinningCard(machine, 28, 8, this->dice[this->selection]);
-      // BaseState::renderLargeSpinningCard(machine, 28, 8, 0);
-      // ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice[1] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
       font3x5.setCursor(4, 0);
       printEventName(this->dice[this->selection]);
 

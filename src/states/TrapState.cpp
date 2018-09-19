@@ -217,10 +217,10 @@ void TrapState::render(StateMachine & machine) {
 
       if (counter < NO_OF_CARDS_IN_FLIP) {
 
-        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
+//        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
           for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
             ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
-          }
+//          }
         }
 
       }

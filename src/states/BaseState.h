@@ -51,9 +51,7 @@ class BaseState : public GameState<GameContext, GameStateType> {
 	private:
 
 		uint8_t leftFlame = 0;
-		uint8_t leftFlame_Frame = 2;
 		uint8_t rightFlame = 1;
-		uint8_t rightFlame_Frame = 2;
 
   public:
 

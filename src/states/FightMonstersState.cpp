@@ -496,9 +496,6 @@ void FightMonstersState::render(StateMachine & machine) {
 		font3x5.setCursor(21, 53);
 		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Healing)]);
 
-		//if (this->ice > 0) 	arduboy.drawVerticalDottedLine(32, 35 + (this->ice * 3), 0, 2); 
-		//if (this->poison) 	arduboy.drawVerticalDottedLine(42, 51, 0, 2); 
-
 	}
 
 

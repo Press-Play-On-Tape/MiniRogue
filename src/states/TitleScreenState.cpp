@@ -94,6 +94,7 @@ void TitleScreenState::render(StateMachine & machine) {
 
     static const uint8_t xPos[] PROGMEM = { 19, 42, 74, 96 };
     static const uint8_t width[] PROGMEM = { 15, 23, 14, 11 };
+
 		arduboy.drawFastHLine(pgm_read_byte(&xPos[gameStats.skillLevel]), 63, pgm_read_byte(&width[gameStats.skillLevel]));
 
 	}
