@@ -68,10 +68,7 @@ void BaseState::renderTitleBackground(StateMachine & machine, bool drawLowerLine
     this->rightFlame_Frame = random(3, 6);
     if (this->rightFlame % 4 == 0) this->rightFlame = 0;
   }
-  
-Serial.print(this->leftFlame);
-Serial.print(" ");
-Serial.println(this->rightFlame);
+
   if (drawLowerLines) {
     arduboy.drawFastHLine(17, 49, 94);
     arduboy.drawFastHLine(17, 51, 94);
