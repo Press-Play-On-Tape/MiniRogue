@@ -192,11 +192,14 @@ void EventState::render(StateMachine & machine) {
   // Render common parts ..
 
   for (int8_t i = -12; i < 80; i = i + 20) {
-    ardBitmap.drawCompressed(i, 40, Images::Event_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(i, 48, Images::Event_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
   }
 
   BaseState::renderBackground(machine, true);
-  
+
+  SpritesB::drawErase(0, 56, Images::Corner_LH, 0);
+  SpritesB::drawErase(85, 56, Images::Corner_RH, 0);
+
   switch (this->viewState) {
 
     case ViewState::RollDice:
