@@ -26,7 +26,6 @@ class EventState : public BaseState {
   
   enum class ViewState : uint8_t {
     RollDice,
-    TakeOrKeep,
     SkillCheck,
     SkillCheckResult,
     SelectCard,
@@ -40,6 +39,7 @@ class EventState : public BaseState {
     void renderLargeSpinningCard(StateMachine & machine, uint8_t x, uint8_t y, uint8_t dice);
 
     ViewState viewState = ViewState::RollDice;
+    ViewState nextState = ViewState::RollDice;
     
     uint8_t counter = 0;
     uint8_t skillCheck = 0;

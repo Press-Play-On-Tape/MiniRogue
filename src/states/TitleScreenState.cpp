@@ -64,6 +64,7 @@ void TitleScreenState::update(StateMachine & machine) {
 
 		machine.getContext().resetGame();
 		machine.changeState(GameStateType::ShowCards);
+		arduboy.resetFrameCount();
 	
 		//playerStats.xpTrack = 3;  //sjh
 		// playerStats.hp = 20;  //sjh
@@ -85,7 +86,7 @@ void TitleScreenState::render(StateMachine & machine) {
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
 	BaseState::renderTitleBackground(machine, true);
-	ardBitmap.drawCompressed(30, 17, Images::Title_Mini_Rogue_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(30, 16, Images::Title_Mini_Rogue_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(19, 56, Images::Title_Levels_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 	if (arduboy.getFrameCount(70) < 7) { SpritesB::drawOverwrite(51, 4, Images::Blink_Eyes, 0); }

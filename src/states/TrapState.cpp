@@ -64,6 +64,27 @@ void TrapState::update(StateMachine & machine) {
 			break;
 
     case ViewState::SkillCheck:
+
+   		if (this->counter < sizeof(DiceDelay)) {
+				
+				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
+
+					this->dice = random(1, 7);
+					this->counter++;
+					arduboy.resetFrameCount();
+
+				}
+
+			}
+			else {    
+
+        this->counter = 0;
+        arduboy.resetFrameCount();
+        this->viewState = ViewState::SkillCheckResult;
+
+			}
+			break;
+
     case ViewState::RollDice:
       
 			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
@@ -74,7 +95,7 @@ void TrapState::update(StateMachine & machine) {
 			}
 			else {
 
-        if (this->viewState == ViewState::RollDice) {
+        // if (this->viewState == ViewState::RollDice) {
 
           switch (this->dice) {
 
@@ -112,14 +133,14 @@ void TrapState::update(StateMachine & machine) {
 
           }
 
-        }
-        else {
+        // }
+        // else {
           
-          this->counter = 0;
-          arduboy.resetFrameCount();
-          this->viewState = ViewState::SkillCheckResult;
+        //   this->counter = 0;
+        //   arduboy.resetFrameCount();
+        //   this->viewState = ViewState::SkillCheckResult;
 
-        }
+        // }
 
 			}
 			break;
@@ -217,10 +238,8 @@ void TrapState::render(StateMachine & machine) {
 
       if (counter < NO_OF_CARDS_IN_FLIP) {
 
-//        if (Images::Large_Spinning_Inlays[this->counter] > 0) {
-          for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
-            ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
-//          }
+        for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
+          ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
         }
 
       }

@@ -22,7 +22,6 @@ char const * const area_Captions[] = {
 };
 
 
-
 class ShowCardsState : public BaseState {
   
   private:

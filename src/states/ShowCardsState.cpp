@@ -36,7 +36,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 	if (gameStats.room <= 0) {
 
 		this->viewState = ViewState::DealCards;
-		this->displayCard = 0;
+		this->displayCard = -3;
 		this->counter = NO_OF_CARDS_IN_FLIP;
 
 

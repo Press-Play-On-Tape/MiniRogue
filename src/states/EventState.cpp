@@ -17,7 +17,8 @@ void EventState::activate(StateMachine & machine) {
 
   (void)machine;
   
-  viewState = ViewState::RollDice;
+  viewState = ViewState::SkillCheck;
+  nextState = ViewState::SkillCheck;
   counter = 0;
   dice[0] = 0;
   dice[1] = 0;
@@ -40,97 +41,19 @@ void EventState::update(StateMachine & machine) {
 
   switch (this->viewState) {
 
-    case ViewState::RollDice:
-      
-			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
-
-				this->dice[1] = random(1, 7);
-				counter++;
-
-			}      
-			else {
-
-        this->viewState = ViewState::TakeOrKeep;
-        this->counter = 40;
-
-			}
-			break;
-
-    case ViewState::TakeOrKeep:
-
-      if (this->counter < FLASH_COUNTER) {
-
-        if (justPressed & A_BUTTON) { 
-
-          viewState = ViewState::UpdateStats; 
-          this->selection = 1; 
-          counter = 0; 
-
-        }
-        else if (justPressed > 0) {
-
-          counter = FLASH_COUNTER; 
-          this->selection = (justPressed & RIGHT_BUTTON ? 1 : 0);
-
-        }
-        else {
-
-          this->counter++;
-
-        }
-
-      }
-      else {
-
-        if (this->dice[1] != 6) { // You can not choose to take a skill test if you rolled a 6 (monster) ..
-
-          if (justPressed & LEFT_BUTTON && this->selection == 1)  { this->selection = 0; } 
-          if (justPressed & RIGHT_BUTTON && this->selection == 0) { this->selection = 1; } 
-        
-        }
-
-        if (justPressed & A_BUTTON) { 
-          
-          counter = 0;
-
-          if (this->selection == 0) {
-
-            this->selection = 1;
-            this->viewState = ViewState::UpdateStats;
-
-          }
-          else {
-
-            this->viewState = ViewState::SkillCheck;
-
-          }
-
-        }
-
-      }
-
-      break;
-
     case ViewState::SkillCheck:
       
-      //SJH
-			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
+			if (this->counter < sizeof(DiceDelay)) {
+				
+				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
 
-        this->skillCheck = random(1, 7);
-        counter++;
+					this->skillCheck = random(1, 7);
+					this->counter++;
+					arduboy.resetFrameCount();
+
+				}
 
 			}
-			// if (this->counter < sizeof(DiceDelay)) {
-				
-			// 	if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
-
-			// 		this->skillCheck = random(1, 7);
-			// 		this->counter++;
-			// 		arduboy.resetFrameCount();
-
-			// 	}
-
-			// }
 			else {
         
         this->counter = 0;
@@ -153,23 +76,40 @@ void EventState::update(StateMachine & machine) {
 
         if (justPressed & A_BUTTON) {
 
+          this->counter = 0;
+          this->viewState = ViewState::RollDice;
+
           if (this->skillCheck <= playerStats.xpTrack) {
-            
-            this->counter = 0;
-            this->selection = 1;
-            this->dice[0] = this->dice[1] - 1;  if (this->dice[0] < 1) this->dice[0] = 6;
-            this->dice[2] = this->dice[1] + 1;  if (this->dice[2] > 6) this->dice[2] = 1;
-            
-            this->viewState = ViewState::SelectCard;
+
+            this->nextState = ViewState::SelectCard;
 
           }
           else {
 
-            machine.changeState(gameStats.incRoom(playerStats)); 
+            this->nextState = ViewState::UpdateStats;
 
           }
 
         }
+
+			}
+			break;
+
+    case ViewState::RollDice:
+      
+			if (counter < NO_OF_CARDS_IN_FLIP - 1) {
+
+				this->dice[1] = random(1, 7);
+        this->dice[0] = this->dice[1] - 1;  if (this->dice[0] < 1) this->dice[0] = 6;
+        this->dice[2] = this->dice[1] + 1;  if (this->dice[2] > 6) this->dice[2] = 1;
+				counter++;
+
+			}      
+			else {
+            
+        this->selection = 1;
+        this->viewState = this->nextState;
+        this->counter = 40;
 
 			}
 			break;
@@ -232,14 +172,6 @@ void EventState::update(StateMachine & machine) {
 
       break;
 
-		case ViewState::PlayerDead:
-
-      if (justPressed & A_BUTTON) { 
-        machine.changeState(GameStateType::PlayerDead);
-			}
-
-			break;
-
   }
 
 }
@@ -269,47 +201,33 @@ void EventState::render(StateMachine & machine) {
 
     case ViewState::RollDice:
 
+      if (this->nextState == ViewState::SelectCard) {
+        arduboy.fillRect(2, 15, 32, 32, BLACK);
+        arduboy.fillRect(54, 15, 32, 32, BLACK);
+        BaseState::renderLargeSpinningCard(machine, 2, 15, this->counter);
+        BaseState::renderLargeSpinningCard(machine, 54, 15, this->counter);
+      }
+
+      arduboy.fillRect(29, 8, 30, 32, BLACK);
       BaseState::renderLargeSpinningCard(machine, 28, 8, this->counter);
       
       if (counter < NO_OF_CARDS_IN_FLIP) {
 
-        //if (Images::Large_Spinning_Inlays[this->counter] > 0) {
-          for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
-            ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
+        for (uint8_t i = 0, j = 0; i < Images::Large_Spinning_Inlays[this->counter]; i++, j = j + 2) {
+
+          if (this->nextState == ViewState::SelectCard) {
+            ardBitmap.drawCompressed(6 + (this->counter * 2) + j, 15, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
+            ardBitmap.drawCompressed(58 + (this->counter * 2) + j, 15, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
           }
-        //}
+
+          ardBitmap.drawCompressed(32 + (this->counter * 2) + j, 8, Images::Large_Spinning_Card_Inlay, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+        }
 
       }
       else {
 
         ardBitmap.drawCompressed(30, 10, Images::Event_Dice[this->dice[1] - 1], WHITE, ALIGN_NONE, MIRROR_NONE);
-
-      }
-
-      break;
-
-    case ViewState::TakeOrKeep:
-
-      renderLargeSpinningCard(machine, 28, 8, this->dice[1]);
-      font3x5.setCursor(4, 0);
-
-      if (counter < FLASH_COUNTER || this->dice[1] == 6) {
-
-        printEventName(this->dice[1]);
-
-      }
-      else {
-
-        font3x5.print(" Take~skill~test? ");
-        arduboy.fillRect(71 + (this->selection == 0 ? 0 : 6), 0, 5, 7, WHITE);
-
-        if (this->selection == 0) { font3x5.setTextColor(BLACK); }
-        font3x5.print("N~");
-        font3x5.setTextColor(WHITE);
-
-        if (this->selection == 1) { font3x5.setTextColor(BLACK); }
-        font3x5.print("Y");
-        font3x5.setTextColor(WHITE);
 
       }
 
@@ -342,8 +260,6 @@ void EventState::render(StateMachine & machine) {
 
           font3x5.print(F("No"));
           font3x5.setTextColor(WHITE);
-          font3x5.setCursor(4, 18);
-          font3x5.print(F(" You lost the skill\ntest and your prize!"));
 
         }
 
@@ -374,11 +290,6 @@ void EventState::render(StateMachine & machine) {
       font3x5.setCursor(4, 0);
       printEventName(this->dice[this->selection]);
 
-      break;
-
-    case ViewState::PlayerDead:
-
-      BaseState::renderPlayerDead();
       break;
 
   }
