@@ -116,13 +116,13 @@ void GameOverState::render(StateMachine & machine) {
 				renderTwoDigitNumeric(gameStats.skillLevel * 3);
 
 				font3x5.setCursor(33, 29);
-				renderTwoDigitNumeric(playerStats.xpTrack * 2);
-				renderTwoDigitNumeric((gameStats.level + 1) * 3);
 				renderTwoDigitNumeric(playerStats.hp * 2);
+				renderTwoDigitNumeric((gameStats.level + 1) * 3);
 				renderTwoDigitNumeric(playerStats.food);
+				renderTwoDigitNumeric(playerStats.armour);
 
 				font3x5.setCursor(56, 29);
-				renderTwoDigitNumeric(playerStats.armour);
+				renderTwoDigitNumeric(playerStats.xpTrack * 2);
 				renderTwoDigitNumeric(playerStats.gold * 2);
 				renderTwoDigitNumeric(playerStats.bossesKilled * 2);
 				renderTwoDigitNumeric(playerStats.itemCount());
