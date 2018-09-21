@@ -4,10 +4,10 @@
 #include "../utils/FadeEffects.h"
 #include <avr/eeprom.h> 
 
-#define EEPROM_START                  EEPROM_STORAGE_SPACE_START + 130
-#define EEPROM_START_C1               EEPROM_START
-#define EEPROM_START_C2               EEPROM_START + 1
-#define EEPROM_SCORE                  EEPROM_START + 2
+#define EEPROM_START                  ((uint8_t *)140)
+#define EEPROM_START_C1               ((uint8_t *)140)
+#define EEPROM_START_C2               ((uint8_t *)141)
+#define EEPROM_SCORE                  142
 
 
 
@@ -53,7 +53,7 @@ void GameOverState::activate(StateMachine & machine) {
 	if (this->score > this->highScore) {
 
 		this->highScore = this->score;
-		eeprom_update_byte(EEPROM_SCORE + gameStats.skillLevel, this->score);
+		eeprom_update_byte((uint8_t *)(EEPROM_SCORE + gameStats.skillLevel), this->score);
 
 	}
 
@@ -67,6 +67,7 @@ void GameOverState::update(StateMachine & machine) {
 
 	auto & arduboy = machine.getContext().arduboy;
   auto justPressed = arduboy.justPressedButtons();
+  auto pressed = arduboy.pressedButtons();
 
   if (justPressed & A_BUTTON) { 
 		
@@ -82,6 +83,47 @@ void GameOverState::update(StateMachine & machine) {
 
 		}
 
+	}
+
+
+	// Clear scores ..
+
+	if ((pressed & UP_BUTTON) && (pressed & DOWN_BUTTON)) {
+
+		clearScores++;
+
+		switch (clearScores) {
+
+			case 21 ... 60:
+				#ifdef USE_LEDS             
+				arduboy.setRGBled(128 - (clearScores * 2), 0, 0);
+				#endif
+				break;
+
+			case 61:
+				clearScores = 0;
+				#ifdef USE_LEDS             
+				arduboy.setRGBled(0, 0, 0);
+				#endif
+				initEEPROM(true);
+				this->highScore = 0;
+				this->score = 0;
+				return;
+
+		}
+
+	}
+	else {
+
+		if (clearScores > 0) {
+		
+			#ifdef USE_LEDS             
+			arduboy.setRGBled(0, 0, 0);
+			#endif
+			clearScores = 0;
+
+		}
+		
 	}
 
 }
@@ -103,7 +145,14 @@ void GameOverState::render(StateMachine & machine) {
 
 		case ViewState::Winner:
 			ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-			if (arduboy.getFrameCount(70) < 7) { SpritesB::drawOverwrite(51, 4, Images::Blink_Eyes, 0); }
+
+			if (arduboy.getFrameCount(70) < 7) {
+				ardBitmap.drawCompressed(51, 4, Images::Blink_Eyes_2, WHITE, ALIGN_NONE, MIRROR_NONE);
+			}
+			else {
+				ardBitmap.drawCompressed(51, 4, Images::Blink_Eyes_1, WHITE, ALIGN_NONE, MIRROR_NONE);
+			}
+
 			break;
 
 		case ViewState::HighScore:
@@ -215,12 +264,9 @@ void GameOverState::initEEPROM(bool forceClear) {
 
     uint8_t score = 0;
 
-    eeprom_update_byte(EEPROM_START_C1, letter1);
-    eeprom_update_byte(EEPROM_START_C2, letter2);
-    eeprom_update_byte(EEPROM_SCORE, score);
-    eeprom_update_byte(EEPROM_SCORE + 1, score);
-    eeprom_update_byte(EEPROM_SCORE + 2, score);
-    eeprom_update_byte(EEPROM_SCORE + 3, score);
+    eeprom_update_byte((uint8_t *)(EEPROM_START_C1), letter1);
+    eeprom_update_byte((uint8_t *)(EEPROM_START_C2), letter2);
+		for (uint8_t i = 0; i < 4; i++) eeprom_update_byte((uint8_t *)(EEPROM_SCORE + i), score);
 
   }
 

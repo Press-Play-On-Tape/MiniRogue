@@ -155,7 +155,7 @@ void FightMonstersState::update(StateMachine & machine) {
 						{
 							uint8_t dmg = getMonsterDMG(machine);
 
-//sjh							this->monsterStats.hp = clamp(this->monsterStats.hp - dmg, 0, 30);	
+							this->monsterStats.hp = clamp(this->monsterStats.hp - dmg, 0, 30);	
 							setDiceSelection(machine, false);
 
 							if (this->monsterStats.hp == 0) { 

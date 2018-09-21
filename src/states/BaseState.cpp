@@ -54,8 +54,8 @@ void BaseState::renderTitleBackground(StateMachine & machine, bool drawLowerLine
 	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
 
-	ardBitmap.drawCompressed(5, 20, Images::Flames[(this->leftFlame == 3 ? 1: this->leftFlame)], WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(107, 20, Images::Flames[(this->rightFlame == 3 ? 1: this->rightFlame)], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(5, 20, Images::Flames[this->leftFlame], WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(107, 20, Images::Flames[this->rightFlame], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
 
   if (arduboy.everyXFrames(3)) { 
     this->leftFlame = (this->leftFlame + 1) % 4;

@@ -95,52 +95,41 @@ void TrapState::update(StateMachine & machine) {
 			}
 			else {
 
-        // if (this->viewState == ViewState::RollDice) {
+        switch (this->dice) {
 
-          switch (this->dice) {
+          case 1: playerStats.decFood(1);       break;
+          case 2: playerStats.decGold(1);       break;
+          case 3: playerStats.decArmour(1);     break;
+          case 4: playerStats.decHP(1);         break;
+          case 5: if (playerStats.xp > 1)       playerStats.xp--;       break;
 
-            case 1: playerStats.decFood(1);       break;
-            case 2: playerStats.decGold(1);       break;
-            case 3: playerStats.decArmour(1);     break;
-            case 4: playerStats.decHP(1);         break;
-            case 5: if (playerStats.xp > 1)       playerStats.xp--;       break;
+          case 6: 
+            
+            playerStats.decHP(2); 
+            
+            if (playerStats.hp > 0) {
+              gameStats.dropArea();
+            }
 
-            case 6: 
-              
-              playerStats.decHP(2); 
-              
-              if (playerStats.hp > 0) {
-                gameStats.dropArea();
-              }
+          break;
 
-            break;
-
-          }
+        }
 
 
-          // Have we died?
+        // Have we died?
 
-          if (playerStats.hp > 0) {
+        if (playerStats.hp > 0) {
 
-            arduboy.resetFrameCount();
-            this->counter = 0;
-            this->viewState = ViewState::UpdateStats;
+          arduboy.resetFrameCount();
+          this->counter = 0;
+          this->viewState = ViewState::UpdateStats;
 
-          }
-          else {
+        }
+        else {
 
-            viewState = ViewState::PlayerDead;
+          viewState = ViewState::PlayerDead;
 
-          }
-
-        // }
-        // else {
-          
-        //   this->counter = 0;
-        //   arduboy.resetFrameCount();
-        //   this->viewState = ViewState::SkillCheckResult;
-
-        // }
+        }
 
 			}
 			break;
