@@ -151,7 +151,13 @@ Dungeon means danger, and danger sometimes means traps. Many adventurers perishe
 
 **Event Card**
 
-<img src="/distributable/Images/MR_Event_001.png" data-canonical-src="/distributable/Images/MR_Event_001.png" width="320" height="160" />
+Like the Trap Card (above), your fate will be tested by your skill level. Roll a number greater than your rank, and you will be awarded with something useful. Occasionally you will be made to fight an extra monster - sometimes when you least expect it.
+
+<img src="/distributable/Images/MR_Event_001.png" data-canonical-src="/distributable/Images/MR_Event_001.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Event_002.png" data-canonical-src="/distributable/Images/MR_Eevnt_002.png" width="320" height="160" />
+
+Roll a number less than or equal to your current rank and you will be able to choose your winnings. Scroll between the options using the **Left** and **Right Buttons** and select your choice using the **A Button**. 
+
+<img src="/distributable/Images/MR_Event_003.png" data-canonical-src="/distributable/Images/MR_Event_003.png" width="320" height="160" />&nbsp;&nbsp; <img src="/distributable/Images/MR_Event_004.png" data-canonical-src="/distributable/Images/MR_Eevnt_004.png" width="320" height="160" />
 
 You may even stumble upon items of great assistance. Most of the rewards are good but occasionally you will be forced to fight a monster.
 
@@ -255,6 +261,12 @@ The Boss Monster’s HP and damage inflicted are detailed in the card below. In 
 Game play is identical to the **Monster Card** described above.
 
 </br>
+
+## Scoring
+
+You are rewarded points for every area you enter, boss monster's you kill and the collection of goodies along the way.  To reset the scores, hold down the **Up Button** and **Down Buttons** simultaneously for about 5 seconds while on this screen.
+
+<img src="/distributable/Images/MR_Score.png" data-canonical-src="/distributable/Images/MR_Score.png" width="320" height="160" />
 
 ## Uploading a new Game
 
