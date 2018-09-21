@@ -307,9 +307,10 @@ void EventState::render(StateMachine & machine) {
 		FlashSettings::FlashHP,
 		FlashSettings::FlashFood,
 		FlashSettings::FlashXP,
+		FlashSettings::FlashArmour,
 	};
 
-	const FlashSettings settings = (this->dice[this->selection] < 5) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice[this->selection]])) : FlashSettings::None;
+	const FlashSettings settings = (this->dice[this->selection] <= 5) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice[this->selection]])) : FlashSettings::None;
 	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
 
 	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);
