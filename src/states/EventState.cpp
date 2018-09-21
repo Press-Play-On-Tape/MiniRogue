@@ -109,7 +109,7 @@ void EventState::update(StateMachine & machine) {
             
         this->selection = 1;
         this->viewState = this->nextState;
-        this->counter = 40;
+        this->counter = 0;
 
 			}
 			break;
@@ -130,6 +130,7 @@ void EventState::update(StateMachine & machine) {
 
 
     case ViewState::UpdateStats:
+
 
       if (counter == 0) {
 
