@@ -2,7 +2,7 @@
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
 #include "../utils/FadeEffects.h"
-
+#include <avr/eeprom.h> 
 
 #define EEPROM_START                  EEPROM_STORAGE_SPACE_START + 130
 #define EEPROM_START_C1               EEPROM_START
@@ -48,12 +48,12 @@ void GameOverState::activate(StateMachine & machine) {
 	this->score += (playerStats.bossesKilled * 2);
 	this->score += (playerStats.itemCount());
 
-	this->highScore = EEPROM.read(EEPROM_SCORE);
+	this->highScore = eeprom_read_byte(EEPROM_SCORE + gameStats.skillLevel);
 
 	if (this->score > this->highScore) {
 
 		this->highScore = this->score;
-		EEPROM.update(EEPROM_SCORE, this->score);
+		eeprom_update_byte(EEPROM_SCORE + gameStats.skillLevel, this->score);
 
 	}
 
@@ -208,19 +208,19 @@ const uint8_t letter2 = 'R';
 
 void GameOverState::initEEPROM(bool forceClear) {
 
-  byte c1 = EEPROM.read(EEPROM_START_C1);
-  byte c2 = EEPROM.read(EEPROM_START_C2);
+  byte c1 = eeprom_read_byte(EEPROM_START_C1);
+  byte c2 = eeprom_read_byte(EEPROM_START_C2);
 
   if (forceClear || c1 != letter1 || c2 != letter2) { 
 
     uint8_t score = 0;
 
-    EEPROM.update(EEPROM_START_C1, letter1);
-    EEPROM.update(EEPROM_START_C2, letter2);
-    EEPROM.put(EEPROM_SCORE, score);
-    EEPROM.put(EEPROM_SCORE + 1, score);
-    EEPROM.put(EEPROM_SCORE + 2, score);
-    EEPROM.put(EEPROM_SCORE + 3, score);
+    eeprom_update_byte(EEPROM_START_C1, letter1);
+    eeprom_update_byte(EEPROM_START_C2, letter2);
+    eeprom_update_byte(EEPROM_SCORE, score);
+    eeprom_update_byte(EEPROM_SCORE + 1, score);
+    eeprom_update_byte(EEPROM_SCORE + 2, score);
+    eeprom_update_byte(EEPROM_SCORE + 3, score);
 
   }
 
