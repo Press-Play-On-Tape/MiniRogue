@@ -108,6 +108,7 @@ void GameOverState::render(StateMachine & machine) {
 
 		case ViewState::HighScore:
 			{
+				#ifdef ORIG_HIGH_SCORE
 				ardBitmap.drawCompressed(20, 21, Images::High_Score_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
 				font3x5.setCursor(23, 20);
@@ -131,6 +132,40 @@ void GameOverState::render(StateMachine & machine) {
 				renderThreeDigitNumeric(this->score);
 				font3x5.setCursor(95, 29);
 				renderThreeDigitNumeric(this->highScore);
+				#else
+				ardBitmap.drawCompressed(19, 17, Images::High_Score2_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
+
+				font3x5.setHeight(7);
+				font3x5.setCursor(25, 16);
+				font3x5.print(F("Skill~Level\nArea~Reached\nBosses~Slayed"));
+		
+				font3x5.setCursor(95, 16);
+				renderTwoDigitNumeric(gameStats.skillLevel * 2);
+				renderTwoDigitNumeric((gameStats.level + 1) * 3);
+				renderTwoDigitNumeric(playerStats.bossesKilled * 2);
+
+				font3x5.setCursor(37, 39);
+				renderTwoDigitNumeric(playerStats.xpTrack * 2);
+				renderTwoDigitNumeric(playerStats.hp * 2);
+
+				font3x5.setCursor(70, 39);
+				renderTwoDigitNumeric(playerStats.gold * 2);
+				renderTwoDigitNumeric(playerStats.food);
+
+				font3x5.setCursor(102, 39);
+				renderTwoDigitNumeric(playerStats.armour);
+				renderTwoDigitNumeric(playerStats.itemCount());
+
+				font3x5.setCursor(19, 57);
+				font3x5.print(F("Score:   ~High~Score:"));
+				font3x5.setCursor(42, 57);
+				renderThreeDigitNumeric(this->score);
+				font3x5.setCursor(98, 57);
+				renderThreeDigitNumeric(this->highScore);
+
+				arduboy.drawFastHLine(19, 55, 90);
+				#endif
 
 			}
 			break;
@@ -155,7 +190,7 @@ void GameOverState::renderThreeDigitNumeric(uint8_t val) {
 	if (val < 10) font3x5.print(F("0"));
 
 	font3x5.print(val);
-	font3x5.print(F("\n"));
+//	font3x5.print(F("\n"));
 
 }
 
@@ -183,6 +218,9 @@ void GameOverState::initEEPROM(bool forceClear) {
     EEPROM.update(EEPROM_START_C1, letter1);
     EEPROM.update(EEPROM_START_C2, letter2);
     EEPROM.put(EEPROM_SCORE, score);
+    EEPROM.put(EEPROM_SCORE + 1, score);
+    EEPROM.put(EEPROM_SCORE + 2, score);
+    EEPROM.put(EEPROM_SCORE + 3, score);
 
   }
 

@@ -67,7 +67,7 @@ void TitleScreenState::update(StateMachine & machine) {
 		arduboy.resetFrameCount();
 	
 		//playerStats.xpTrack = 4;  //sjh
-		// playerStats.hp = 20;  //sjh
+		playerStats.hp = 1;  //sjh
 		// playerStats.items[0] = 1; //sjh
 		// playerStats.items[1] = 1; //sjh
 		
