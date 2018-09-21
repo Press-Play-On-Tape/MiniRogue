@@ -29,6 +29,7 @@ class GameOverState : public BaseState {
     ViewState viewState = ViewState::Winner;
     uint8_t score = 0;
     uint8_t highScore = 0;
+    uint8_t clearScores = 0;
 
   public:
 

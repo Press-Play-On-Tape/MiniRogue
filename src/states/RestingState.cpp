@@ -112,11 +112,8 @@ void RestingState::render(StateMachine & machine) {
 
 	static const FlashSettings settingsHelper[] PROGMEM = 
 	{
-		//SelectedItem::Food
 		FlashSettings::FlashFood,
-		//SelectedItem::Heal
 		FlashSettings::FlashHP,
-		//SelectedItem::Weapon
 		FlashSettings::FlashXP,
 	};
 

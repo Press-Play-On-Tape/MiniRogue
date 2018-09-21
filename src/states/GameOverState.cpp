@@ -2,12 +2,12 @@
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
 #include "../utils/FadeEffects.h"
+#include <avr/eeprom.h> 
 
-
-#define EEPROM_START                  EEPROM_STORAGE_SPACE_START + 130
-#define EEPROM_START_C1               EEPROM_START
-#define EEPROM_START_C2               EEPROM_START + 1
-#define EEPROM_SCORE                  EEPROM_START + 2
+#define EEPROM_START                  ((uint8_t *)140)
+#define EEPROM_START_C1               ((uint8_t *)140)
+#define EEPROM_START_C2               ((uint8_t *)141)
+#define EEPROM_SCORE                  142
 
 
 
@@ -48,12 +48,12 @@ void GameOverState::activate(StateMachine & machine) {
 	this->score += (playerStats.bossesKilled * 2);
 	this->score += (playerStats.itemCount());
 
-	this->highScore = EEPROM.read(EEPROM_SCORE);
+	this->highScore = eeprom_read_byte(EEPROM_SCORE + gameStats.skillLevel);
 
 	if (this->score > this->highScore) {
 
 		this->highScore = this->score;
-		EEPROM.update(EEPROM_SCORE, this->score);
+		eeprom_update_byte((uint8_t *)(EEPROM_SCORE + gameStats.skillLevel), this->score);
 
 	}
 
@@ -67,6 +67,7 @@ void GameOverState::update(StateMachine & machine) {
 
 	auto & arduboy = machine.getContext().arduboy;
   auto justPressed = arduboy.justPressedButtons();
+  auto pressed = arduboy.pressedButtons();
 
   if (justPressed & A_BUTTON) { 
 		
@@ -82,6 +83,47 @@ void GameOverState::update(StateMachine & machine) {
 
 		}
 
+	}
+
+
+	// Clear scores ..
+
+	if ((pressed & UP_BUTTON) && (pressed & DOWN_BUTTON)) {
+
+		clearScores++;
+
+		switch (clearScores) {
+
+			case 21 ... 60:
+				#ifdef USE_LEDS             
+				arduboy.setRGBled(128 - (clearScores * 2), 0, 0);
+				#endif
+				break;
+
+			case 61:
+				clearScores = 0;
+				#ifdef USE_LEDS             
+				arduboy.setRGBled(0, 0, 0);
+				#endif
+				initEEPROM(true);
+				this->highScore = 0;
+				this->score = 0;
+				return;
+
+		}
+
+	}
+	else {
+
+		if (clearScores > 0) {
+		
+			#ifdef USE_LEDS             
+			arduboy.setRGBled(0, 0, 0);
+			#endif
+			clearScores = 0;
+
+		}
+		
 	}
 
 }
@@ -103,11 +145,19 @@ void GameOverState::render(StateMachine & machine) {
 
 		case ViewState::Winner:
 			ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-			if (arduboy.getFrameCount(70) < 7) { SpritesB::drawOverwrite(51, 4, Images::Blink_Eyes, 0); }
+
+			if (arduboy.getFrameCount(70) < 7) {
+				ardBitmap.drawCompressed(51, 4, Images::Blink_Eyes_2, WHITE, ALIGN_NONE, MIRROR_NONE);
+			}
+			else {
+				ardBitmap.drawCompressed(51, 4, Images::Blink_Eyes_1, WHITE, ALIGN_NONE, MIRROR_NONE);
+			}
+
 			break;
 
 		case ViewState::HighScore:
 			{
+				#ifdef ORIG_HIGH_SCORE
 				ardBitmap.drawCompressed(20, 21, Images::High_Score_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
 				font3x5.setCursor(23, 20);
@@ -131,6 +181,40 @@ void GameOverState::render(StateMachine & machine) {
 				renderThreeDigitNumeric(this->score);
 				font3x5.setCursor(95, 29);
 				renderThreeDigitNumeric(this->highScore);
+				#else
+				ardBitmap.drawCompressed(19, 17, Images::High_Score2_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
+
+				font3x5.setHeight(7);
+				font3x5.setCursor(25, 16);
+				font3x5.print(F("Skill~Level\nArea~Reached\nBosses~Slayed"));
+		
+				font3x5.setCursor(95, 16);
+				renderTwoDigitNumeric(gameStats.skillLevel * 2);
+				renderTwoDigitNumeric((gameStats.level + 1) * 3);
+				renderTwoDigitNumeric(playerStats.bossesKilled * 2);
+
+				font3x5.setCursor(37, 39);
+				renderTwoDigitNumeric(playerStats.xpTrack * 2);
+				renderTwoDigitNumeric(playerStats.hp * 2);
+
+				font3x5.setCursor(70, 39);
+				renderTwoDigitNumeric(playerStats.gold * 2);
+				renderTwoDigitNumeric(playerStats.food);
+
+				font3x5.setCursor(102, 39);
+				renderTwoDigitNumeric(playerStats.armour);
+				renderTwoDigitNumeric(playerStats.itemCount());
+
+				font3x5.setCursor(19, 57);
+				font3x5.print(F("Score:   ~High~Score:"));
+				font3x5.setCursor(42, 57);
+				renderThreeDigitNumeric(this->score);
+				font3x5.setCursor(98, 57);
+				renderThreeDigitNumeric(this->highScore);
+
+				arduboy.drawFastHLine(19, 55, 90);
+				#endif
 
 			}
 			break;
@@ -155,7 +239,7 @@ void GameOverState::renderThreeDigitNumeric(uint8_t val) {
 	if (val < 10) font3x5.print(F("0"));
 
 	font3x5.print(val);
-	font3x5.print(F("\n"));
+//	font3x5.print(F("\n"));
 
 }
 
@@ -173,16 +257,16 @@ const uint8_t letter2 = 'R';
 
 void GameOverState::initEEPROM(bool forceClear) {
 
-  byte c1 = EEPROM.read(EEPROM_START_C1);
-  byte c2 = EEPROM.read(EEPROM_START_C2);
+  byte c1 = eeprom_read_byte(EEPROM_START_C1);
+  byte c2 = eeprom_read_byte(EEPROM_START_C2);
 
   if (forceClear || c1 != letter1 || c2 != letter2) { 
 
     uint8_t score = 0;
 
-    EEPROM.update(EEPROM_START_C1, letter1);
-    EEPROM.update(EEPROM_START_C2, letter2);
-    EEPROM.put(EEPROM_SCORE, score);
+    eeprom_update_byte((uint8_t *)(EEPROM_START_C1), letter1);
+    eeprom_update_byte((uint8_t *)(EEPROM_START_C2), letter2);
+		for (uint8_t i = 0; i < 4; i++) eeprom_update_byte((uint8_t *)(EEPROM_SCORE + i), score);
 
   }
 

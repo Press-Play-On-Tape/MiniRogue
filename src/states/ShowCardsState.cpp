@@ -66,7 +66,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 			
 		}
 
-		//machine.getContext().cards[0] = GameStateType::Event; //sjh
+		//machine.getContext().cards[0] = GameStateType::Treasure; //sjh
 
 	}
 	else {
@@ -164,7 +164,6 @@ void ShowCardsState::render(StateMachine & machine) {
 		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 	}
-	// ardBitmap.drawCompressed(97, 18, Images::Card_Border_Right_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 
 	// Player statistics ..

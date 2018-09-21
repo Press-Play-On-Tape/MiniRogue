@@ -36,21 +36,24 @@ void TreasureState::update(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::InitialRoll:
-
-      if (this->counter < sizeof(DiceDelay) && (justPressed & A_BUTTON)) { 
-        
-        counter = sizeof(DiceDelay); 
-        this->dice = random(1, 7);
-
-      }
             
 			if (this->counter < sizeof(DiceDelay)) {
-				
+
 				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
 
 					this->dice = random(1, 7);
-					this->counter++;
-					arduboy.resetFrameCount();
+
+          if (justPressed & A_BUTTON) { 
+            
+            counter = sizeof(DiceDelay); 
+
+          }
+          else {
+
+            this->counter++;
+            arduboy.resetFrameCount();
+          
+          }
 
 				}
 
