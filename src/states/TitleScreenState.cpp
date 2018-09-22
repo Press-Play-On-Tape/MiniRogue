@@ -11,8 +11,14 @@ constexpr const static uint8_t UPLOAD_DELAY = 16;
 //
 void TitleScreenState::activate(StateMachine & machine) {
 
+	#ifdef SOUND_ON_OFF
+	auto & arduboy = machine.getContext().arduboy;
+
+  this->restart = 0;
+	this->sound_state = arduboy.audio.enabled();
+	#else
 	(void)machine;
-  restart = 0;
+	#endif
 		
 }
 
@@ -72,6 +78,17 @@ void TitleScreenState::update(StateMachine & machine) {
 		// playerStats.items[1] = 1; //sjh
 		
 	}
+  #ifdef SOUND_ON_OFF
+	if (justPressed & B_BUTTON) {
+
+		this->sound_counter = 60;
+		this->sound_state = !this->sound_state;
+		toggleSoundSettings(machine);
+
+	}
+
+	if (this->sound_counter > 0) this->sound_counter--;
+	#endif
 
 }
 
@@ -105,5 +122,44 @@ void TitleScreenState::render(StateMachine & machine) {
 
 	}
 
+  #ifdef SOUND_ON_OFF
+
+	if (this->sound_counter > 0) {
+
+		ardBitmap.drawCompressed(119, 56, Images::Sound_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+
+		if (this->sound_counter % 16 < 8) {
+
+			ardBitmap.drawCompressed(119, 56, (this->sound_state == 1 ? Images::Sound_On : Images::Sound_Off), WHITE, ALIGN_NONE, MIRROR_NONE);
+
+		}
+
+	}
+
+	#endif
+
 }
 
+/* ----------------------------------------------------------------------------
+ *  Toggle the sound setting and commit to the EEPROM.
+ */
+#ifdef SOUND_ON_OFF
+void TitleScreenState::toggleSoundSettings(StateMachine & machine) {
+
+	auto & arduboy = machine.getContext().arduboy;
+
+  if (arduboy.audio.enabled()) {
+  
+    arduboy.audio.off(); 
+    arduboy.audio.saveOnOff();
+  
+  }
+  else {
+  
+    arduboy.audio.on(); 
+    arduboy.audio.saveOnOff();
+  
+  }
+    
+}
+#endif

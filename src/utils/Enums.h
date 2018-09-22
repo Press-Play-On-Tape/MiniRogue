@@ -5,6 +5,7 @@
 
 #define _DEBUG
 #define SOUND
+#define SOUND_ON_OFF
 
 #ifdef SOUND
 extern uint8_t hpISR;
