@@ -18,6 +18,8 @@
   Modified by Filmote and Vampirics
 */
 
+#define SOUND
+
 #include "utils/Utils.h"
 #include "utils/GameContext.h"
 #include "utils/GameState.h"

@@ -4,7 +4,6 @@
 #include "Utils.h"
 
 #define _DEBUG
-#define SOUND
 
 #ifdef SOUND
 extern uint8_t hpISR;
