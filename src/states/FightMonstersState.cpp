@@ -417,6 +417,23 @@ void FightMonstersState::monsterIsDead(StateMachine & machine ) {
 }
 
 
+void FightMonstersState::drawMonsterHead(StateMachine & machine, uint8_t const *imageHead, uint8_t const *maskHead) {
+	
+	auto & ardBitmap = machine.getContext().ardBitmap;
+
+	uint8_t head_inc = (this->monsterPosition == 1 || this->monsterPosition == 2 ? 1 : 0);
+
+	if (maskHead != nullptr) {
+		ardBitmap.drawCompressed(60, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(60 + 7, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+	}
+
+	ardBitmap.drawCompressed(50, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(50 + 17, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
+}
+
+
 // ----------------------------------------------------------------------------
 //  Render the state .. 
 //
@@ -428,38 +445,54 @@ void FightMonstersState::render(StateMachine & machine) {
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	bool flash = arduboy.getFrameCountHalf(20);
 
+	uint8_t hand_inc = (this->monsterPosition == 2 || this->monsterPosition == 3 ? 1 : 0);
+
+
+	// Update monster animation ..
+
+	this->monsterPositionInc++; 
+	if (this->monsterPositionInc > 3) {
+
+		this->monsterPositionInc = 0;
+
+		this->monsterPosition++; 
+		if (this->monsterPosition > 4) this->monsterPosition = 0;
+
+	}
+
 
 	// Draw background ..
 
   BaseState::renderBackground(machine, true);
 	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
+	ardBitmap.drawCompressed(40 + 45, 27, Images::Monster_LowerBody_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(40, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(40 + 27, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(31, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+
 	{
-		uint8_t const *imageName = nullptr;
-		uint8_t const *maskName = nullptr;
 
 		switch (machine.getContext().gameState) {
 
-			case GameStateType::Monster:
-			case GameStateType::MonsterFromEvent:
-
-				imageName = Images::Monster_Only_Comp;
-				maskName = Images::Monster_Only_Mask_Comp;
-				break;
-
 			case GameStateType::BossMonster:
 
-				imageName = Images::BossMonster_Only_Comp;
-				maskName = Images::BossMonster_Only_Mask_Comp;
+				drawMonsterHead(machine, Images::BossMonster_Head, Images::BossMonster_Head_Mask);
+				ardBitmap.drawCompressed(92, 1 + hand_inc, Images::Monster_Sword_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(92, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_NONE);				
+				
 				break;
 
-			default: break;
+			default:
+
+				drawMonsterHead(machine, Images::Monster_Head, nullptr);
+				ardBitmap.drawCompressed(71, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(71 + 13, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+				ardBitmap.drawCompressed(71, 18 + hand_inc, Images::Monster_Shield, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+				break;
 
 		}
-
-		ardBitmap.drawCompressed(85, 0, maskName, BLACK, ALIGN_NONE, MIRROR_NONE);
-		ardBitmap.drawCompressed(58, 0, imageName, WHITE, ALIGN_NONE, MIRROR_NONE);
-		ardBitmap.drawCompressed(35, 0, Images::Monster_LHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 	}
 
@@ -488,13 +521,11 @@ void FightMonstersState::render(StateMachine & machine) {
 		ardBitmap.drawCompressed(0, 19, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 		font3x5.setCursor(21, 23);
-		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Fire)]);
-		font3x5.setCursor(21, 33);
-		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Ice)]);
-		font3x5.setCursor(21, 43);
-		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Poison)]);
-		font3x5.setCursor(21, 53);
-		font3x5.print(playerStats.items[static_cast<uint8_t>(Wand::Healing)]);
+		font3x5.setHeight(10);
+		for (uint8_t i = 0; i < 4; i++) {
+			font3x5.print(playerStats.items[i]);
+		}
+		font3x5.setHeight(8);
 
 	}
 

@@ -106,12 +106,14 @@ class FightMonstersState : public BaseState {
     MonsterStats monsterStats;
 
     SelectedElement selectedElement = SelectedElement::None;
+
     uint8_t dice[4];
     uint8_t dice_Sixes[4];
 		uint8_t diceMonster = 0;
-
     uint8_t counter = 0;
     uint8_t ice = 0;
+    uint8_t monsterPositionInc = 0;
+    uint8_t monsterPosition = 0;
 
     bool dice_Retain[4];
     bool poison = false;
@@ -127,6 +129,7 @@ class FightMonstersState : public BaseState {
     uint8_t getMonsterDMG(StateMachine & machine);
     void setDiceSelection(StateMachine & machine, bool value);
     void monsterIsDead(StateMachine & machine);
+    void drawMonsterHead(StateMachine & machine, uint8_t const *imageHead, uint8_t const *maskHead);
 
   public:	
 

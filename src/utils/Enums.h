@@ -4,6 +4,7 @@
 #include "Utils.h"
 
 #define _DEBUG
+#define _SOUND
 
 extern uint8_t hpISR;
 
@@ -103,14 +104,18 @@ struct PlayerStats {
   void decHP(uint8_t val) {
 
     hp = max(hp - val, 0);
+    #ifdef SOUND
     hpISR = 46 - (hp * 2);
+    #endif
 
   }
 
   void incHP(uint8_t val) {
 
     hp = min(hp + val, 20);
+    #ifdef SOUND
     hpISR = 46 - (hp * 2);
+    #endif
 
   }
 
