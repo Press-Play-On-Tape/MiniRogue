@@ -4,9 +4,11 @@
 #include "Utils.h"
 
 #define _DEBUG
-#define _SOUND
+#define SOUND
 
+#ifdef SOUND
 extern uint8_t hpISR;
+#endif
 
 constexpr const static uint8_t FLASH_DELAY = 16;
 constexpr const static uint8_t FLASH_COUNTER = 70;

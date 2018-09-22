@@ -84,7 +84,7 @@ void BaseState::renderMessageBox(StateMachine & machine, uint8_t x, uint8_t y, u
 
 void BaseState::renderPlayerDead(uint8_t y) {
 
-  Sprites::drawOverwrite(38, y, Images::Message_PlayerDead, 0);
+  SpritesB::drawOverwrite(38, y, Images::Message_PlayerDead, 0);
 
 }
 
@@ -182,6 +182,6 @@ void BaseState::renderPlayerStatistics(StateMachine & machine, bool overallFlash
 
 void BaseState::drawItem(uint8_t position, uint8_t const *imageName) {
 
-  Sprites::drawOverwrite(107 + (position * 11), 56, imageName, 0);
+  SpritesB::drawOverwrite(107 + (position * 11), 56, imageName, 0);
 
 }

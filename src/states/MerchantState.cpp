@@ -244,8 +244,8 @@ void MerchantState::render(StateMachine & machine) {
 
   // Highlight ..
 
-  Sprites::drawOverwrite(2, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
-  Sprites::drawOverwrite(33, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
+  SpritesB::drawOverwrite(2, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
+  SpritesB::drawOverwrite(33, 7 + (selectedItem * 8), Images::Merchant_Highlight, 0);
 
 
   // Error Message ?

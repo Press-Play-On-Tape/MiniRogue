@@ -21,6 +21,7 @@
 #include "states/States.h"
 #include "utils/Utils.h"
 
+#ifdef SOUND
 long t;
 uint8_t hpISR = 46;
 
@@ -29,6 +30,7 @@ ISR(TIMER3_COMPA_vect)
     t++;
     OCR4A = ((t*(t>>8|t>>9)&hpISR&t>>8))^(t&t>>13|t>>6); // by xpansive
 }
+#endif
 
 void Game::setup(void) {
 
