@@ -509,7 +509,7 @@ void FightMonstersState::render(StateMachine & machine) {
 		font3x5.print(this->monsterStats.hp);
 		font3x5.setTextColor(WHITE);
 		font3x5.setCursor(21, 10);
-		font3x5.print(this->monsterStats.dmg);
+		font3x5.print(this->monsterStats.dmg); 
 
 	}
 
@@ -520,13 +520,11 @@ void FightMonstersState::render(StateMachine & machine) {
 
 		ardBitmap.drawCompressed(0, 19, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-		font3x5.setCursor(21, 23);
-		font3x5.setHeight(10);
 		for (uint8_t i = 0; i < 4; i++) {
+			font3x5.setCursor(21, 23 + (i*10));
 			font3x5.print(playerStats.items[i]);
 		}
-		font3x5.setHeight(8);
-
+	
 	}
 
 
