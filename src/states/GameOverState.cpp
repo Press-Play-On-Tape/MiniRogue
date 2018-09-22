@@ -144,7 +144,7 @@ void GameOverState::render(StateMachine & machine) {
 	switch (this->viewState) {
 
 		case ViewState::Winner:
-			ardBitmap.drawCompressed(24, 15, Images::Winner_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+			ardBitmap.drawCompressed(24, 15, Images::Winner, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 			if (arduboy.getFrameCount(70) < 7) {
 				ardBitmap.drawCompressed(51, 4, Images::Blink_Eyes_2, WHITE, ALIGN_NONE, MIRROR_NONE);
@@ -158,7 +158,7 @@ void GameOverState::render(StateMachine & machine) {
 		case ViewState::HighScore:
 			{
 				#ifdef ORIG_HIGH_SCORE
-				ardBitmap.drawCompressed(20, 21, Images::High_Score_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(20, 21, Images::High_Score, WHITE, ALIGN_NONE, MIRROR_NONE);
 				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
 				font3x5.setCursor(23, 20);
 				font3x5.print(FlashString(level_Captions[ static_cast<uint8_t>(gameStats.skillLevel) ]));
@@ -182,7 +182,7 @@ void GameOverState::render(StateMachine & machine) {
 				font3x5.setCursor(95, 29);
 				renderThreeDigitNumeric(this->highScore);
 				#else
-				ardBitmap.drawCompressed(19, 17, Images::High_Score2_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(19, 17, Images::High_Score2, WHITE, ALIGN_NONE, MIRROR_NONE);
 				SpritesB::drawOverwrite(24, 4, Images::Game_Over_Banner, 0);
 
 				font3x5.setHeight(7);

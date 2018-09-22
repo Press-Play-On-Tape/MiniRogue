@@ -85,6 +85,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 					counter = 0;
 					this->viewState = nextState;
+					arduboy.setRGBled(0, 0, 0);
 					arduboy.resetFrameCount();
 
 				}
@@ -333,6 +334,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 				gameStats.monsterDefeated = true;
         machine.changeState(gameStats.incRoom(playerStats)); 
+				arduboy.setRGBled(0, 0, 0);
 
 			}
 
@@ -342,6 +344,7 @@ void FightMonstersState::update(StateMachine & machine) {
 
 			if (justPressed & A_BUTTON) {
 				machine.changeState(GameStateType::PlayerDead);
+				arduboy.setRGBled(0, 0, 0);
 			}
 
 			break;
@@ -424,12 +427,12 @@ void FightMonstersState::drawMonsterHead(StateMachine & machine, uint8_t const *
 	uint8_t head_inc = (this->monsterPosition == 1 || this->monsterPosition == 2 ? 1 : 0);
 
 	if (maskHead != nullptr) {
-		ardBitmap.drawCompressed(60, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_NONE);
-		ardBitmap.drawCompressed(60 + 7, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+		ardBitmap.drawCompressed(62, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(62 + 7, 24 + head_inc, maskHead, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
 	}
 
-	ardBitmap.drawCompressed(50, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(50 + 17, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(52, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(52 + 17, 0 + head_inc, imageHead, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
 
 }
 
@@ -443,7 +446,7 @@ void FightMonstersState::render(StateMachine & machine) {
 	auto & gameStats = machine.getContext().gameStats;
 	auto & playerStats = machine.getContext().playerStats;
 	auto & ardBitmap = machine.getContext().ardBitmap;
-	bool flash = arduboy.getFrameCountHalf(20);
+	bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
 
 	uint8_t hand_inc = (this->monsterPosition == 2 || this->monsterPosition == 3 ? 1 : 0);
 
@@ -464,12 +467,12 @@ void FightMonstersState::render(StateMachine & machine) {
 	// Draw background ..
 
   BaseState::renderBackground(machine, true);
-	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(0, 0, Images::Monster_Stats, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-	ardBitmap.drawCompressed(40 + 45, 27, Images::Monster_LowerBody_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
-	ardBitmap.drawCompressed(40, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(40 + 27, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
-	ardBitmap.drawCompressed(31, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(42 + 45, 27, Images::Monster_LowerBody_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(42, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(42 + 27, 19, Images::Monster_LowerBody, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(33, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
 
 	{
 
@@ -478,17 +481,17 @@ void FightMonstersState::render(StateMachine & machine) {
 			case GameStateType::BossMonster:
 
 				drawMonsterHead(machine, Images::BossMonster_Head, Images::BossMonster_Head_Mask);
-				ardBitmap.drawCompressed(92, 1 + hand_inc, Images::Monster_Sword_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-				ardBitmap.drawCompressed(92, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_NONE);				
+				ardBitmap.drawCompressed(94, 1 + hand_inc, Images::Monster_Sword_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(94, 1 + hand_inc, Images::Monster_Sword, WHITE, ALIGN_NONE, MIRROR_NONE);				
 				
 				break;
 
 			default:
 
 				drawMonsterHead(machine, Images::Monster_Head, nullptr);
-				ardBitmap.drawCompressed(71, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
-				ardBitmap.drawCompressed(71 + 13, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
-				ardBitmap.drawCompressed(71, 18 + hand_inc, Images::Monster_Shield, WHITE, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(73, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+				ardBitmap.drawCompressed(73 + 13, 18 + hand_inc, Images::Monster_Shield_Mask, BLACK, ALIGN_NONE, MIRROR_HORIZONTAL);
+				ardBitmap.drawCompressed(73, 18 + hand_inc, Images::Monster_Shield, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 				break;
 
@@ -500,9 +503,17 @@ void FightMonstersState::render(StateMachine & machine) {
 	// Monster statistics ..
 	{
 
-		if (this->viewState == ViewState::HighlightMonsterStats && flash) {
-			font3x5.setTextColor(BLACK);
-			arduboy.fillRect(20, 2, (this->monsterStats.hp < 10 ? 5 : 10), 7, WHITE);
+		if (this->viewState == ViewState::HighlightMonsterStats) {
+
+			if (flash) {
+				font3x5.setTextColor(BLACK);
+				arduboy.fillRect(20, 2, (this->monsterStats.hp < 10 ? 5 : 10), 7, WHITE);
+				arduboy.setRGBled(0, 32, 0);
+			}
+			else {
+				arduboy.setRGBled(0, 0, 0);
+			}
+
 		}
 
 		font3x5.setCursor(21, 2);
@@ -518,7 +529,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	if (viewState == ViewState::WandSelection || lastState == ViewState::WandSelection) {
 
-		ardBitmap.drawCompressed(0, 19, Images::Monster_Items_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(0, 19, Images::Monster_Items, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 		for (uint8_t i = 0; i < 4; i++) {
 			font3x5.setCursor(21, 23 + (i*10));
@@ -596,6 +607,9 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	const FlashSettings settings = ((this->viewState == ViewState::HighlightPlayerStats) ? FlashSettings::FlashHP : FlashSettings::None);
 
+	if (this->viewState == ViewState::HighlightPlayerStats) {
+		arduboy.setRGBled((flash ? 32 : 0), 0, 0);		
+	}
 	BaseState::renderPlayerStatistics(machine, true, settings);
 
 
@@ -613,16 +627,16 @@ void FightMonstersState::render(StateMachine & machine) {
 			
 		case ViewState::MonsterDead:
 		case ViewState::MonsterDead_Wait:
+
 			if (this->viewState != ViewState::MonsterDead_Wait) {
 
 				FlashSettings settings = FlashSettings::FlashXP;
 
-				if(machine.getContext().gameState == GameStateType::BossMonster)
-				{
-					settings |= FlashSettings::FlashGold;
+				if(machine.getContext().gameState == GameStateType::BossMonster) {
 
-					if(this->diceMonster == 5)
-						settings |= FlashSettings::FlashArmour;
+					settings |= FlashSettings::FlashGold;
+					if(this->diceMonster == 5) settings |= FlashSettings::FlashArmour;
+					
 				}
 
 				BaseState::renderPlayerStatistics(machine, true, settings);

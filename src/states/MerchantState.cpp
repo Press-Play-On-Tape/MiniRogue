@@ -213,8 +213,8 @@ void MerchantState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Mask_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(39, 0, Images::Merchant_Only_Mask, BLACK, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(39, 0, Images::Merchant_Only, WHITE, ALIGN_NONE, MIRROR_NONE);
 	if (arduboy.getFrameCount(50) < 4) { arduboy.drawFastHLine(58, 11, 7, WHITE); }
 
   arduboy.drawFastHLine(35, 60, 51, WHITE);
@@ -228,11 +228,11 @@ void MerchantState::render(StateMachine & machine) {
     switch (this->viewState) {
 
       case ViewState::Buying:
-        imageName = Images::Merchant_Buy_Comp;
+        imageName = Images::Merchant_Buy;
         break;
 
       case ViewState::Selling:
-        imageName = Images::Merchant_Sell_Comp;
+        imageName = Images::Merchant_Sell;
         break;
 
     }

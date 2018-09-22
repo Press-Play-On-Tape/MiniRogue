@@ -20,11 +20,21 @@ void BaseState::renderSpinningCard(StateMachine & machine, int8_t x, int8_t y, u
 
   }
 
-  for (uint8_t j = 0; j < 4; ++j) {
+  if (i != 6) {
 
-    const uint8_t xOffset = ((j % 2) ? 10 : 0);
-    const uint8_t yOffset = ((j < 2) ? y : y + ySpacing);
-    ardBitmap.drawCompressed(x + xOffset, yOffset, spinning_card, WHITE, ALIGN_NONE, j);
+    for (uint8_t j = 0; j < 4; ++j) {
+
+      const uint8_t xOffset = ((j % 2) ? 10 : 0);
+      const uint8_t yOffset = ((j < 2) ? y : y + ySpacing);
+      ardBitmap.drawCompressed(x + xOffset, yOffset, spinning_card, WHITE, ALIGN_NONE, j);
+
+    }
+
+  }
+  else {
+
+    ardBitmap.drawCompressed(x, y, spinning_card, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(x, y + ySpacing, spinning_card, WHITE, ALIGN_NONE, MIRROR_VERTICAL);
 
   }
 
@@ -51,8 +61,8 @@ void BaseState::renderTitleBackground(StateMachine & machine, bool drawLowerLine
 	auto & ardBitmap = machine.getContext().ardBitmap;
   auto & arduboy = machine.getContext().arduboy;
 
-	ardBitmap.drawCompressed(0, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-	ardBitmap.drawCompressed(64, 0, Images::Title_Blank_Comp, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
+	ardBitmap.drawCompressed(0, 0, Images::Title_Blank, WHITE, ALIGN_NONE, MIRROR_NONE);
+	ardBitmap.drawCompressed(64, 0, Images::Title_Blank, WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
 
 	ardBitmap.drawCompressed(5, 20, Images::Flames[this->leftFlame], WHITE, ALIGN_NONE, MIRROR_NONE);
 	ardBitmap.drawCompressed(107, 20, Images::Flames[this->rightFlame], WHITE, ALIGN_NONE, MIRROR_HORIZONTAL);
@@ -100,9 +110,9 @@ void BaseState::renderBackground(StateMachine & machine, bool renderCorners) {
 
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-  if (renderCorners) ardBitmap.drawCompressed(0, 0, Images::Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  for (uint8_t y= 0; y < 64; y = y + 10)  ardBitmap.drawCompressed(89, y, Images::Background_Divider_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  if (renderCorners) ardBitmap.drawCompressed(0, 0, Images::Background, WHITE, ALIGN_NONE, MIRROR_NONE);
+  for (uint8_t y= 0; y < 64; y = y + 10)  ardBitmap.drawCompressed(89, y, Images::Background_Divider, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(105, 0, Images::Health, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 }
 

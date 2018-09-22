@@ -101,7 +101,7 @@ void RestingState::render(StateMachine & machine) {
   const bool flash = arduboy.getFrameCountHalf(FLASH_DELAY);
 
   BaseState::renderBackground(machine, false);
-  ardBitmap.drawCompressed(0, 0, Images::Card_Resting_Large_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(0, 0, Images::Card_Resting_Large, WHITE, ALIGN_NONE, MIRROR_NONE);
 
 
 	// Player statistics ..

@@ -33,6 +33,30 @@ void TrapState::update(StateMachine & machine) {
 
   switch (this->viewState) {
 
+    case ViewState::SkillCheck:
+
+      if (justPressed & A_BUTTON) { this->dice = random(1, 7); counter = sizeof(DiceDelay); }
+
+   		if (this->counter < sizeof(DiceDelay)) {
+				
+				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
+
+					this->dice = random(1, 7);
+					this->counter++;
+					arduboy.resetFrameCount();
+
+				}
+
+			}
+			else {    
+
+        this->counter = 0;
+        arduboy.resetFrameCount();
+        this->viewState = ViewState::SkillCheckResult;
+
+			}
+			break;
+
     case ViewState::SkillCheckResult:
 
       if (justPressed & A_BUTTON) { counter = FLASH_COUNTER; }
@@ -59,28 +83,6 @@ void TrapState::update(StateMachine & machine) {
           }
 
         }
-
-			}
-			break;
-
-    case ViewState::SkillCheck:
-
-   		if (this->counter < sizeof(DiceDelay)) {
-				
-				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
-
-					this->dice = random(1, 7);
-					this->counter++;
-					arduboy.resetFrameCount();
-
-				}
-
-			}
-			else {    
-
-        this->counter = 0;
-        arduboy.resetFrameCount();
-        this->viewState = ViewState::SkillCheckResult;
 
 			}
 			break;
@@ -181,11 +183,11 @@ void TrapState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  ardBitmap.drawCompressed(0, 40, Images::Trap_LHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(79, 40, Images::Trap_RHS_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(0, 40, Images::Trap_LHS, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(79, 40, Images::Trap_RHS, WHITE, ALIGN_NONE, MIRROR_NONE);
 
   for (uint8_t i = 9; i < 70; i = i + 14) {
-    ardBitmap.drawCompressed(i, 40, Images::Trap_Single_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(i, 40, Images::Trap_Single, WHITE, ALIGN_NONE, MIRROR_NONE);
   }
 
   switch (this->viewState) {
@@ -267,11 +269,12 @@ void TrapState::render(StateMachine & machine) {
     FlashSettings::FlashArmour,
     FlashSettings::FlashHP,
     FlashSettings::FlashXP,
+    FlashSettings::FlashHP,
   };
 
 	// Player statistics ..
 
-	const FlashSettings settings = (this->dice < 6) ? static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice])) : FlashSettings::None;
+	const FlashSettings settings = static_cast<FlashSettings>(pgm_read_byte(&diceHelper[this->dice]));
 	const bool shouldFlash = (this->viewState == ViewState::UpdateStats && this->counter < FLASH_COUNTER);
 
 	BaseState::renderPlayerStatistics(machine, shouldFlash, settings);

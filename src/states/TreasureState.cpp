@@ -147,7 +147,7 @@ void TreasureState::render(StateMachine & machine) {
   // Render common parts ..
 
   BaseState::renderBackground(machine, true);
-  ardBitmap.drawCompressed(0, 0, Images::Chest_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(0, 0, Images::Chest_Background, WHITE, ALIGN_NONE, MIRROR_NONE);
 
   switch (this->viewState) {
 
@@ -155,7 +155,7 @@ void TreasureState::render(StateMachine & machine) {
 
       if (this->counter < sizeof(DiceDelay)) {
        
-        ardBitmap.drawCompressed(14, 16, Images::Chest_Closed_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+        ardBitmap.drawCompressed(14, 16, Images::Chest_Closed, WHITE, ALIGN_NONE, MIRROR_NONE);
         SpritesB::drawSelfMasked(48, 1, Images::Dice, this->dice);
       
         font3x5.setCursor(3, 2);
@@ -225,7 +225,7 @@ void TreasureState::renderSelectTreasure(StateMachine & machine) {
 	
   auto & ardBitmap = machine.getContext().ardBitmap;
 
-  ardBitmap.drawCompressed(14, 8, Images::Chest_Open_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(14, 8, Images::Chest_Open, WHITE, ALIGN_NONE, MIRROR_NONE);
 
   if (this->viewState == ViewState::RollDice && this->counter > 0) {
 
@@ -249,7 +249,7 @@ void TreasureState::renderChestResults(StateMachine & machine) {
   font3x5.setHeight(9);
   font3x5.setCursor(3, 2);
   SpritesB::drawOverwrite(48, 1, Images::Dice, this->dice);
-  ardBitmap.drawCompressed(14, 16, Images::Chest_Closed_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(14, 16, Images::Chest_Closed, WHITE, ALIGN_NONE, MIRROR_NONE);
   
   if (this->dice >= 5) {
 

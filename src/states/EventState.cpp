@@ -42,7 +42,9 @@ void EventState::update(StateMachine & machine) {
   switch (this->viewState) {
 
     case ViewState::SkillCheck:
-      
+
+      if (justPressed & A_BUTTON) { this->skillCheck = random(1, 7); counter = FLASH_COUNTER; }
+    
 			if (this->counter < sizeof(DiceDelay)) {
 				
 				if (arduboy.everyXFrames(pgm_read_byte(&DiceDelay[this->counter]))) {
@@ -131,7 +133,6 @@ void EventState::update(StateMachine & machine) {
 
     case ViewState::UpdateStats:
 
-
       if (counter == 0) {
 
         switch (this->dice[this->selection]) {
@@ -147,7 +148,7 @@ void EventState::update(StateMachine & machine) {
 
       }
 
-      if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER; justPressed = A_BUTTON; }
+      if (justPressed & A_BUTTON) { this->counter = FLASH_COUNTER;}
 
       if (this->counter < FLASH_COUNTER) {
 
@@ -193,7 +194,7 @@ void EventState::render(StateMachine & machine) {
   // Render common parts ..
 
   for (int8_t i = -12; i < 80; i = i + 20) {
-    ardBitmap.drawCompressed(i, 48, Images::Event_Background_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(i, 48, Images::Event_Background, WHITE, ALIGN_NONE, MIRROR_NONE);
   }
 
   BaseState::renderBackground(machine, true);

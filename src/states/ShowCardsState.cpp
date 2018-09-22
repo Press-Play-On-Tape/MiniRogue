@@ -66,7 +66,7 @@ void ShowCardsState::activate(StateMachine & machine) {
 			
 		}
 
-		//machine.getContext().cards[0] = GameStateType::BossMonster; //sjh
+		//machine.getContext().cards[0] = GameStateType::Event; //sjh
 
 	}
 	else {
@@ -159,10 +159,10 @@ void ShowCardsState::render(StateMachine & machine) {
 
 	// Draw background ..
 
-	ardBitmap.drawCompressed(105, 0, Images::Health_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);	
+	ardBitmap.drawCompressed(105, 0, Images::Health, WHITE, ALIGN_NONE, MIRROR_NONE);	
 	for (int8_t i = -2; i < 93; i = i + 10) {
-		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
-		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom_Comp, WHITE, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(i, 18, Images::Card_Border_Top, WHITE, ALIGN_NONE, MIRROR_NONE);
+		ardBitmap.drawCompressed(i, 50, Images::Card_Border_Bottom, WHITE, ALIGN_NONE, MIRROR_NONE);
 	}
 
 
@@ -196,7 +196,7 @@ void ShowCardsState::render(StateMachine & machine) {
       
 			if (this->displayCard == CARD_SHOW_ALL && (gameStats.selectedCard == i) && flash && room != 0) {
 
-        ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight_Comp, BLACK, ALIGN_NONE, MIRROR_NONE);
+        ardBitmap.drawCompressed(x, y, Images::Card_Outline_Highlight, BLACK, ALIGN_NONE, MIRROR_NONE);
 
 			}
 
