@@ -1,3 +1,5 @@
+<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/SplashScreen.png" width="700" height="257" />
+
 ## Background
 
 Mini Rogue is a 9-card game in which a single player delves into a deep dungeon to get the famous ruby called The Og's Blood on the bottom floor. The player must choose how to spend their resources in order to be powerful enough to confront ever difficult monsters. Random events and encounters make every play-through a unique experience.
