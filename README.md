@@ -1,4 +1,4 @@
-<img src="/distributable/Images/MR_Icons_001.png" data-canonical-src="/distributable/SplashScreen.png" width="700" height="257" />
+<img src="/distributable/SplashScreen.png" data-canonical-src="/distributable/SplashScreen.png" width="700" height="257" />
 
 ## Background
 
