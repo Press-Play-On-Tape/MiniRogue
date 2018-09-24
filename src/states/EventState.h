@@ -30,7 +30,6 @@ class EventState : public BaseState {
     SkillCheckResult,
     SelectCard,
     UpdateStats,
-    PlayerDead,
   };
 
   private:

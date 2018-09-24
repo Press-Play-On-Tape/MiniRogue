@@ -48,7 +48,7 @@ void GameOverState::activate(StateMachine & machine) {
 	this->score += (playerStats.bossesKilled * 2);
 	this->score += (playerStats.itemCount());
 
-	this->highScore = eeprom_read_byte(EEPROM_SCORE + gameStats.skillLevel);
+	this->highScore = eeprom_read_byte(((uint8_t *)EEPROM_SCORE + gameStats.skillLevel));
 
 	if (this->score > this->highScore) {
 
