@@ -20,6 +20,8 @@
   Boston, MA  02111-1307  USA
 */
 
+#define SOUND
+
 #ifndef WiringPrivate_h
 #define WiringPrivate_h
 
