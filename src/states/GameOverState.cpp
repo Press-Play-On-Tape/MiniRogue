@@ -96,14 +96,14 @@ void GameOverState::update(StateMachine & machine) {
 
 			case 21 ... 60:
 				#ifdef USE_LEDS             
-				arduboy.setRGBled(128 - (clearScores * 2), 0, 0);
+				arduboy.setRGBled(RED_LED, 128 - (clearScores * 2));
 				#endif
 				break;
 
 			case 61:
 				clearScores = 0;
 				#ifdef USE_LEDS             
-				arduboy.setRGBled(0, 0, 0);
+				arduboy.setRGBled(RED_LED, 0);
 				#endif
 				initEEPROM(true);
 				this->highScore = 0;
@@ -118,7 +118,7 @@ void GameOverState::update(StateMachine & machine) {
 		if (clearScores > 0) {
 		
 			#ifdef USE_LEDS             
-			arduboy.setRGBled(0, 0, 0);
+			arduboy.setRGBled(RED_LED, 0);
 			#endif
 			clearScores = 0;
 

@@ -54,6 +54,10 @@ void Game::setup(void) {
 	arduboy.boot();
 	arduboy.flashlight();
 	arduboy.systemButtons();
+	#ifdef USE_LEDS
+	// 3 parameter version must first be called at least once, in order to initialize the hardware
+	arduboy.setRGBled(0, 0, 0);
+	#endif
 	arduboy.audio.begin();
 	arduboy.initRandomSeed();
 	arduboy.setFrameRate(60);
