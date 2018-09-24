@@ -88,7 +88,7 @@ void FightMonstersState::update(StateMachine & machine) {
 					arduboy.resetFrameCount();
 
 					#ifdef USE_LEDS
-					arduboy.setRGBled(0, 0, 0);
+					arduboy.setRGBled(RED_LED, 0);
 					#endif
 
 				}
@@ -339,7 +339,7 @@ void FightMonstersState::update(StateMachine & machine) {
         machine.changeState(gameStats.incRoom(playerStats));
 
 				#ifdef USE_LEDS
-				arduboy.setRGBled(0, 0, 0);
+				arduboy.setRGBled(RED_LED, 0);
 				#endif
 
 			}
@@ -352,7 +352,7 @@ void FightMonstersState::update(StateMachine & machine) {
 				machine.changeState(GameStateType::PlayerDead);
 
 				#ifdef USE_LEDS
-				arduboy.setRGBled(0, 0, 0);
+				arduboy.setRGBled(RED_LED, 0);
 				#endif
 
 			}
@@ -624,7 +624,7 @@ void FightMonstersState::render(StateMachine & machine) {
 
 	#ifdef USE_LEDS
 	if (this->viewState == ViewState::HighlightPlayerStats) {
-		arduboy.setRGBled((flash ? 32 : 0), 0, 0);		
+		arduboy.setRGBled(RED_LED, (flash ? 32 : 0));
 	}
 	#endif
 	BaseState::renderPlayerStatistics(machine, true, settings);

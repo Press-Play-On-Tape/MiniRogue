@@ -68,6 +68,9 @@ struct PlayerStats {
   uint8_t xp;
   uint8_t bossesKilled;
   uint8_t items[4];
+  #ifdef SOUND
+  uint8_t hpTemp;
+  #endif
 
   void decArmour(uint8_t val) {
 
@@ -109,7 +112,8 @@ struct PlayerStats {
 
     hp = max(hp - val, 0);
     #ifdef SOUND
-    hpISR = 46 - (hp * 2);
+    hpTemp = hp * 2;
+    hpISR = 46 - hpTemp;
     #endif
 
   }
@@ -118,7 +122,8 @@ struct PlayerStats {
 
     hp = min(hp + val, 20);
     #ifdef SOUND
-    hpISR = 46 - (hp * 2);
+    hpTemp = hp * 2;
+    hpISR = 46 - hpTemp;
     #endif
 
   }
