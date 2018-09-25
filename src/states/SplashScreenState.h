@@ -8,7 +8,7 @@
 class SplashScreenState : public GameState<GameContext, GameStateType> {
 
   private:
-    FadeOutEffect fadeOutEffect;
+    uint8_t counter = 0;
 
   public:
     void activate(StateMachine & machine) override;

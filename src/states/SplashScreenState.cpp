@@ -1,7 +1,6 @@
 #include "SplashScreenState.h"
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
-#include "../utils/FadeEffects.h"
 
 
 // ----------------------------------------------------------------------------
@@ -10,7 +9,6 @@
 void SplashScreenState::activate(StateMachine & machine) {
 
   (void)machine;
-  fadeOutEffect.reset(0, HEIGHT, 1); 
 
 }
 
@@ -20,7 +18,14 @@ void SplashScreenState::activate(StateMachine & machine) {
 //
 void SplashScreenState::update(StateMachine & machine) { 
 
-  (void)machine;
+  this->counter++;
+
+
+  if (counter == 60) {
+  
+    machine.changeState(GameStateType::TitleScreen);
+
+  }
 
 }
 
@@ -33,15 +38,15 @@ void SplashScreenState::render(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
 	auto & ardBitmap = machine.getContext().ardBitmap;
 
-  ardBitmap.drawCompressed(30, 14, Images::BootLogo, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(25, 17, Images::Ppot_01, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(43, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(73, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-  if (!fadeOutEffect.isComplete()) {
-
-    fadeOutEffect.draw(arduboy);
-    fadeOutEffect.update();
-
+  if (this->counter < 30) {
+    ardBitmap.drawCompressed(58, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
   }
-
-  if (fadeOutEffect.isComplete()) machine.changeState(GameStateType::TitleScreen);
+  else {
+    ardBitmap.drawCompressed(58, 26, Images::Ppot_03, WHITE, ALIGN_NONE, MIRROR_NONE);
+  }
 
 }
