@@ -27,7 +27,7 @@ void SplashScreenState::update(StateMachine & machine) {
 
     this->counter++;
 
-    if (counter == 30) {
+    if (counter == 120) {
     
       machine.changeState(GameStateType::TitleScreen);
 
@@ -59,13 +59,13 @@ void SplashScreenState::render(StateMachine & machine) {
   else {
 
     ardBitmap.drawCompressed(58, 26, Images::Ppot_ButtonDown, WHITE, ALIGN_NONE, MIRROR_NONE);
-    ardBitmap.drawCompressed(35, 46, Images::Ppot_Loading, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(44, 46, Images::Ppot_Loading, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-    uint8_t i = (this->counter / 5 ) % 3;
+    uint8_t i = (this->counter / 15) % 4;
 
-    for (uint8_t j = 0; j < i + 1; j++) {
+    for (uint8_t j = 0; j < i; j++) {
       
-        arduboy.drawPixel(70 + (j * 2), 54);
+        arduboy.drawPixel(79 + (j * 2), 49);
 
     }
 
