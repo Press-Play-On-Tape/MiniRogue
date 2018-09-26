@@ -18,12 +18,20 @@ void SplashScreenState::activate(StateMachine & machine) {
 //
 void SplashScreenState::update(StateMachine & machine) { 
 
-  this->counter++;
+	auto & arduboy = machine.getContext().arduboy;
+  auto justPressed = arduboy.justPressedButtons();
 
+	if (justPressed > 0) this->counter = 1;
 
-  if (counter == 60) {
-  
-    machine.changeState(GameStateType::TitleScreen);
+  if (this->counter > 0) {
+
+    this->counter++;
+
+    if (counter == 30) {
+    
+      machine.changeState(GameStateType::TitleScreen);
+
+    }
 
   }
 
@@ -35,18 +43,32 @@ void SplashScreenState::update(StateMachine & machine) {
 //
 void SplashScreenState::render(StateMachine & machine) {
 
-	auto & arduboy = machine.getContext().arduboy;
 	auto & ardBitmap = machine.getContext().ardBitmap;
+	auto & arduboy = machine.getContext().arduboy;
 
-  ardBitmap.drawCompressed(25, 17, Images::Ppot_01, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(43, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
-  ardBitmap.drawCompressed(73, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(47, 17, Images::Ppot_Buttons, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(43, 26, Images::Ppot_ButtonUp, WHITE, ALIGN_NONE, MIRROR_NONE);
+  ardBitmap.drawCompressed(73, 26, Images::Ppot_ButtonUp, WHITE, ALIGN_NONE, MIRROR_NONE);
 
-  if (this->counter < 30) {
-    ardBitmap.drawCompressed(58, 26, Images::Ppot_02, WHITE, ALIGN_NONE, MIRROR_NONE);
+  if (this->counter == 0) {
+
+    ardBitmap.drawCompressed(58, 26, Images::Ppot_ButtonUp, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(26, 46, Images::Ppot_Caption, WHITE, ALIGN_NONE, MIRROR_NONE);
+
   }
   else {
-    ardBitmap.drawCompressed(58, 26, Images::Ppot_03, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+    ardBitmap.drawCompressed(58, 26, Images::Ppot_ButtonDown, WHITE, ALIGN_NONE, MIRROR_NONE);
+    ardBitmap.drawCompressed(35, 46, Images::Ppot_Loading, WHITE, ALIGN_NONE, MIRROR_NONE);
+
+    uint8_t i = (this->counter / 5 ) % 3;
+
+    for (uint8_t j = 0; j < i + 1; j++) {
+      
+        arduboy.drawPixel(70 + (j * 2), 54);
+
+    }
+
   }
 
 }
