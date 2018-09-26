@@ -2,7 +2,6 @@
 
 #include "BaseState.h"
 #include "../utils/Enums.h"
-#include "../utils/FadeEffects.h"
 #include "../fonts/Font3x5.h"
 
 char const error_01[] PROGMEM = "   You need\n  more gold!";

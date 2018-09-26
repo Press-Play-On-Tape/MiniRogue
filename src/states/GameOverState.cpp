@@ -1,7 +1,6 @@
 #include "GameOverState.h"
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
-#include "../utils/FadeEffects.h"
 #include <avr/eeprom.h> 
 
 #define EEPROM_START                  ((uint8_t *)140)

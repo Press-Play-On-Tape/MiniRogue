@@ -3,7 +3,6 @@
 #include "../utils/GameContext.h"
 #include "../utils/GameState.h"
 #include "../utils/Enums.h"
-#include "../utils/FadeEffects.h"
 #include "../fonts/Font3x5.h"
 
 enum FlashSettings : uint8_t {

@@ -3,7 +3,6 @@
 #include "../utils/GameContext.h"
 #include "../utils/GameState.h"
 #include "../utils/Enums.h"
-#include "../utils/FadeEffects.h"
 
 class SplashScreenState : public GameState<GameContext, GameStateType> {
 

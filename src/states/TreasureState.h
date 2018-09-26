@@ -2,7 +2,6 @@
 
 #include "BaseState.h"
 #include "../utils/Enums.h"
-#include "../utils/FadeEffects.h"
 #include "../fonts/Font3x5.h"
 
 class TreasureState : public BaseState {

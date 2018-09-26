@@ -2,7 +2,6 @@
 
 #include "BaseState.h"
 #include "../utils/Enums.h"
-#include "../utils/FadeEffects.h"
 
 class RestingState : public BaseState {
   
