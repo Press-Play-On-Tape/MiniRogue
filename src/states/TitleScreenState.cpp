@@ -24,19 +24,12 @@ void TitleScreenState::activate(StateMachine & machine) {
 	#ifdef SOUND
 
 		// set up Timer 3
-		TCCR3A = 0; // normal operation
 		TCCR3B = _BV(WGM32) | _BV(CS30); // CTC, no pre-scaling
 		OCR3A = 1999; // compare A register value (8000Hz)
-		TIMSK3 = _BV(OCIE3A); // interrupt on Compare A Match		// // set up Timer 3
-		// TCCR3A = 0; // normal operation
-		// TCCR3B = _BV(WGM32) | _BV(CS30); // CTC, no pre-scaling
-		// OCR3A = 1999; // compare A register value (8000Hz)
-		// TIMSK3 = _BV(OCIE3A); // interrupt on Compare A Match
+		TIMSK3 = _BV(OCIE3A); // interrupt on Compare A Match
 
 		//set up Timer 4
 		TCCR4A = _BV(COM4A0) | _BV(PWM4A); // Fast-PWM 8-bit
-		TCCR4B = _BV(CS40); // 62500Hz
-		OCR4C = 0xFF; // Resolution to 8-bit (TOP=0xFF)
 
 	#endif
 	
