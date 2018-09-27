@@ -21,45 +21,34 @@ void SplashScreenState::update(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
 	auto justPressed = arduboy.justPressedButtons();
 
-  if (justPressed > 0) {
+  if (justPressed > 0 && this->counter == 0) {
 
     this->counter = 1;
 
     TCCR3A = _BV(COM3A0); // set toggle on compare mode (which connects the pin)
-    OCR3A = 7812; // 128 Hz
-  }
+    OCR3A = 3905; // 128 Hz
 
+  }
   if (this->counter > 0) {
 
     this->counter++;
 
-    if      (counter == 11)  { // 256 Hz
-      OCR3A = 3905;
-    }
-    else if (counter == 22)  { // 512 Hz
-      OCR3A = 1952;
-    }
-    else if (counter == 33)  { // 1000 Hz
-      OCR3A = 999;
-    }
-    else if (counter == 44)  { // 2000 Hz
-      OCR3A = 499;
-    }
-    else if (counter == 55)  { // 4000 Hz
-      OCR3A = 249;
-    }
-    else if (counter == 66)  { // 8820 Hz
-      OCR3A = 112;
-    }
-    else if (counter == 77) { // 11025 Hz
-      OCR3A = 90;
-    }
-    else if (counter == 88) {
-      TCCR3A = 0; // set normal mode (which disconnects the pin)
+    switch (this->counter) {
 
-    }
-    else if (counter == 130) {
-      machine.changeState(GameStateType::TitleScreen);
+      case 2:     
+        OCR3A = 18000;    
+        break;
+
+      case 5:     
+        TCCR3A = 0;       
+        break;
+        
+      case 125:   
+        machine.changeState(GameStateType::TitleScreen);    
+        break;
+
+      default:
+        break;
 
     }
 
