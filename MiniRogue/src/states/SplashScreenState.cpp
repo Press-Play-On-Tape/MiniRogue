@@ -27,7 +27,7 @@ void SplashScreenState::update(StateMachine & machine) {
 
     this->counter++;
 
-    if (counter == 120) {
+    if (counter == 20) {
     
       machine.changeState(GameStateType::TitleScreen);
 
