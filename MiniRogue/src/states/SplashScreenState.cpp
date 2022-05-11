@@ -2,6 +2,8 @@
 #include "../utils/Arduboy2Ext.h"
 #include "../images/Images.h"
 
+static constexpr uint8_t ppotFrames = (1.6 *60); // 1.6s animation loop
+
 
 // ----------------------------------------------------------------------------
 //  Initialise state ..
@@ -46,32 +48,50 @@ void SplashScreenState::render(StateMachine & machine) {
 	auto & ardBitmap = machine.getContext().ardBitmap;
 	auto & arduboy = machine.getContext().arduboy;
 
-  SpritesB::drawOverwrite(32, 17, Images::PPOT, 0);
 
-  uint8_t y = 17; 
-  switch (arduboy.getFrameCount(48)) {
+  SpritesB::drawOverwrite(32, 16, Images::PPOT, 0);
 
-      case 12 ... 23:
-          y = 30; 
-          [[fallthrough]]
+  uint8_t p = 0x11; // Default pixel position 0 is hidden in the image
+  
+  switch (arduboy.getFrameCount(ppotFrames)) {
+    
+    // 2nd quarter of frames
+    case (ppotFrames*1/4) ... (ppotFrames*2/4)-1:
+      p = 0x31; // Move pixel down to position 1
+      /*-fallthrough*/
 
-      case 0 ... 11:
-          Sprites::drawOverwrite(91, 25, Images::PPOT_Arrow, 0);
-          break;
+    // 1st quarter of frames
+    case 0 ... (ppotFrames*1/4)-1:
+      // Flash 'Play' arrow by clearing the image
+      // Overwrite directly to the screen buffer 
+      arduboy.sBuffer[91 +(3*WIDTH)] = 0x00;
+      arduboy.sBuffer[92 +(3*WIDTH)] = 0x00;
+      arduboy.sBuffer[93 +(3*WIDTH)] = 0x00;
+      arduboy.sBuffer[94 +(3*WIDTH)] = 0x00;
+      arduboy.sBuffer[95 +(3*WIDTH)] = 0x00;
+      break;
 
-      case 24 ... 35:
-          y = 31; 
-          break;
+    // 3rd quarter of frames
+    case (ppotFrames*2/4) ... (ppotFrames*3/4)-1:
+      p = 0x51; // Move pixel down to position 2
+      break;
 
-      default: // 36 ... 47:
-          y = 32; 
-          break;
+    // 4th quarter of frames
+    default:
+      p = 0x91; // Move pixel down to position 3
+      break;
 
   }
 
-  arduboy.drawPixel(52, y, WHITE); // Falling pixel represents the tape spooling
-  if (y % 2 == 0) { // On even steps of pixel movement, update the spindle image
-      SpritesB::drawOverwrite(45, 28, Images::PPOT_Spindle, 0);
+  // Draw pixel to represent the tape spooling
+  // Render directly to the screen buffer 
+  arduboy.sBuffer[52 +(3*WIDTH)] = p; // Values 0x11, 0x31, 0x51, 0x91
+
+  // On even steps of pixel movement, update the spindle image
+  if ((p & 0xA0) == 0) {
+    // Render directly to the screen buffer 
+    arduboy.sBuffer[45 +(3*WIDTH)] = 0xA5;
+    arduboy.sBuffer[46 +(3*WIDTH)] = 0x95;
   }
 
 }
