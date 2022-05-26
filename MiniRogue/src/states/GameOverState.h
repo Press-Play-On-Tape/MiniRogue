@@ -39,5 +39,6 @@ class GameOverState : public BaseState {
     void renderTwoDigitNumeric(uint8_t val);
     void renderThreeDigitNumeric(uint8_t val);
     void initEEPROM(bool forceClear);
-
+    int16_t checkSum(bool update);
+    
 };

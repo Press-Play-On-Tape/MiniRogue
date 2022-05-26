@@ -18,6 +18,17 @@ constexpr const static uint8_t WINNER_LEVEL = 5;
 constexpr const static uint8_t DO_NOT_EDIT_SLOT = 255;
 constexpr const static uint8_t MAX_NUMBER_OF_SCORES         = 5;
 
+namespace Constants {
+
+  constexpr uint16_t EEPROM_Start = 140;
+  constexpr uint16_t EEPROM_Start_C1 = 140;
+  constexpr uint16_t EEPROM_Start_C2 = 141;
+  constexpr uint16_t EEPROM_Score = 142;
+  constexpr uint16_t EEPROM_End = EEPROM_Score + 4;
+  constexpr uint16_t EEPROM_Checksum = EEPROM_End;
+
+}
+
 const uint8_t InitSettings[] PROGMEM = {
 	1, 5, 5, 6,
 	0, 5, 3, 6,

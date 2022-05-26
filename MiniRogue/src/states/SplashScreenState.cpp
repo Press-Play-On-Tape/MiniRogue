@@ -45,7 +45,6 @@ void SplashScreenState::update(StateMachine & machine) {
 //
 void SplashScreenState::render(StateMachine & machine) {
 
-	auto & ardBitmap = machine.getContext().ardBitmap;
 	auto & arduboy = machine.getContext().arduboy;
 
 

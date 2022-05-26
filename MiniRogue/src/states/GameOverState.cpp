@@ -3,11 +3,6 @@
 #include "../images/Images.h"
 #include <avr/eeprom.h> 
 
-#define EEPROM_START                  ((uint8_t *)140)
-#define EEPROM_START_C1               ((uint8_t *)140)
-#define EEPROM_START_C2               ((uint8_t *)141)
-#define EEPROM_SCORE                  142
-
 
 
 // ----------------------------------------------------------------------------
@@ -47,12 +42,14 @@ void GameOverState::activate(StateMachine & machine) {
 	this->score += (playerStats.bossesKilled * 2);
 	this->score += (playerStats.itemCount());
 
-	this->highScore = eeprom_read_byte(((uint8_t *)EEPROM_SCORE + gameStats.skillLevel));
+	this->highScore = eeprom_read_byte(((uint8_t *)Constants::EEPROM_Score + gameStats.skillLevel));
 
 	if (this->score > this->highScore) {
 
 		this->highScore = this->score;
-		eeprom_update_byte((uint8_t *)(EEPROM_SCORE + gameStats.skillLevel), this->score);
+		eeprom_update_byte((uint8_t *)(Constants::EEPROM_Score + gameStats.skillLevel), this->score);
+
+		GameOverState::checkSum(true);
 
 	}
 
@@ -256,17 +253,55 @@ const uint8_t letter2 = 'R';
 
 void GameOverState::initEEPROM(bool forceClear) {
 
-  byte c1 = eeprom_read_byte(EEPROM_START_C1);
-  byte c2 = eeprom_read_byte(EEPROM_START_C2);
+    byte c1 = EEPROM.read(Constants::EEPROM_Start_C1);
+    byte c2 = EEPROM.read(Constants::EEPROM_Start_C2);
 
-  if (forceClear || c1 != letter1 || c2 != letter2) { 
+	if (forceClear || c1 != letter1 || c2 != letter2) { 
 
-    uint8_t score = 0;
+		uint8_t score = 0;
 
-    eeprom_update_byte((uint8_t *)(EEPROM_START_C1), letter1);
-    eeprom_update_byte((uint8_t *)(EEPROM_START_C2), letter2);
-		for (uint8_t i = 0; i < 4; i++) eeprom_update_byte((uint8_t *)(EEPROM_SCORE + i), score);
+        EEPROM.put(Constants::EEPROM_Start_C1, letter1);
+        EEPROM.put(Constants::EEPROM_Start_C2, letter2);
+			
+		for (uint8_t i = 0; i < 4; i++) {
+			EEPROM.put(Constants::EEPROM_Score + i, score); 
+		}
 
-  }
+	}
+	else {
+
+		int16_t checkSumOld = 0;
+		int16_t checkSumNow = GameOverState::checkSum(false);
+		EEPROM.get(Constants::EEPROM_Checksum, checkSumOld);
+
+		if (checkSumNow != checkSumOld) {
+
+			GameOverState::initEEPROM(true);
+
+		}
+		
+	}    
+
+}
+
+
+/* -----------------------------------------------------------------------------
+ *   Generate and optionally save a check sum .. 
+ */
+int16_t GameOverState::checkSum(bool update) {
+
+    int16_t checksum = 0;
+
+    for (uint8_t i = 0; i < (Constants::EEPROM_End - Constants::EEPROM_Start); i++) {
+
+        checksum = checksum + ((i % 2 == 0 ? 1 : -1) * eeprom_read_byte(reinterpret_cast<uint8_t *>(Constants::EEPROM_Start + i)));
+
+    }
+
+    if (update) {
+        EEPROM.put(Constants::EEPROM_Checksum, static_cast<uint16_t>(checksum));
+    }
+
+    return checksum;
 
 }

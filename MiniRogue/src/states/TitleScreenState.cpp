@@ -51,29 +51,29 @@ void TitleScreenState::update(StateMachine & machine) {
 	auto & arduboy = machine.getContext().arduboy;
 	auto & playerStats = machine.getContext().playerStats;
 	auto & gameStats = machine.getContext().gameStats;
-  auto justPressed = arduboy.justPressedButtons();
-  auto pressed = arduboy.pressedButtons();
+	auto justPressed = arduboy.justPressedButtons();
+	auto pressed = arduboy.pressedButtons();
 
 	// Restart ?
 
-	if (pressed & DOWN_BUTTON) {
+	// if (pressed & DOWN_BUTTON) {
 
-		if (restart < UPLOAD_DELAY) {
-			restart++;
-		}
-		else {
-			arduboy.exitToBootloader();
-		}
+	// 	if (restart < UPLOAD_DELAY) {
+	// 		restart++;
+	// 	}
+	// 	else {
+	// 		arduboy.exitToBootloader();
+	// 	}
 
-	}
-	else {
-		restart = 0;
-	}
+	// }
+	// else {
+	// 	restart = 0;
+	// }
 
 
 	// Handle other input ..
 
-	if ((justPressed & LEFT_BUTTON) && gameStats.skillLevel > MIN_LEVEL) 		--gameStats.skillLevel;
+	if ((justPressed & LEFT_BUTTON) && gameStats.skillLevel > MIN_LEVEL) 	--gameStats.skillLevel;
 	if ((justPressed & RIGHT_BUTTON) && gameStats.skillLevel < MAX_LEVEL) 	++gameStats.skillLevel;
 
 	if (justPressed & A_BUTTON) {
@@ -98,7 +98,8 @@ void TitleScreenState::update(StateMachine & machine) {
 		// playerStats.items[1] = 1; //sjh
 		
 	}
-  #ifdef SOUND_ON_OFF
+  
+  	#ifdef SOUND_ON_OFF
 	if (justPressed & B_BUTTON) {
 
 		this->sound_counter = 60;
